@@ -1,0 +1,102 @@
+.container {
+  width: 100vw;
+  height: auto;
+  padding: 0 0rem;
+  .main {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 2.5rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .headingRow {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 730px;
+      .firstTwoThirds {
+        width: auto;
+        height: auto;
+        .headerSubtitleContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: auto;
+          height: auto;
+          h1 {
+            margin: 0 0 17.5px 0;
+            padding: 0;
+          }
+          p {
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+      .lastThird {
+        display: flex;
+        flex-direction: flex;
+        .filter {
+          display: flex;
+          flex-direction: row;
+          h3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: auto;
+            height: auto;
+            margin: 0 0 0 0;
+            padding: 0;
+          }
+          p {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0;
+          }
+        }
+        .newInvoiceButton {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0 0 0 25px;
+          padding: 0;
+        }
+      }
+    }
+    .invoicesContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 730px;
+      .invoice {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        .biggerHalf {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 53%;
+        }
+        .smallerHalf {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 40%;
+        }
+      }
+    }
+  }
+}
