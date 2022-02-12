@@ -15,12 +15,45 @@ const Home: NextPage = () => {
       </Head>
       <Sidebar />
       <main className={styles.main}>
+      <div className={styles.header}>
+        <div className={styles.invoiceHeaderContainer}>
+          <h2>Invoices</h2>
+          <p>No invoices</p>
+        </div>
+        <div className={styles.rightEnd}>
+          <div className={styles.filterByStatusButton}>
+          <h3>Filter by status</h3>
+          <div className={styles.imageHolder}>
+            <Image
+              src="/down-arrow.png"
+              alt="down-arrow"
+              width={9}
+              height={5}
+                />
+          </div>
+          </div>
+          <div className={styles.newInvoiceButton}>
+            <Image
+              src="/plus.png"
+              alt="plus"
+              width={32}
+              height={32}
+                />
+              <h3>New Invoice</h3>
+          </div>
+        </div>
+      </div>
+      <div className={styles.noInvoicesContainer}>
       <Image 
         src="/no-invoices.png"
         alt="no-invoices"
         width={241}
         height={200}
           />
+        <h2>There is nothing here</h2>
+        <p>Create an invoice by clicking the
+        <b> New Invoice </b>button and get started</p>
+      </div>
       </main>
     </div>
   )

@@ -1,8 +1,11 @@
+@use "app.scss";
+
 .container {
   position: relative;
   display: flex;
   width: 100vw;
   height: auto;
+  background-color: app.$light-background;
   padding: 0 0rem;
   .main {
     width: 100vw;
@@ -12,92 +15,93 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    .headingRow {
+    .header {
+      position: relative;
       display: flex;
-      flex-direction: row;
+      width: 730px;
+      height: 59px;
       justify-content: space-between;
       align-items: center;
-      width: 730px;
-      .firstTwoThirds {
-        width: auto;
-        height: auto;
-        .headerSubtitleContainer {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          width: auto;
-          height: auto;
-          h1 {
-            margin: 0 0 17.5px 0;
-            padding: 0;
-          }
-          p {
-            margin: 0;
-            padding: 0;
-          }
+      margin: 25px 0px 0px 0px;
+      .invoiceHeaderContainer {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        h2 {
+          font-size: 32px;
+          padding: 0;
+          margin: 0;
+        }
+        p {
+          font-size: 12px;
+          padding: 0;
+          margin: 0;
+          color: app.$subtitle;
         }
       }
-      .lastThird {
+      .rightEnd {
+        position: relative;
         display: flex;
-        flex-direction: flex;
-        .filter {
+        justify-content: center;
+        align-items: center;
+        .filterByStatusButton {
+          position: relative;
           display: flex;
-          flex-direction: row;
+          width: 140px;
+          height: 48px;
+          justify-content: space-around;
+          align-items: center;
           h3 {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: auto;
-            height: auto;
-            margin: 0 0 0 0;
-            padding: 0;
+            font-size: 12px;
           }
-          p {
+          .imageHolder {
+            position: relative;
             display: flex;
-            flex-direction: column;
             justify-content: center;
+            align-items: center;
             width: auto;
             height: auto;
-            margin: 0;
-            padding: 0;
+            margin: 4px 0px 0px 0px;
           }
         }
         .newInvoiceButton {
+          position: relative;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          justify-content: space-around;
           align-items: center;
-          margin: 0 0 0 25px;
-          padding: 0;
+          background-color: app.$purple;
+          border-radius: 40px;
+          width: 150px;
+          height: 48px;
+          padding: 7.5px;
+          margin: 0px 0px 0px 40px;
+          h3 {
+            font-size: 12px;
+            color: app.$white;
+          }
         }
       }
     }
-    .invoicesContainer {
+    .noInvoicesContainer {
+      position: relative;
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      width: 730px;
-      .invoice {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        .biggerHalf {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-          align-items: center;
-          width: 53%;
-        }
-        .smallerHalf {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-          align-items: center;
-          width: 40%;
-        }
+      width: 242px;
+      margin: 300px 0px 0px 0px;
+      h2 {
+        color: app.$font;
+        font-size: 20px;
+        text-align: center;
+        margin: 30px 0px 0px 0px;
+      }
+      p {
+        color: app.$subtitle;
+        font-size: 12px;
+        text-align: center;
+        width: 90%;
+        margin: 20px 0px 0px 0px;
       }
     }
   }
