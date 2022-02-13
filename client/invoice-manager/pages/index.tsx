@@ -1,11 +1,42 @@
+import { useState, useEffect, useRef } from "react"
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
 import Sidebar from "../components/sidebar/sidebar"
+import data from "../dummy-data.json"
 
 const Home: NextPage = () => {
+  const [ invoiceList, setInvoiceList ] = useState<boolean>(false);
+  const [ invoiceCount, setInvoiceCount ] = useState<string[]>([""]);
+  const countRef = useRef<number>(0);
+
+
+  function checkInvoices() {
+    if (data?.user1) {
+      setInvoiceList(true);
+    } else {
+        setInvoiceList(false);
+      }
+  }
+
+   function getInvoices() {
+      const invoicesCounted = Object.keys(data);
+      setInvoiceCount(invoicesCounted);
+   }
+
+
+  useEffect(() => {
+      checkInvoices();
+      getInvoices();
+  }, [countRef]);
+
+  // Checking my variables
+  console.log(data);
+  console.log(invoiceList);
+  console.log(invoiceCount);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -43,6 +74,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+      {invoiceList === false &&
       <div className={styles.noInvoicesContainer}>
       <Image 
         src="/no-invoices.png"
@@ -54,6 +86,80 @@ const Home: NextPage = () => {
         <p>Create an invoice by clicking the
         <b> New Invoice </b>button and get started</p>
       </div>
+      }
+      {invoiceList === true &&
+      <div className={styles.invoiceListContainer}>
+        <div className={styles.invoiceContainer}>
+          <div className={styles.firstHalf}>
+          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
+          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
+          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
+          </div>
+          <div className={styles.secondHalf}>
+          <p className={styles.total}><b>$300.00</b></p>
+          <div className={styles.statusContainer}>
+            <div className={styles.circle} />
+            <p className={styles.status}>{data.user1[0].status}</p>
+          </div>
+          <div className={styles.invoiceArrow}>
+          <Image
+            src="/invoice-arrow.png"
+            alt="invoice-arrow"
+            width={7}
+            height={10}
+            layout="fixed"
+          />
+          </div>
+          </div>
+        </div>
+        <div className={styles.invoiceContainer}>
+          <div className={styles.firstHalf}>
+          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
+          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
+          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
+          </div>
+          <div className={styles.secondHalf}>
+          <p className={styles.total}><b>$300.00</b></p>
+          <div className={styles.statusContainer}>
+            <div className={styles.circle} />
+            <p className={styles.status}>{data.user1[0].status}</p>
+          </div>
+          <div className={styles.invoiceArrow}>
+          <Image
+            src="/invoice-arrow.png"
+            alt="invoice-arrow"
+            width={7}
+            height={10}
+            layout="fixed"
+          />
+          </div>
+          </div>
+        </div>
+        <div className={styles.invoiceContainer}>
+          <div className={styles.firstHalf}>
+          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
+          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
+          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
+          </div>
+          <div className={styles.secondHalf}>
+          <p className={styles.total}><b>$300.00</b></p>
+          <div className={styles.statusContainer}>
+            <div className={styles.circle} />
+            <p className={styles.status}>{data.user1[0].status}</p>
+          </div>
+          <div className={styles.invoiceArrow}>
+          <Image
+            src="/invoice-arrow.png"
+            alt="invoice-arrow"
+            width={7}
+            height={10}
+            layout="fixed"
+          />
+          </div>
+          </div>
+        </div>
+      </div>
+      }
       </main>
     </div>
   )
