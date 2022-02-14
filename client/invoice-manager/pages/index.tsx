@@ -5,11 +5,14 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 
 import Sidebar from "../components/sidebar/sidebar"
+import NewInvoiceForm from "../components/forms/newInvoiceForm"
 import data from "../dummy-data.json"
 
 const Home: NextPage = () => {
-  const [ invoiceList, setInvoiceList ] = useState<boolean>(false);
-  const [ invoiceCount, setInvoiceCount ] = useState<string[]>([""]);
+  const [invoiceList, setInvoiceList] = useState<boolean>(false);
+  const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
+  const [invoiceForm, setInvoiceForm] = useState<boolean>(true);
+
   const countRef = useRef<number>(0);
 
 
@@ -24,6 +27,10 @@ const Home: NextPage = () => {
    function getInvoices() {
       const invoicesCounted = Object.keys(data);
       setInvoiceCount(invoicesCounted);
+   }
+
+   function toggleNewInvoiceForm() {
+     setInvoiceForm(!invoiceForm);
    }
 
 
@@ -46,6 +53,14 @@ const Home: NextPage = () => {
       </Head>
       <Sidebar />
       <main className={styles.main}>
+      {invoiceForm === true &&
+      <>
+        <div className={styles.sidebarBackground} />
+        <div className={styles.invoiceFormContainer}>
+          <NewInvoiceForm />
+        </div>
+      </>
+      }
       <div className={styles.header}>
         <div className={styles.invoiceHeaderContainer}>
           <h2>Invoices</h2>
@@ -63,7 +78,7 @@ const Home: NextPage = () => {
                 />
           </div>
           </div>
-          <div className={styles.newInvoiceButton}>
+          <div className={styles.newInvoiceButton} onClick={toggleNewInvoiceForm}>
             <Image
               src="/plus.png"
               alt="plus"

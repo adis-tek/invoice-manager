@@ -10,11 +10,32 @@
   .main {
     width: 100vw;
     min-height: 100vh;
-    padding: 2.5rem 0;
+    padding: 0rem 0;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
+    .sidebarBackground {
+      position: absolute;
+      display: flex;
+      width: 103px;
+      height: 100vh;
+      background-color: app.$dark-background;
+      left: 0px;
+      z-index: 1;
+    }
+    .invoiceFormContainer {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      width: 620px;
+      height: 100vh;
+      align-items: center;
+      background-color: app.$white;
+      left: 103px;
+      z-index: 1;
+    }
     .header {
       position: relative;
       display: flex;
@@ -22,7 +43,7 @@
       height: 59px;
       justify-content: space-between;
       align-items: center;
-      margin: 25px 0px 0px 0px;
+      margin: calc(2.5rem + 25px) 0px 0px 0px;
       .invoiceHeaderContainer {
         position: relative;
         display: flex;
