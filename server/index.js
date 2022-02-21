@@ -2,12 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
-const pool = require("./db");
+const pool = require("./config/db.config");
 
 //middleware
 app.use(cors());
 app.use(express.json()); //req.body
-
 dotenv.config();
 
 //ROUTES//
@@ -16,9 +15,9 @@ dotenv.config();
 
 app.post("/invoices", async (req, res) => {
     try {
-        const { invoice } = req.body;
+        const { amount } = req.body;
         const newInvoice = await pool.query("INSERT INTO invoice_test (invoice_id, total) VALUES(uuid_generate_v4(), $1) RETURNING *",
-        [invoice]
+        [amount]
         );
 
         res.json(newInvoice.rows[0]);
@@ -32,6 +31,15 @@ app.post("/invoices", async (req, res) => {
 app.get("/invoices", async(req, res) => {
     try {
         const allInvoices = await pool.query("SELECT * FROM invoice_test");
+        res.json(allInvoices.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+})
+
+app.get("/manager", async(req, res) => {
+    try {
+        const allInvoices = await pool.query("SELECT * FROM invoice");
         res.json(allInvoices.rows);
     } catch(err) {
         console.log(err.message)
