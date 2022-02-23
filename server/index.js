@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const pool = require("./config/db.config");
 
 //middleware
+app.use(bodyParser.json({limit: "32mb", extended: true}))
+app.use(bodyParser.urlencoded({limit: "32mb", extended: true}))
 app.use(cors());
 app.use(express.json()); //req.body
 dotenv.config();
@@ -51,7 +53,7 @@ app.get("/manager", async(req, res) => {
 app.get("/invoices/:id", async(req, res) => {
     try {
         const { id } = req.params;
-        const todo = await pool.query("SELECT * FROM invoice_test WHERE total = $1", [id]);
+        const todo = await pool.query("SELECT * FROM bill_from WHERE bill_from_id = $1", [id]);
         res.json(todo.rows[0]);
     } catch {
         console.log(err.message);

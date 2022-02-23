@@ -95,7 +95,7 @@ CREATE TABLE item_list(
     price MONEY NOT NULL DEFAULT 1.00
 );
 
-/* VALUE INPUT 
+/*VALUE INPUT 
  
  insert into
  invoice_test (invoice_id, total)
@@ -152,26 +152,26 @@ CREATE TABLE item_list(
  insert into
  invoice ( invoice_id, account_user_uuid, bill_from_id, bill_to_id, bill_info_id, item_list_id, updated_at )
  values
- (1, (SELECT account_user_uuid from account_user WHERE profile_id=1), 1, 1, 1, 1, CURRENT_TIMESTAMP);
+ (2, (SELECT account_user_uuid from account_user WHERE profile_id=1), 2, 2, 2, 2, CURRENT_TIMESTAMP);
  
  insert into
  bill_from ( bill_from_id, street_address, city, postal_code, country)
  values
- (1, 'street1', 'city1', 60660, 'country1');
+ (2, 'street1', 'city1', 60660, 'country1');
  
  insert into
  bill_to (bill_to_id, clients_name, clients_email, street_address, city, postal_code, country)
  values
- (1, 'name1', 'email1', 'client-street1', 'client-city1', 60661, 'client-country1');
+ (2, 'name1', 'email1', 'client-street1', 'client-city1', 60661, 'client-country1');
  
  insert into
  bill_info (bill_info_id, invoice_date, payment_terms, project_description)
  values
- (1, DEFAULT, DEFAULT, 'description1');
+ (2, DEFAULT, DEFAULT, 'description1');
  
  insert into
  item_list (item_list_id, item_name, quantity, price)
  values
- (1, 'item1', DEFAULT, DEFAULT);
+ (2, 'item1', DEFAULT, DEFAULT);
  
  */
