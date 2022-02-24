@@ -9,6 +9,7 @@ type Data = {
 const url = "http://localhost:5000/invoices";
 
 export const fetchInvoices = () => axios.get(url);
+export const createInvoice = (newInvoice: any) => axios.post(url, newInvoice);
 
 export default function handler(
   req: NextApiRequest,

@@ -11,4 +11,14 @@ export const getInvoices = () => async (dispatch: any, res: any) => {
     }
 }
 
+export const createInvoice = (invoice: any) => async (dispatch: any) => {
+    try {
+        const { data } = await api.createInvoice(invoice);
+
+        dispatch({ type: "CREATE", payload: data })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default getInvoices

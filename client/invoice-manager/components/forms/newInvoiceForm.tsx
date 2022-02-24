@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
 import styles from "../../styles/invoiceForm.module.scss"
+import { useDispatch } from 'react-redux'
+import { createInvoice } from "../../actions/invoices"
 
 import Image from "next/image"
 
 const NewInvoiceForm: NextPage = () => {
+    const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
         billFromStreet:"",
         billFromCity: "",
@@ -49,8 +52,11 @@ const NewInvoiceForm: NextPage = () => {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
         console.log(invoiceData);
+        dispatch(createInvoice(invoiceData));
+        
     }
 
     return (
