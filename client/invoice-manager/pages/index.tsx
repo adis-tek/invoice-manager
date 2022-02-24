@@ -3,17 +3,23 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
+import { getInvoices } from '../actions/invoices'
 import Sidebar from "../components/sidebar/sidebar"
 import NewInvoiceForm from "../components/forms/newInvoiceForm"
 import data from "../dummy-data.json"
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
   const [invoiceList, setInvoiceList] = useState<boolean>(false);
   const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
   const [invoiceForm, setInvoiceForm] = useState<boolean>(true);
 
   const countRef = useRef<number>(0);
+
+  const invoices = useSelector((state: any) => state.invoices);
 
 
   function checkInvoices() {
@@ -24,7 +30,7 @@ const Home: NextPage = () => {
       }
   }
 
-   function getInvoices() {
+   function loadInvoices() {
       const invoicesCounted = Object.keys(data);
       setInvoiceCount(invoicesCounted);
    }
@@ -36,8 +42,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
       checkInvoices();
-      getInvoices();
+      loadInvoices();
+      dispatch(getInvoices);
+      console.log(invoices);
   }, [countRef]);
+
+  console.log(invoices);
 
   // Checking my variables
   console.log(data);

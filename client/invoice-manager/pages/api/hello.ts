@@ -1,9 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import axios from "axios";
 
 type Data = {
   name: string
 }
+
+const url = "http://localhost:5000/invoices";
+
+export const fetchInvoices = () => axios.get(url);
 
 export default function handler(
   req: NextApiRequest,
