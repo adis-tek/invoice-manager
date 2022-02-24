@@ -1,13 +1,12 @@
 import * as api from '../pages/api/hello'
 
 //ACTION CREATOR
-export const getInvoices = () => async (dispatch: any, res: any) => {
+export const getInvoices = () => async (dispatch: any) => {
     try {
-        const { data } = await api.fetchInvoices();
+        const { data } = await api.fetchInvoices()
         dispatch({ type: "FETCH_ALL", payload: data })
-    } catch (error) {
-        res.status(400).json();
-        console.log(error);
+    } catch (err) {
+        console.log((err as Error).message);
     }
 }
 
@@ -20,5 +19,3 @@ export const createInvoice = (invoice: any) => async (dispatch: any) => {
         console.log(error);
     }
 }
-
-export default getInvoices

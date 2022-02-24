@@ -11,9 +11,9 @@ const url = "http://localhost:5000/invoices";
 export const fetchInvoices = () => axios.get(url);
 export const createInvoice = (newInvoice: any) => axios.post(url, newInvoice);
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+// export default function handler(
+//   req: NextApiRequest,
+//   res: NextApiResponse<Data>
+// ) {
+//   res.status(200).json({ name: 'John Doe' })
+// }

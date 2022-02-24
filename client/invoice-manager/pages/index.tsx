@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import axios from "axios";
 
 import { getInvoices } from '../actions/invoices'
 import Sidebar from "../components/sidebar/sidebar"
@@ -21,6 +22,14 @@ const Home: NextPage = () => {
 
   const invoices = useSelector((state: any) => state.invoices);
 
+  const loadInvoices = useCallback(async () => {
+    dispatch(getInvoices());
+    console.log("Loading invoices.")
+  }, [dispatch]);
+
+  axios.get('http://localhost:5000/invoices')
+  .then(res => console.log(res))
+  .catch(error => console.log(error));
 
   function checkInvoices() {
     if (data?.user1) {
@@ -30,7 +39,7 @@ const Home: NextPage = () => {
       }
   }
 
-   function loadInvoices() {
+   function showInvoices() {
       const invoicesCounted = Object.keys(data);
       setInvoiceCount(invoicesCounted);
    }
@@ -42,9 +51,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
       checkInvoices();
+      showInvoices();
       loadInvoices();
-      dispatch(getInvoices);
-      console.log(invoices);
   }, [countRef]);
 
   console.log(invoices);
@@ -114,7 +122,33 @@ const Home: NextPage = () => {
       }
       {invoiceList === true &&
       <div className={styles.invoiceListContainer}>
-        <div className={styles.invoiceContainer}>
+        {invoices.map((invoices: any) => {
+          <div className={styles.invoiceContainer}>
+            <p>{invoices}</p>
+          <div className={styles.firstHalf}>
+          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
+          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
+          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
+          </div>
+          <div className={styles.secondHalf}>
+          <p className={styles.total}><b>$300.00</b></p>
+          <div className={styles.statusContainer}>
+            <div className={styles.circle} />
+            <p className={styles.status}>{data.user1[0].status}</p>
+          </div>
+          <div className={styles.invoiceArrow}>
+          <Image
+            src="/invoice-arrow.png"
+            alt="invoice-arrow"
+            width={7}
+            height={10}
+            layout="fixed"
+          />
+          </div>
+          </div>
+        </div>
+        })}
+        {/* <div className={styles.invoiceContainer}>
           <div className={styles.firstHalf}>
           <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
           <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
@@ -159,30 +193,7 @@ const Home: NextPage = () => {
           />
           </div>
           </div>
-        </div>
-        <div className={styles.invoiceContainer}>
-          <div className={styles.firstHalf}>
-          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
-          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
-          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
-          </div>
-          <div className={styles.secondHalf}>
-          <p className={styles.total}><b>$300.00</b></p>
-          <div className={styles.statusContainer}>
-            <div className={styles.circle} />
-            <p className={styles.status}>{data.user1[0].status}</p>
-          </div>
-          <div className={styles.invoiceArrow}>
-          <Image
-            src="/invoice-arrow.png"
-            alt="invoice-arrow"
-            width={7}
-            height={10}
-            layout="fixed"
-          />
-          </div>
-          </div>
-        </div>
+        </div> */}
       </div>
       }
       </main>
