@@ -8,12 +8,77 @@ import pool from "../config/db.config.js";
 //     }
 // }
 
+//READ ACCOUNT DATA
+
+export const getAccountUser = async(req, res) => {
+    try {
+        const user = await pool.query("SELECT * FROM account_user");
+        res.json(user.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getIdentity = async(req, res) => {
+    try {
+        const allInvoices = await pool.query("SELECT * FROM identity join account_user on identity.account_user_uuid=account_user.account_user_uuid");
+        res.json(allInvoices.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getProfile = async(req, res) => {
+    try {
+        const allInvoices = await pool.query("SELECT * FROM profile join account_user on profile.account_user_uuid=account_user.account_user_uuid");
+        res.json(allInvoices.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
 //READ INVOICES
 
 export const getInvoices = async(req, res) => {
     try {
         const allInvoices = await pool.query("SELECT * FROM invoice");
         res.json(allInvoices.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getBillFrom = async(req, res) => {
+    try {
+        const allBillFrom = await pool.query("SELECT * FROM invoice join bill_from on invoice.bill_from_id=bill_from.bill_from_id");
+        res.json(allBillFrom.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getBillTo = async(req, res) => {
+    try {
+        const allBillFrom = await pool.query("SELECT * FROM invoice join bill_to on invoice.bill_to_id=bill_to.bill_to_id");
+        res.json(allBillFrom.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getBillInfo = async(req, res) => {
+    try {
+        const allBillInfo = await pool.query("SELECT * FROM invoice join bill_info on invoice.bill_info_id=bill_info.bill_info_id");
+        res.json(allBillInfo.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
+export const getItemList = async(req, res) => {
+    try {
+        const allItemList = await pool.query("SELECT * FROM invoice join item_list on invoice.item_list_id=item_list.item_list_id");
+        res.json(allItemList.rows);
     } catch(err) {
         console.log(err.message)
     }
