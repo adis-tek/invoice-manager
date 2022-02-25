@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   const [invoiceList, setInvoiceList] = useState<boolean>(false);
   const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
   const [invoiceForm, setInvoiceForm] = useState<boolean>(true);
+  const [newArray, setNewArray] = useState<string[]>([])
 
   const countRef = useRef<number>(0);
 
@@ -27,10 +28,6 @@ const Home: NextPage = () => {
 
   const loadData = useCallback(async () => {
     dispatch(getInvoices());
-    dispatch(getBillFrom());
-    dispatch(getBillTo());
-    dispatch(getBillInfo());
-    dispatch(getItemList());
     console.log("Loading invoices.")
   }, [dispatch]);
 
@@ -54,6 +51,14 @@ const Home: NextPage = () => {
      setInvoiceForm(!invoiceForm);
    }
 
+   function calcId() {
+     const tempId = invoices.length;
+     const officialId = [{}];
+     switch (tempId) {
+       case tempId <= 9:
+
+     }
+   }
 
   useEffect(() => {
       checkInvoices();
@@ -66,6 +71,8 @@ const Home: NextPage = () => {
   console.log("billTo", billTo);
   console.log("billInfo", billInfo);
   console.log("itemList", itemList);
+
+
 
   // Checking my variables
   // console.log(data);
@@ -137,30 +144,36 @@ const Home: NextPage = () => {
       </div>
       }
       {invoiceList === true &&
+      <>
       <div className={styles.invoiceListContainer}>
-          <div className={styles.invoiceContainer}>
-          <div className={styles.firstHalf}>
-          <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
-          <p className={styles.payDate}>Due {data.user1[0].bill_address[0].invoice_date}</p>
-          <p className={styles.clientName}>{data.user1[0].bill_address[0].client_name}</p>
+      {invoices?.map((invoice: any) => {
+          {console.log(invoice?.clients_name)}
+          return(
+            <div key={invoice} className={styles.invoiceContainer}>
+            <div className={styles.firstHalf}>
+            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
+            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
+            <p className={styles.clientName}>{invoice.clients_name}</p>
+            </div>
+            <div className={styles.secondHalf}>
+            <p className={styles.total}><b>{invoice.price}</b></p>
+            <div className={styles.statusContainer}>
+              <div className={styles.circle} />
+              <p className={styles.status}>Pending</p>
+            </div>
+            <div className={styles.invoiceArrow}>
+            <Image
+              src="/invoice-arrow.png"
+              alt="invoice-arrow"
+              width={7}
+              height={10}
+              layout="fixed"
+            />
+            </div>
+            </div>
           </div>
-          <div className={styles.secondHalf}>
-          <p className={styles.total}><b>$300.00</b></p>
-          <div className={styles.statusContainer}>
-            <div className={styles.circle} />
-            <p className={styles.status}>{data.user1[0].status}</p>
-          </div>
-          <div className={styles.invoiceArrow}>
-          <Image
-            src="/invoice-arrow.png"
-            alt="invoice-arrow"
-            width={7}
-            height={10}
-            layout="fixed"
-          />
-          </div>
-          </div>
-        </div>
+          )
+        })}
         <div className={styles.invoiceContainer}>
           <div className={styles.firstHalf}>
           <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
@@ -208,6 +221,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
+      </>
 }
       </main>
     </div>
