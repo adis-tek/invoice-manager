@@ -7,8 +7,21 @@ type Data = {
 }
 
 const url = "http://localhost:5000/invoices";
+const identity = "http://localhost:5000/invoices/identity";
+const profile = "http://localhost:5000/invoices/profile";
+const billFrom = "http://localhost:5000/invoices/bill-from";
+const billTo = "http://localhost:5000/invoices/bill-to";
+const billInfo = "http://localhost:5000/invoices/bill-info";
+const itemList = "http://localhost:5000/invoices/item-list";
 
 export const fetchInvoices = () => axios.get(url);
+
+export const fetchIdentity = () => axios.get(identity);
+export const fetchProfile = () => axios.get(profile);
+export const fetchBillFrom = () => axios.get(billFrom);
+export const fetchBillTo = () => axios.get(billTo);
+export const fetchBillInfo = () => axios.get(billInfo);
+export const fetchItemList = () => axios.get(itemList);
 export const createInvoice = (newInvoice: any) => axios.post(url, newInvoice);
 
 // export default function handler(
