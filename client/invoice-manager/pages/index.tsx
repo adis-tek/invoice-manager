@@ -159,7 +159,7 @@ const Home: NextPage = () => {
             <p className={styles.total}><b>{invoice.price}</b></p>
             <div className={styles.statusContainer}>
               <div className={styles.circle} />
-              <p className={styles.status}>Pending</p>
+              <p className={styles.status}>{invoice.status}</p>
             </div>
             <div className={styles.invoiceArrow}>
             <Image
