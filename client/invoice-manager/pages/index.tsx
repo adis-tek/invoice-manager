@@ -149,7 +149,7 @@ const Home: NextPage = () => {
       {invoices?.map((invoice: any) => {
           {console.log(invoice?.clients_name)}
           return(
-            <div key={invoice} className={styles.invoiceContainer}>
+            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
             <div className={styles.firstHalf}>
             <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
             <p className={styles.payDate}>Due {invoice.invoice_date}</p>
