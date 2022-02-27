@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { NextPage } from 'next'
 import styles from "../../styles/invoiceForm.module.scss"
 import { useDispatch } from 'react-redux'
 import { createInvoice } from "../../actions/invoices"
 
 import Image from "next/image"
+import { parse } from 'node:path/win32'
 
 const NewInvoiceForm: NextPage = () => {
     const dispatch = useDispatch();
@@ -22,35 +23,165 @@ const NewInvoiceForm: NextPage = () => {
         invoiceDate: "",
         paymentTerms: "",
         projectDescription: "",
+        item_name_1: "",
+        item_quantity_1: "",
+        item_price_1: "",
+        item_name_2: "",
+        item_quantity_2: "",
+        item_price_2: "",
+        item_name_3: "",
+        item_quantity_3: "",
+        item_price_3: "",
+        item_name_4: "",
+        item_quantity_4: "",
+        item_price_4: "",
+        item_name_5: "",
+        item_quantity_5: "",
+        item_price_5: "",
     }));
-    const [itemCounter, setItemCounter] = useState<number>(0);
-    const [itemList2, setItemList2] = useState<string[]>([]);
-    let items: string[] = ["1", "2", "3", "4", "5"];
-    let itemList: string[] = [];
 
-    const addItem = () => {
-        if (itemCounter < 6) {
-        setItemList2([...itemList2, items[itemCounter]]);
-        setItemCounter(itemCounter + 1);
-        console.log(items);
-        console.log(itemList);
-        console.log(itemList2);
-        } else {
-            return;
+    //ITEM COMPONENT STATE
+    const [item1, setItem1] = useState<boolean>(true);
+    const [item2, setItem2] = useState<boolean>(true);
+    const [item3, setItem3] = useState<boolean>(false);
+    const [item4, setItem4] = useState<boolean>(false);
+    const [item5, setItem5] = useState<boolean>(false);
+
+    const [quantity1, setQuantity1] = useState("");
+    const [quantity2, setQuantity2] = useState("");
+    const [quantity3, setQuantity3] = useState("");
+    const [quantity4, setQuantity4] = useState("");
+    const [quantity5, setQuantity5] = useState("");
+
+    const [price1, setPrice1] = useState("");
+    const [price2, setPrice2] = useState("");
+    const [price3, setPrice3] = useState("");
+    const [price4, setPrice4] = useState("");
+    const [price5, setPrice5] = useState("");
+
+    const countRef = useRef<number>(0);
+
+    //
+
+
+    function addItem() {
+        if (
+            item1 === false
+            && item2 === false
+            && item3 === false
+            && item4 === false
+            && item5 === false
+             ) {
+            setItem1(true);
+        }
+        if (
+            item1 === true
+            && item2 === false
+            && item3 === false
+            && item4 === false
+            && item5 === false
+             ) {
+            setItem2(true);
+        }
+        if (
+            item1 === true
+            && item2 === true
+            && item3 === false
+            && item4 === false
+            && item5 === false
+             ) {
+            setItem3(true);
+        }
+        if (
+            item1 === true
+            && item2 === true
+            && item3 === true
+            && item4 === false
+            && item5 === false
+             ) {
+            setItem4(true);
+        }
+        if (
+            item1 === true
+            && item2 === true
+            && item3 === true
+            && item4 === true
+            && item5 === false
+             ) {
+            setItem5(true);
         }
     }
 
-    const removeItem = (itemList2: string[]) => {
-        if (itemCounter < 6 || itemCounter >= 0){
-            const itemArray = [...itemList2];
-            itemArray.pop();
-            setItemList2(itemArray);
-            setItemCounter(itemCounter - 1);
-            console.log(itemList2);
+    function handleItemQuantity() {
+        
+    }
+
+    function handleItemPrice(e: any) {
+        return e.toFixed(2);
+
+
+    }
+
+    function removeItem(itemNumber: number) {
+        if (itemNumber === 1) {
+            setInvoiceData({...invoiceData, item_name_1: ""});
+            setInvoiceData({...invoiceData, item_quantity_1: ""});
+            setInvoiceData({...invoiceData, item_price_1: ""});
+            setItem1(false);
+        }
+        if (itemNumber === 2) {
+            setInvoiceData({...invoiceData, item_name_2: ""});
+            setInvoiceData({...invoiceData, item_quantity_2: ""});
+            setInvoiceData({...invoiceData, item_price_2: ""});
+            setItem2(false);
+        }
+        if (itemNumber === 3) {
+            setInvoiceData({...invoiceData, item_name_3: ""});
+            setInvoiceData({...invoiceData, item_quantity_3: ""});
+            setInvoiceData({...invoiceData, item_price_3: ""});
+            setItem3(false);
+        }
+        if (itemNumber === 4) {
+            setInvoiceData({...invoiceData, item_name_4: ""});
+            setInvoiceData({...invoiceData, item_quantity_4: ""});
+            setInvoiceData({...invoiceData, item_price_4: ""});
+            setItem4(false);
+        }
+        if (itemNumber === 5) {
+            setInvoiceData({...invoiceData, item_name_5: ""});
+            setInvoiceData({...invoiceData, item_quantity_5: ""});
+            setInvoiceData({...invoiceData, item_price_5: ""});
+            setItem5(false);
+        }
+        
+    }
+
+    function checkTotal(total: number) {
+        if (isNaN(total)) {
+            return <p>0.00</p>;
         } else {
-            return;
+            return total;
         }
     }
+
+    function checkQuantity() {
+        if (quantity1.includes(".")) {
+            let newString = quantity1.slice(0, -1);
+            setQuantity1(newString);
+        } else {
+            setInvoiceData({...invoiceData, item_quantity_1: quantity1});
+        }
+    }
+
+    useEffect(() => {
+        checkQuantity();
+    }, [quantity1])
+
+    console.log(quantity1);
+    console.log(invoiceData.item_quantity_1);
+
+    console.log(parseFloat(invoiceData.item_quantity_1) * parseFloat(invoiceData.item_price_1))
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -58,6 +189,7 @@ const NewInvoiceForm: NextPage = () => {
         dispatch(createInvoice(invoiceData));
         
     }
+
 
     return (
         <div className={styles.invoiceFormContainer}>
@@ -203,28 +335,78 @@ const NewInvoiceForm: NextPage = () => {
                 </div>
                 <div className={styles.formSection}>
                 <h5 className={styles.itemListTitle}>Item List</h5>
-                {itemList2.map((item, index) => {
-                return <div key={index} className={styles.multiInputContainer}>
+                {item1 &&
+                <div id="item1" className={styles.multiInputContainer}>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Item Name</p>
-                        <input type="text" name="itemName" className={styles.itemInput} />
+                        <input 
+                        type="text" 
+                        name="itemName" 
+                        onChange={(e) => setInvoiceData({...invoiceData, item_name_1: e.target.value})} 
+                        className={styles.itemInput} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Qty.</p>
-                        <input type="number" name="quantity" className={styles.itemInput} />
+                        <input 
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
+                        name="quantity"
+                        value={invoiceData.item_quantity_1}
+                        onChange={(e) => {
+                        if (e.target.value.includes(".")) {
+                            let splitInput = e.target.value.split("");
+                            let fixedInput = splitInput.slice(0, -1);
+                            let realInput = fixedInput.join("");
+                                setInvoiceData({...invoiceData, item_quantity_1: realInput})
+                                setQuantity1(realInput);
+                        }
+                        else {
+                                setInvoiceData({...invoiceData, item_quantity_1: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Price</p>
-                        <input type="number" name="price" className={styles.itemInput} />
+                        <input 
+                        type="number" 
+                        name="price"
+                        value={invoiceData.item_price_1}
+                        onChange={(e) => {
+                            if (e.target.value.includes(".")) {
+                                let theLength = e.target.value.length;
+                                let theIndex = e.target.value.indexOf(".");
+                                let difference = (theLength - theIndex)-1;
+                                console.log(difference);
+                                console.log("Hello", parseFloat(e.target.value).toFixed(2));
+                                setInvoiceData({...invoiceData, item_price_1: parseFloat(e.target.value).toFixed(2)});
+                                if (difference == 3) {
+                                    let converted = parseFloat(e.target.value);
+                                    let rounded = Math.round(converted * 100) / 100;
+                                    let realInput = rounded.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_1: realInput});
+                                    setPrice1(realInput);
+                                 } else {
+                                    setInvoiceData({...invoiceData, item_price_1: e.target.value});
+                                }
+                        } else {
+                            setInvoiceData({...invoiceData, item_price_1: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                        <p>$156.00</p>
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_1)) * (parseFloat(invoiceData.item_price_1))).toFixed(2)))}</p>
+                        {console.log(invoiceData.item_quantity_1)}
+                        {console.log(invoiceData.item_price_1)}
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
                         <div 
-                        onClick={() => {removeItem(itemList2)}}
+                        onClick={() => {removeItem(1)}}
                         className={styles.imageHolder}>
                             <Image
                                 src="/trash-can.png"
@@ -236,8 +418,328 @@ const NewInvoiceForm: NextPage = () => {
                         </div>
                     </div>
                 </div>
-                                })}
-                {itemList2.length < 6 &&
+                    }
+                {item2 &&
+                <div id="item2" className={styles.multiInputContainer}>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Item Name</p>
+                        <input 
+                        type="text" 
+                        name="itemName" 
+                        onChange={(e) => setInvoiceData({...invoiceData, item_name_2: e.target.value})} 
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Qty.</p>
+                        <input 
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
+                        name="quantity"
+                        value={invoiceData.item_quantity_2}
+                        onChange={(e) => {
+                        if (e.target.value.includes(".")) {
+                            let splitInput = e.target.value.split("");
+                            let fixedInput = splitInput.slice(0, -1);
+                            let realInput = fixedInput.join("");
+                                setInvoiceData({...invoiceData, item_quantity_2: realInput})
+                                setQuantity2(realInput);
+                        }
+                        else {
+                                setInvoiceData({...invoiceData, item_quantity_2: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Price</p>
+                        <input 
+                        type="number" 
+                        name="price"
+                        value={invoiceData.item_price_2}
+                        onChange={(e) => {
+                            if (e.target.value.includes(".")) {
+                                let theLength = e.target.value.length;
+                                let theIndex = e.target.value.indexOf(".");
+                                let difference = (theLength - theIndex)-1;
+                                setInvoiceData({...invoiceData, item_price_2: parseFloat(e.target.value).toFixed(2)});
+                                if (difference == 3) {
+                                    let converted = parseFloat(e.target.value);
+                                    let rounded = Math.round(converted * 100) / 100;
+                                    let realInput = rounded.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_2: realInput});
+                                    setPrice2(realInput);
+                                 } else {
+                                    setInvoiceData({...invoiceData, item_price_2: e.target.value});
+                                }
+                        } else {
+                            setInvoiceData({...invoiceData, item_price_2: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.totalContainer}>
+                        <p className={styles.totalTitle}>Total</p>
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_2)) * (parseFloat(invoiceData.item_price_2))).toFixed(2)))}</p>
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>&nbsp;</p>
+                        <div 
+                        onClick={() => {removeItem(2)}}
+                        className={styles.imageHolder}>
+                            <Image
+                                src="/trash-can.png"
+                                alt="trash-can"
+                                width={13}
+                                height={16}
+                                layout="fixed"
+                            />
+                        </div>
+                    </div>
+                </div>
+                    }
+                {item3 &&
+                <div id="item3" className={styles.multiInputContainer}>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Item Name</p>
+                        <input 
+                        type="text" 
+                        name="itemName" 
+                        onChange={(e) => setInvoiceData({...invoiceData, item_name_3: e.target.value})} 
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Qty.</p>
+                        <input 
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
+                        name="quantity"
+                        value={invoiceData.item_quantity_3}
+                        onChange={(e) => {
+                        if (e.target.value.includes(".")) {
+                            let splitInput = e.target.value.split("");
+                            let fixedInput = splitInput.slice(0, -1);
+                            let realInput = fixedInput.join("");
+                                setInvoiceData({...invoiceData, item_quantity_3: realInput})
+                                setQuantity3(realInput);
+                        }
+                        else {
+                                setInvoiceData({...invoiceData, item_quantity_3: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Price</p>
+                        <input 
+                        type="number" 
+                        name="price"
+                        value={invoiceData.item_price_3}
+                        onChange={(e) => {
+                            if (e.target.value.includes(".")) {
+                                let theLength = e.target.value.length;
+                                let theIndex = e.target.value.indexOf(".");
+                                let difference = (theLength - theIndex)-1;
+                                setInvoiceData({...invoiceData, item_price_3: parseFloat(e.target.value).toFixed(2)});
+                                if (difference == 3) {
+                                    let converted = parseFloat(e.target.value);
+                                    let rounded = Math.round(converted * 100) / 100;
+                                    let realInput = rounded.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setPrice3(realInput);
+                                 } else {
+                                    setInvoiceData({...invoiceData, item_price_3: e.target.value});
+                                }
+                        } else {
+                            setInvoiceData({...invoiceData, item_price_3: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.totalContainer}>
+                        <p className={styles.totalTitle}>Total</p>
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_3)) * (parseFloat(invoiceData.item_price_3))).toFixed(2)))}</p>
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>&nbsp;</p>
+                        <div 
+                        onClick={() => {removeItem(3)}}
+                        className={styles.imageHolder}>
+                            <Image
+                                src="/trash-can.png"
+                                alt="trash-can"
+                                width={13}
+                                height={16}
+                                layout="fixed"
+                            />
+                        </div>
+                    </div>
+                </div>
+                    }
+                {item4 &&
+                <div id="item4" className={styles.multiInputContainer}>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Item Name</p>
+                        <input 
+                        type="text" 
+                        name="itemName" 
+                        onChange={(e) => setInvoiceData({...invoiceData, item_name_4: e.target.value})} 
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Qty.</p>
+                        <input 
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
+                        name="quantity"
+                        value={invoiceData.item_quantity_4}
+                        onChange={(e) => {
+                        if (e.target.value.includes(".")) {
+                            let splitInput = e.target.value.split("");
+                            let fixedInput = splitInput.slice(0, -1);
+                            let realInput = fixedInput.join("");
+                                setInvoiceData({...invoiceData, item_quantity_4: realInput})
+                                setQuantity4(realInput);
+                        }
+                        else {
+                                setInvoiceData({...invoiceData, item_quantity_4: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Price</p>
+                        <input 
+                        type="number" 
+                        name="price"
+                        value={invoiceData.item_price_4}
+                        onChange={(e) => {
+                            if (e.target.value.includes(".")) {
+                                let theLength = e.target.value.length;
+                                let theIndex = e.target.value.indexOf(".");
+                                let difference = (theLength - theIndex)-1;
+                                setInvoiceData({...invoiceData, item_price_4: parseFloat(e.target.value).toFixed(2)});
+                                if (difference == 3) {
+                                    let converted = parseFloat(e.target.value);
+                                    let rounded = Math.round(converted * 100) / 100;
+                                    let realInput = rounded.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_4: realInput});
+                                    setPrice4(realInput);
+                                 } else {
+                                    setInvoiceData({...invoiceData, item_price_4: e.target.value});
+                                }
+                        } else {
+                            setInvoiceData({...invoiceData, item_price_4: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.totalContainer}>
+                        <p className={styles.totalTitle}>Total</p>
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_4)) * (parseFloat(invoiceData.item_price_4))).toFixed(2)))}</p>
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>&nbsp;</p>
+                        <div 
+                        onClick={() => {removeItem(4)}}
+                        className={styles.imageHolder}>
+                            <Image
+                                src="/trash-can.png"
+                                alt="trash-can"
+                                width={13}
+                                height={16}
+                                layout="fixed"
+                            />
+                        </div>
+                    </div>
+                </div>
+                    }
+                {item5 &&
+                <div id="item5" className={styles.multiInputContainer}>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Item Name</p>
+                        <input 
+                        type="text" 
+                        name="itemName" 
+                        onChange={(e) => setInvoiceData({...invoiceData, item_name_5: e.target.value})} 
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Qty.</p>
+                        <input 
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
+                        name="quantity"
+                        value={invoiceData.item_quantity_5}
+                        onChange={(e) => {
+                        if (e.target.value.includes(".")) {
+                            let splitInput = e.target.value.split("");
+                            let fixedInput = splitInput.slice(0, -1);
+                            let realInput = fixedInput.join("");
+                                setInvoiceData({...invoiceData, item_quantity_5: realInput})
+                                setQuantity5(realInput);
+                        }
+                        else {
+                                setInvoiceData({...invoiceData, item_quantity_5: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>Price</p>
+                        <input 
+                        type="number" 
+                        name="price"
+                        value={invoiceData.item_price_5}
+                        onChange={(e) => {
+                            if (e.target.value.includes(".")) {
+                                let theLength = e.target.value.length;
+                                let theIndex = e.target.value.indexOf(".");
+                                let difference = (theLength - theIndex)-1;
+                                setInvoiceData({...invoiceData, item_price_5: parseFloat(e.target.value).toFixed(2)});
+                                if (difference == 3) {
+                                    let converted = parseFloat(e.target.value);
+                                    let rounded = Math.round(converted * 100) / 100;
+                                    let realInput = rounded.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_5: realInput});
+                                    setPrice5(realInput);
+                                 } else {
+                                    setInvoiceData({...invoiceData, item_price_5: e.target.value});
+                                }
+                        } else {
+                            setInvoiceData({...invoiceData, item_price_5: e.target.value});
+                        }
+                        }}
+                        className={styles.itemInput} />
+                    </div>
+                    <div className={styles.totalContainer}>
+                        <p className={styles.totalTitle}>Total</p>
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_5)) * (parseFloat(invoiceData.item_price_5))).toFixed(2)))}</p>
+                    </div>
+                    <div className={styles.itemInputContainer}>
+                        <p className={styles.inputTitle}>&nbsp;</p>
+                        <div 
+                        onClick={() => {removeItem(5)}}
+                        className={styles.imageHolder}>
+                            <Image
+                                src="/trash-can.png"
+                                alt="trash-can"
+                                width={13}
+                                height={16}
+                                layout="fixed"
+                            />
+                        </div>
+                    </div>
+                </div>
+                    }
+                {item5 === false &&
                 <button 
                 onClick={addItem}
                 className={styles.addItemButton}><b>+Add New Item</b></button>
