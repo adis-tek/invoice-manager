@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -149,6 +150,8 @@ const Home: NextPage = () => {
       {invoices?.map((invoice: any) => {
           {console.log(invoice?.clients_name)}
           return(
+            <>
+            <Link href={`/${invoice?.invoice_id}`}>
             <div key={invoice.invoice_id} className={styles.invoiceContainer}>
             <div className={styles.firstHalf}>
             <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
@@ -172,6 +175,8 @@ const Home: NextPage = () => {
             </div>
             </div>
           </div>
+          </Link>
+          </>
           )
         })}
         <div className={styles.invoiceContainer}>
