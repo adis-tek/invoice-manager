@@ -20,11 +20,40 @@ const InvoicePageId: NextPage = () => {
     const targetInvoice = parseInt(invoiceId) - 1;
     const dispatch = useDispatch();
     const invoices = useSelector((state: any) => state.invoices);
-    const [invoiceForm, setInvoiceForm] = useState(false);
-
     const pageInvoice = invoices[targetInvoice];
-
+    const [invoiceForm, setInvoiceForm] = useState(false);
     const countRef = useRef<number>(0);
+    const [invoiceData, setInvoiceData] = useState(({
+        billFromStreet:"",
+        billFromCity: "",
+        billFromPostal: "",
+        billFromCountry: "",
+        clientName: "",
+        clientEmail: "",
+        billToStreet:"",
+        billToCity: "",
+        billToPostal: "",
+        billToCountry: "",
+        invoiceDate: "",
+        paymentTerms: "",
+        projectDescription: "",
+        itemName1: "",
+        itemQuantity1: "",
+        itemPrice1: "",
+        itemName2: "",
+        itemQuantity2: "",
+        itemPrice2: "",
+        itemName3: "",
+        itemQuantity3: "",
+        itemPrice3: "",
+        itemName4: "",
+        itemQuantity4: "",
+        itemPrice4: "",
+        itemName5: "",
+        itemQuantity5: "",
+        itemPrice5: "",
+        status: "",
+    }));
 
     const loadData = useCallback(async () => {
         dispatch(getInvoices());
@@ -33,10 +62,45 @@ const InvoicePageId: NextPage = () => {
 
     useEffect(() => {
         loadData();
+        handleLoadedData();
     }, [countRef]);
 
     console.log(invoices[targetInvoice]);
     console.log(invoices.clients_name);
+
+    const handleLoadedData = useCallback(async () => {
+        setTimeout(() => {
+            setInvoiceData({...invoiceData, 
+                clientName: pageInvoice?.clients_name,
+                clientEmail: pageInvoice?.clients_email,
+                billToStreet: pageInvoice?.street_address,
+                billToCity: pageInvoice?.city,
+                billToPostal: pageInvoice?.postal_code,
+                billToCountry: pageInvoice?.country,
+                invoiceDate: pageInvoice?.invoice_date,
+                paymentTerms: pageInvoice?.payment_terms,
+                projectDescription: pageInvoice?.project_description,
+                itemName1: pageInvoice?.item_name,
+                itemQuantity1: pageInvoice?.quantity,
+                itemPrice1: pageInvoice?.price,
+                status: pageInvoice?.status
+                // itemName2: pageInvoice.item_name[1],
+                // itemQuantity2: pageInvoice.item_quantity[1],
+                // itemPrice2: pageInvoice.item_price[1],
+                // itemName3: pageInvoice.item_name[2],
+                // itemQuantity3: pageInvoice.item_quantity[2],
+                // itemPrice3: pageInvoice.item_price[2],
+                // itemName4: pageInvoice.item_name[3],
+                // itemQuantity4: pageInvoice.item_quantity[3],
+                // itemPrice4: pageInvoice.item_price[3],
+                // itemName5: pageInvoice.item_name[4],
+                // itemQuantity5: pageInvoice.item_quantity[4],
+                // itemPrice5: pageInvoice.item_price[4],
+            });
+        }, 500)
+    }, [setInvoiceData]);
+
+    console.log(invoiceData);
 
     return (
         <div className={styles.container}>
@@ -73,7 +137,7 @@ const InvoicePageId: NextPage = () => {
               <p className={styles.statusText}>Status</p>
               <div className={styles.statusContainer}>
               <div className={styles.circle} />
-              <p className={styles.status}><b>Pending</b></p>
+              <p className={styles.status}><b>{invoiceData.status}</b></p>
             </div>
           </div>
           <div className={styles.buttonsContainer}>
@@ -92,38 +156,38 @@ const InvoicePageId: NextPage = () => {
               <div className={styles.invoiceDetailsContainer}>
                     <div className={styles.topContainer}>
                         <div className={styles.leftSide}>
-                            <h2 className={styles.id}>#<b>0001</b></h2>
-                            <p className={styles.description}>Graphic Design</p>
+                            <h2 className={styles.id}>#<b>{invoiceId}</b></h2>
+                            <p className={styles.description}>{invoiceData.projectDescription}</p>
                         </div>
                         <div className={styles.rightSide}>
-                        <p className={styles.street}>Street Name</p>
-                        <p className={styles.city}>City</p>
-                        <p className={styles.postal}>Postal</p>
-                        <p className={styles.country}>Country</p>
+                        <p className={styles.street}>{invoiceData.billToStreet}</p>
+                        <p className={styles.city}>{invoiceData.billToCity}</p>
+                        <p className={styles.postal}>{invoiceData.billToCity}</p>
+                        <p className={styles.country}>{invoiceData.billToCountry}</p>
                         </div>
                     </div>
                     <div className={styles.lowerContainer}>
                         <div className={styles.leftSide}>
                             <div className={styles.invoiceDateContainer}>
                                 <p>Invoice Date</p>
-                                <h2>DATE</h2>
+                                <h2>{invoiceData.invoiceDate}</h2>
                             </div>
                             <div className={styles.paymentDateContainer}>
                                 <p>Payment Date</p>
-                                <h2>PAYMENT DATE</h2>
+                                <h2>{invoiceData.invoiceDate} + Payment Terms</h2>
                             </div>
                         </div>
                         <div className={styles.middle}>
                             <p>Bill To</p>
-                            <h2><b>Alex Grim</b></h2>
-                            <p>Street</p>
-                            <p>City</p>
-                            <p>Postal</p>
-                            <p>Country</p>
+                            <h2><b>{invoiceData.clientName}</b></h2>
+                            <p>{invoiceData.billToStreet}</p>
+                            <p>{invoiceData.billToCity}</p>
+                            <p>{invoiceData.billToPostal}</p>
+                            <p>{invoiceData.billToCountry}</p>
                         </div>
                         <div className={styles.rightSide}>
                             <p>Sent to</p>
-                            <h2><b>alexgrim@mail.com</b></h2>
+                            <h2><b>{invoiceData.clientEmail}</b></h2>
                         </div>
                     </div>
               </div>
@@ -138,15 +202,15 @@ const InvoicePageId: NextPage = () => {
                             <p className={styles.itemTotal}>Total</p>
                         </div>
                         <div className={styles.itemListDataContainer}>
-                        <p className={styles.itemNameData}>NAME DATA</p>
-                        <p className={styles.itemQuantityData}>2</p>
-                        <p className={styles.itemPriceData}>$199.99</p>
-                        <p className={styles.itemTotalData}>$399.98</p>
+                        <p className={styles.itemNameData}>{invoiceData.itemName1}</p>
+                        <p className={styles.itemQuantityData}>{invoiceData.itemQuantity1}</p>
+                        <p className={styles.itemPriceData}>$ {invoiceData.itemPrice1}</p>
+                        <p className={styles.itemTotalData}>$ TOTAL</p>
                         </div>
                     </div>
                     <div className={styles.amountContainer}>
                         <p>Amount Due</p>
-                        <h1>$556.00</h1>
+                        <h1>$ TOTAL</h1>
                     </div>
               </div>
           </div>
