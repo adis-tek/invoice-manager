@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import type { NextPage } from "next";
 import { useRouter } from "next/router"
+import Link from 'next/link'
 import styles from '../styles/InvoicePage.module.scss'
 
 import Sidebar from "../components/sidebar/sidebar"
@@ -56,7 +57,7 @@ const InvoicePageId: NextPage = () => {
     }));
 
     const loadData = useCallback(async () => {
-        dispatch(getInvoices());
+        await dispatch(getInvoices());
         console.log("Loading invoices.")
       }, [dispatch]);
 
@@ -65,42 +66,46 @@ const InvoicePageId: NextPage = () => {
         handleLoadedData();
     }, [countRef]);
 
+
+
     console.log(invoices[targetInvoice]);
     console.log(invoices.clients_name);
 
     const handleLoadedData = useCallback(async () => {
-        setTimeout(() => {
-            setInvoiceData({...invoiceData, 
-                clientName: pageInvoice?.clients_name,
-                clientEmail: pageInvoice?.clients_email,
-                billToStreet: pageInvoice?.street_address,
-                billToCity: pageInvoice?.city,
-                billToPostal: pageInvoice?.postal_code,
-                billToCountry: pageInvoice?.country,
-                invoiceDate: pageInvoice?.invoice_date,
-                paymentTerms: pageInvoice?.payment_terms,
-                projectDescription: pageInvoice?.project_description,
-                itemName1: pageInvoice?.item_name,
-                itemQuantity1: pageInvoice?.quantity,
-                itemPrice1: pageInvoice?.price,
-                status: pageInvoice?.status
-                // itemName2: pageInvoice.item_name[1],
-                // itemQuantity2: pageInvoice.item_quantity[1],
-                // itemPrice2: pageInvoice.item_price[1],
-                // itemName3: pageInvoice.item_name[2],
-                // itemQuantity3: pageInvoice.item_quantity[2],
-                // itemPrice3: pageInvoice.item_price[2],
-                // itemName4: pageInvoice.item_name[3],
-                // itemQuantity4: pageInvoice.item_quantity[3],
-                // itemPrice4: pageInvoice.item_price[3],
-                // itemName5: pageInvoice.item_name[4],
-                // itemQuantity5: pageInvoice.item_quantity[4],
-                // itemPrice5: pageInvoice.item_price[4],
-            });
-        }, 500)
-    }, [setInvoiceData]);
+        await setInvoiceData({...invoiceData, 
+            clientName: pageInvoice?.clients_name,
+            clientEmail: pageInvoice?.clients_email,
+            billToStreet: pageInvoice?.street_address,
+            billToCity: pageInvoice?.city,
+            billToPostal: pageInvoice?.postal_code,
+            billToCountry: pageInvoice?.country,
+            invoiceDate: pageInvoice?.invoice_date,
+            paymentTerms: pageInvoice?.payment_terms,
+            projectDescription: pageInvoice?.project_description,
+            itemName1: pageInvoice?.item_name,
+            itemQuantity1: pageInvoice?.quantity,
+            itemPrice1: pageInvoice?.price,
+            status: pageInvoice?.status
+            // itemName2: pageInvoice.item_name[1],
+            // itemQuantity2: pageInvoice.item_quantity[1],
+            // itemPrice2: pageInvoice.item_price[1],
+            // itemName3: pageInvoice.item_name[2],
+            // itemQuantity3: pageInvoice.item_quantity[2],
+            // itemPrice3: pageInvoice.item_price[2],
+            // itemName4: pageInvoice.item_name[3],
+            // itemQuantity4: pageInvoice.item_quantity[3],
+            // itemPrice4: pageInvoice.item_price[3],
+            // itemName5: pageInvoice.item_name[4],
+            // itemQuantity5: pageInvoice.item_quantity[4],
+            // itemPrice5: pageInvoice.item_price[4],
+        });
+    }, [loadData]);
 
     console.log(invoiceData);
+
+    function toggleNewInvoiceForm() {
+        setInvoiceForm(!invoiceForm);
+    }
 
     return (
         <div className={styles.container}>
@@ -120,6 +125,7 @@ const InvoicePageId: NextPage = () => {
       </>
       }
       <div className={styles.pageContainer}>
+      <Link href={"/"}>
       <div className={styles.goBackContainer}>
           <div className={styles.backArrowHolder}>
           <Image
@@ -132,6 +138,7 @@ const InvoicePageId: NextPage = () => {
           </div>
           <p><b>Go back</b></p>
       </div>
+      </Link>
       <div className={styles.mainHeaderContainer}>
           <div className={styles.statusContainer}>
               <p className={styles.statusText}>Status</p>
@@ -141,7 +148,7 @@ const InvoicePageId: NextPage = () => {
             </div>
           </div>
           <div className={styles.buttonsContainer}>
-              <div className={styles.editButtonContainer}>
+              <div onClick={toggleNewInvoiceForm} className={styles.editButtonContainer}>
                   <p className={styles.editText}><b>Edit</b></p>
               </div>
               <div className={styles.deleteButtonContainer}>
