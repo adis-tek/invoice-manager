@@ -1,1 +1,432 @@
 @use "app.scss";
+
+.container {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: auto;
+  background-color: app.$light-background;
+  padding: 0 0rem;
+  .main {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 0rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    .sidebarBackground {
+      position: absolute;
+      display: flex;
+      width: 103px;
+      height: 100vh;
+      background-color: app.$dark-background;
+      left: 0px;
+      z-index: 1;
+    }
+    .invoiceFormContainer {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      width: 620px;
+      height: 100vh;
+      align-items: center;
+      background-color: app.$white;
+      left: 103px;
+      z-index: 1;
+    }
+    .pageContainer {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 730px;
+      margin: 25px 0px 0px 0px;
+      .goBackContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 81px;
+        .backArrowHolder {
+          position: relative;
+          display: flex;
+          width: 15px;
+          height: 15px;
+          align-items: center;
+          justify-content: center;
+          padding: 0px 0px 0px 0px;
+          margin: 0px 0px 0px 0px;
+        }
+        p {
+          margin: 0px 0px 0px 25px;
+        }
+      }
+      .mainHeaderContainer {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 88px;
+        align-items: center;
+        justify-content: space-between;
+        background-color: app.$white;
+        margin: 0px 0px 30px 0px;
+        padding: 0px 35px;
+        border-radius: 10px;
+        .statusContainer {
+          position: relative;
+          display: flex;
+          width: 159px;
+          height: 40px;
+          align-items: center;
+          justify-content: space-between;
+          .statusText {
+            position: relative;
+            display: flex;
+            color: app.$subtitle;
+            font-size: 12px;
+          }
+          .statusContainer {
+            position: relative;
+            display: flex;
+            width: 104px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: app.$pending-lite;
+            padding: 0px 0px 5px 0px;
+            .circle {
+              position: relative;
+              display: flex;
+              width: 8px;
+              height: 8px;
+              background-color: app.$pending;
+              border-radius: 50%;
+              margin: 2.5px 10px 0px 0px;
+              align-self: center;
+            }
+            .status {
+              text-transform: capitalize;
+              color: app.$pending;
+              font-size: 12px;
+            }
+          }
+        }
+        .buttonsContainer {
+          position: relative;
+          display: flex;
+          width: 309px;
+          height: 48px;
+          align-items: center;
+          justify-content: space-between;
+          .editButtonContainer {
+            position: relative;
+            display: flex;
+            width: 73px;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            background-color: app.$edit-button;
+            .editText {
+              position: relative;
+              color: app.$subtitle;
+              font-size: 12px;
+            }
+          }
+          .deleteButtonContainer {
+            position: relative;
+            display: flex;
+            width: 89px;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            background-color: app.$delete-button;
+            .deleteText {
+              position: relative;
+              color: app.$white;
+              font-size: 12px;
+            }
+          }
+          .markButtonContainer {
+            position: relative;
+            display: flex;
+            width: 131px;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            background-color: app.$mark-as-paid;
+            .markText {
+              position: relative;
+              color: app.$white;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      .mainInvoiceContainer {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 631px;
+        height: auto;
+        background-color: app.$white;
+        padding: 50px;
+        border-radius: 10px;
+        margin: 0px 0px 50px 0px;
+        .invoiceDetailsContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 315px;
+          margin: 0px 0px 30px 0px;
+          .topContainer {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: auto;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0px 0px 10px 0px;
+            .leftSide {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              align-items: flex-start;
+              .id {
+                font-size: 16px;
+                margin: 0px 0px 10px 0px;
+              }
+              .description {
+                color: app.$purple-gray;
+                font-size: 12px;
+                margin: 0px;
+              }
+            }
+            .rightSide {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              .street,
+              .city,
+              .postal,
+              .country {
+                color: app.$purple-gray;
+                font-size: 12px;
+                text-align: right;
+                margin: 3px 0px;
+              }
+            }
+          }
+          .lowerContainer {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 125px;
+            justify-content: space-between; /*TEMP PLACEMENT! */
+            align-items: center;
+            margin: 40px 0px 0px 0px;
+            .leftSide {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              width: 25%;
+              height: 150px;
+              align-items: flex-start;
+              justify-content: space-between;
+              .invoiceDateContainer {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+              }
+              p {
+                color: app.$purple-gray;
+                font-size: 12px;
+                margin: 0px;
+              }
+              h2 {
+                font-size: 15px;
+                margin: 15px 0px;
+              }
+              .paymentDateContainer {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+              }
+              p {
+                color: app.$purple-gray;
+                font-size: 12px;
+                margin: 0px;
+              }
+              h2 {
+                font-size: 15px;
+                margin: 15px 0px 0px 0px;
+              }
+            }
+            .middle {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              width: 25%;
+              height: 150px;
+              p {
+                color: app.$purple-gray;
+                font-size: 12px;
+                text-align: left;
+                margin: 0px 0px 3px 0px;
+              }
+              h2 {
+                font-size: 15px;
+                margin: 12px 0px 15px 0px;
+                text-align: left;
+              }
+            }
+            .rightSide {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              width: 30%;
+              height: 150px;
+              p {
+                color: app.$purple-gray;
+                font-size: 12px;
+                text-align: left;
+                margin: 0px 0px;
+              }
+              h2 {
+                font-size: 15px;
+                margin: 15px 0px;
+                text-align: left;
+              }
+            }
+          }
+        }
+        .itemListContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+          background-color: app.$item-list;
+          border-radius: 10px;
+          .itemsHeader {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            margin: 0px;
+            .itemName {
+              position: relative;
+              display: flex;
+              width: 282px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-start;
+            }
+            .itemQuantity {
+              position: relative;
+              display: flex;
+              width: 36px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-start;
+            }
+            .itemPrice {
+              position: relative;
+              display: flex;
+              width: 120px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-end;
+            }
+            .itemTotal {
+              position: relative;
+              display: flex;
+              width: 135px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-end;
+            }
+          }
+          .itemListDataContainer {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: auto;
+            padding: 0px 20px 20px 20px;
+            .itemNameData {
+              position: relative;
+              display: flex;
+              width: 282px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-start;
+            }
+            .itemQuantityData {
+              position: relative;
+              display: flex;
+              width: 36px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: center;
+            }
+            .itemPriceData {
+              position: relative;
+              display: flex;
+              width: 120px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-end;
+            }
+            .itemTotalData {
+              position: relative;
+              display: flex;
+              width: 135px;
+              height: auto;
+              color: app.$purple-gray;
+              font-size: 11px;
+              justify-content: flex-end;
+            }
+          }
+          .amountContainer {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 80px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: app.$sidebar-background;
+            border-radius: 0px 0px 10px 10px;
+            p {
+              color: app.$white;
+              font-size: 11px;
+            }
+            h1 {
+              color: app.$white;
+              font-size: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

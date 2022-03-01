@@ -30,15 +30,23 @@ $red: rgb(236, 87, 87); /* Delete button */
 
 $light-red: rgb(255, 151, 151); /* Hovering over delete button */
 
+/* Item Button */
+
+$item-button: rgb(249, 250, 254);
+
+/* Sidebar */
+
+$sidebar-background: rgb(55, 59, 83);
+
 /* Backgrounds */
 
 $light-background: rgb(248, 248, 251);
 
 $dark-background: rgb(20, 22, 37);
 
-/* Sidebar */
+$item-list: $item-button;
 
-$sidebar-background: rgb(55, 59, 83);
+$item-list-amount-due: $sidebar-background;
 
 /* Global */
 
@@ -52,6 +60,10 @@ $pending: rgb(255, 143, 0);
 
 $pending-lite: rgba(255, 143, 0, 0.06);
 
-/* Item Button */
+/* Buttons */
 
-$item-button: rgb(249, 250, 254);
+$edit-button: $item-button;
+
+$delete-button: $red;
+
+$mark-as-paid: $purple;
