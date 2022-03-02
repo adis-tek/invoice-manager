@@ -18,7 +18,7 @@ router.get("/:id", filterInvoices);
 //CREATE INVOICES
 router.post("/", createInvoice);
 //UPDATE INVOICE
-router.put("/:id", updateInvoice);
+router.patch("/:id", updateInvoice);
 //DELETE INVOICE
 router.delete("/:id", deleteInvoice);
 

@@ -110,7 +110,7 @@ export const createInvoice = async (req, res) => {
         // [clientName]);
 
         console.log(newInvoice);
-        console.log(clientName)
+        console.log(clientName);
     }   catch (err) {
         console.log(err.message)
     }
@@ -121,10 +121,13 @@ export const createInvoice = async (req, res) => {
 export const updateInvoice = async(req, res) => {
     try {
         const { id } = req.params;
-        const { newTotal } = req.body;
-        const updateInvoice = await pool.query("UPDATE invoice_test SET total = $1 WHERE total = $2", [newTotal, id]);
+        const editedInvoice = req.body;
+        // const updateInvoice = await pool.query("UPDATE invoice_test SET total = $1 WHERE total = $2", [newTotal, id]);
+        console.log("This is the invoice data", editedInvoice);
+        console.log("This is the id", id);
+        // res.json("Invoice Updated")
 
-        res.json("Invoice Updated")
+        //Needs to be fixed.
     } catch (err) {
         console.log(err.message);
         
@@ -136,8 +139,9 @@ export const updateInvoice = async(req, res) => {
 export const deleteInvoice = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleteInvoice = await pool.query("DELETE FROM invoice_test WHERE total = $1", [id]);
-        res.json("Invoice deleted");
+        // const deleteInvoice = await pool.query("DELETE FROM invoice_test WHERE total = $1", [id]);
+        console.log("Delete invoice", id);
+        console.log(req.body);
     } catch (err) {
         console.log(err.message);
     }
