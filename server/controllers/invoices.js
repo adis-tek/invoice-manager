@@ -41,7 +41,7 @@ export const getProfile = async(req, res) => {
 
 export const getInvoices = async(req, res) => {
     try {
-        const allInvoices = await pool.query("SELECT * FROM invoice");
+        const allInvoices = await pool.query("SELECT * FROM invoice RIGHT OUTER JOIN bill_from ON invoice.bill_from_id = bill_from.bill_from_id RIGHT OUTER JOIN bill_to ON invoice.bill_to_id = bill_to.bill_to_id RIGHT OUTER JOIN bill_info ON invoice.bill_info_id = bill_info.bill_info_id RIGHT OUTER JOIN item_list ON invoice.item_list_id = item_list.item_list_id");
         res.json(allInvoices.rows);
     } catch(err) {
         console.log(err.message)
@@ -91,7 +91,7 @@ export const filterInvoices = async(req, res) => {
         const { id } = req.params;
         const todo = await pool.query("SELECT * FROM bill_from WHERE bill_from_id = $1", [id]);
         res.json(todo.rows[0]);
-    } catch {
+    } catch(err) {
         console.log(err.message);
     }
 }
@@ -100,12 +100,17 @@ export const filterInvoices = async(req, res) => {
 
 export const createInvoice = async (req, res) => {
     try {
-        const { amount } = req.body;
-        const newInvoice = await pool.query("INSERT INTO invoice_test (invoice_id, total) VALUES(uuid_generate_v4(), $1) RETURNING *",
-        [amount]
-        );
+        // const { amount } = req.body;
+        // );
+        const newInvoice = req.body;
 
-        res.json(newInvoice.rows[0]);
+        const clientName = newInvoice.clientName;
+
+        // const addedInvoice = await pool.query("INSERT INTO bill_to (clients_name) VALUES($1) RETURNING *",
+        // [clientName]);
+
+        console.log(newInvoice);
+        console.log(clientName)
     }   catch (err) {
         console.log(err.message)
     }
