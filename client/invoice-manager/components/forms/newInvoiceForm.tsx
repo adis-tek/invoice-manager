@@ -6,15 +6,15 @@ import { createInvoice } from "../../actions/invoices"
 
 import Image from "next/image"
 
-const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) => {
+const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
         billFromStreet:"",
         billFromCity: "",
         billFromPostal: "",
         billFromCountry: "",
-        clientName: {defaultClientName},
-        clientEmail: {defaultClientEmail},
+        clientName: props.defaultClientName,
+        clientEmail: props.defaultClientEmail,
         billToStreet:"",
         billToCity: "",
         billToPostal: "",
@@ -38,6 +38,13 @@ const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) 
         item_quantity_5: "",
         item_price_5: "",
     }));
+
+    //INVOICE ID
+    const id = props.dynamicId;
+
+    console.log(id);
+    console.log(id?.length);
+    console.log(id === true);
 
     //ITEM COMPONENT STATE
     const [item1, setItem1] = useState<boolean>(true);
@@ -194,8 +201,15 @@ const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) 
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(invoiceData);
-        dispatch(createInvoice(invoiceData));
+        if (id?.length > 0) {
+            console.log(invoiceData);
+            console.log("Created new invoice.");
+            props?.changeInvoiceForm(false);
+            // dispatch(createInvoice(invoiceData));
+        } else {
+            console.log("Edited invoice.");
+            props?.changeInvoiceForm(false);
+        }
         
     }
 
@@ -204,7 +218,7 @@ const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) 
     return (
         <>
         <div className={styles.invoiceFormContainer}>
-            {console.log(defaultClientName)}
+            {console.log(props.defaultClientName)}
             <h2 className={styles.title}>New Invoice</h2>
             <div className={styles.formContainer}>
                 <div className={styles.formSection}>
@@ -757,7 +771,7 @@ const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) 
                 className={styles.addItemButton}><b>+Add New Item</b></button>
                 }
                 <div className={styles.formSubmitContainer}>
-                <button onClick={() => props.changeInvoiceForm(false)} className={styles.addItemButton}>Cancel</button>
+                <button onClick={() => props?.changeInvoiceForm(false)} className={styles.addItemButton}>Cancel</button>
                 <button
                 onClick={handleSubmit}
                  className={styles.addItemButton}>Save Changes</button>

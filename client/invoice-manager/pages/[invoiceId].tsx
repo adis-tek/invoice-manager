@@ -120,6 +120,7 @@ const InvoicePageId: NextPage = () => {
         <div className={styles.invoiceFormContainer}>
           <NewInvoiceForm 
           changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)}
+          dynamicId={invoiceId}
           defaultClientName={invoiceData?.clientName}
           defaultClientEmail={invoiceData?.clientEmail}
           />
