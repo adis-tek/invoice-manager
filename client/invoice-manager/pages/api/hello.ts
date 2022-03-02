@@ -16,6 +16,9 @@ const itemList = "http://localhost:5000/invoices/item-list";
 
 export const fetchInvoices = () => axios.get(url);
 export const createInvoice = (newInvoice: any) => axios.post(url, newInvoice);
+export const updateInvoice = (id: any, updatedInvoice: any) => axios.patch(`${url}/${id}`, id, updatedInvoice);
+export const deleteInvoice = (id: any) => axios.delete(`${url}/${id}`, id);
+
 
 export const fetchIdentity = () => axios.get(identity);
 export const fetchProfile = () => axios.get(profile);

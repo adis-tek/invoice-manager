@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import type { NextPage } from 'next'
 import styles from "../../styles/invoiceForm.module.scss"
 import { useDispatch } from 'react-redux'
-import { createInvoice } from "../../actions/invoices"
+import { createInvoice, updateInvoice } from "../../actions/invoices"
 
 import Image from "next/image"
 
@@ -202,13 +202,14 @@ const NewInvoiceForm: NextPage = (props) => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         if (id?.length > 0) {
+            console.log("Edited invoice.");
+            props?.changeInvoiceForm(false);
+            dispatch(updateInvoice(id, invoiceData));
+        } else {
             console.log(invoiceData);
             console.log("Created new invoice.");
             props?.changeInvoiceForm(false);
             // dispatch(createInvoice(invoiceData));
-        } else {
-            console.log("Edited invoice.");
-            props?.changeInvoiceForm(false);
         }
         
     }

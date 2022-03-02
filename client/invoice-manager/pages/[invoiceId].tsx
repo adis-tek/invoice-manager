@@ -12,7 +12,7 @@ import NewInvoiceForm from "../components/forms/newInvoiceForm"
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
-import { getInvoices } from '../actions/invoices'
+import { getInvoices, deleteInvoice } from '../actions/invoices'
 
 
 const InvoicePageId: NextPage = () => {
@@ -105,6 +105,12 @@ const InvoicePageId: NextPage = () => {
     console.log(invoices[0]?.clients_name);
     console.log(invoiceId);
 
+    function dispatchDeleteInvoice() {
+        const id = invoiceId;
+
+        dispatch(deleteInvoice(id));
+    }
+
     return (
         <div className={styles.container}>
       <Head>
@@ -154,7 +160,9 @@ const InvoicePageId: NextPage = () => {
               <div onClick={toggleNewInvoiceForm} className={styles.editButtonContainer}>
                   <p className={styles.editText}><b>Edit</b></p>
               </div>
-              <div className={styles.deleteButtonContainer}>
+              <div 
+              onClick={dispatchDeleteInvoice}
+              className={styles.deleteButtonContainer}>
                   <p className={styles.deleteText}>Delete</p>
               </div>
               <div className={styles.markButtonContainer}>

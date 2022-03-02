@@ -20,6 +20,26 @@ export const createInvoice = (invoice: any) => async (dispatch: any) => {
      }
 }  
 
+export const updateInvoice = (id: any, updatedInvoice: any) => async (dispatch: any) => {
+    try {
+        const { data } = await api.updateInvoice(id, updatedInvoice);
+
+        dispatch({ type: "UPDATE", payload: data })
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
+export const deleteInvoice = (id: any) => async (dispatch: any) => {
+    try {
+        await api.deleteInvoice(id);
+
+        dispatch({ type: "DELETE", payload: id })
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
 export const getBillFrom = () => async (dispatch: any) => {
     try {
         const { data } = await api.fetchBillFrom()
