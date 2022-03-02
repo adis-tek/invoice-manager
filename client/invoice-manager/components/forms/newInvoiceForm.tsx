@@ -7,7 +7,7 @@ import { createInvoice } from "../../actions/invoices"
 import Image from "next/image"
 import { parse } from 'node:path/win32'
 
-const NewInvoiceForm: NextPage = () => {
+const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
         billFromStreet:"",
@@ -58,6 +58,8 @@ const NewInvoiceForm: NextPage = () => {
     const [price3, setPrice3] = useState("");
     const [price4, setPrice4] = useState("");
     const [price5, setPrice5] = useState("");
+
+    const [state, setState] = useState(props);
 
     const countRef = useRef<number>(0);
 
@@ -110,10 +112,6 @@ const NewInvoiceForm: NextPage = () => {
              ) {
             setItem5(true);
         }
-    }
-
-    function handleItemQuantity() {
-        
     }
 
     function handleItemPrice(e: any) {
@@ -182,6 +180,18 @@ const NewInvoiceForm: NextPage = () => {
 
     console.log(parseFloat(invoiceData.item_quantity_1) * parseFloat(invoiceData.item_price_1))
 
+    function checkProps(props){
+        if (props === true) {
+            setState(true);
+        } else {
+            setState(false);
+        }
+    }
+
+    function toggleNewInvoiceForm() {
+        setState(false);
+    }
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -190,8 +200,10 @@ const NewInvoiceForm: NextPage = () => {
         
     }
 
+    console.log("State of form", state === true);
 
     return (
+        <>
         <div className={styles.invoiceFormContainer}>
             <h2 className={styles.title}>New Invoice</h2>
             <div className={styles.formContainer}>
@@ -745,7 +757,7 @@ const NewInvoiceForm: NextPage = () => {
                 className={styles.addItemButton}><b>+Add New Item</b></button>
                 }
                 <div className={styles.formSubmitContainer}>
-                <button className={styles.addItemButton}>Cancel</button>
+                <button onClick={() => props.changeInvoiceForm(false)} className={styles.addItemButton}>Cancel</button>
                 <button
                 onClick={handleSubmit}
                  className={styles.addItemButton}>Save Changes</button>
@@ -753,6 +765,7 @@ const NewInvoiceForm: NextPage = () => {
                 </div>
                 </div>
             </div>
+        </>
     )
 }
 

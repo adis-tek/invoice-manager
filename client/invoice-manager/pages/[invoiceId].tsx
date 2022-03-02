@@ -120,7 +120,7 @@ const InvoicePageId: NextPage = () => {
       <>
         <div className={styles.sidebarBackground} />
         <div className={styles.invoiceFormContainer}>
-          <NewInvoiceForm />
+          <NewInvoiceForm changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)} />
         </div>
       </>
       }
