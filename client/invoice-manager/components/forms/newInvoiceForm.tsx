@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { createInvoice } from "../../actions/invoices"
 
 import Image from "next/image"
-import { parse } from 'node:path/win32'
 
 const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) => {
     const dispatch = useDispatch();

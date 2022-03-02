@@ -10,6 +10,16 @@ export const getInvoices = () => async (dispatch: any) => {
     }
 }
 
+export const createInvoice = (invoice: any) => async (dispatch: any) => {
+     try {
+         const { data } = await api.createInvoice(invoice);
+
+         dispatch({ type: "CREATE", payload: data })
+     } catch (error) {
+         console.log(error);
+     }
+}  
+
 export const getBillFrom = () => async (dispatch: any) => {
     try {
         const { data } = await api.fetchBillFrom()
@@ -45,13 +55,3 @@ export const getItemList = () => async (dispatch: any) => {
         console.log((err as Error).message);
     }
 }
-
-// export const createInvoice = (invoice: any) => async (dispatch: any) => {
-//     try {
-//         const { data } = await api.createInvoice(invoice);
-
-//         dispatch({ type: "CREATE", payload: data })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }  
