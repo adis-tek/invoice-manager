@@ -61,16 +61,6 @@ const InvoicePageId: NextPage = () => {
         console.log("Loading invoices.")
       }, [dispatch]);
 
-    useEffect(() => {
-        loadData();
-        handleLoadedData();
-    }, [countRef]);
-
-
-
-    console.log(invoices[targetInvoice]);
-    console.log(invoices.clients_name);
-
     const handleLoadedData = useCallback(async () => {
         await setInvoiceData({...invoiceData, 
             clientName: pageInvoice?.clients_name,
@@ -99,13 +89,21 @@ const InvoicePageId: NextPage = () => {
             // itemQuantity5: pageInvoice.item_quantity[4],
             // itemPrice5: pageInvoice.item_price[4],
         });
-    }, [loadData]);
-
-    console.log(invoiceData);
+    }, [setInvoiceData]);
 
     function toggleNewInvoiceForm() {
         setInvoiceForm(!invoiceForm);
     }
+
+    useEffect(() => {
+        loadData();
+        handleLoadedData();
+    }, []);
+
+    console.log(invoices[targetInvoice]);
+    console.log(pageInvoice);
+    console.log(invoices[0]?.clients_name);
+    console.log(invoiceId);
 
     return (
         <div className={styles.container}>
@@ -120,7 +118,11 @@ const InvoicePageId: NextPage = () => {
       <>
         <div className={styles.sidebarBackground} />
         <div className={styles.invoiceFormContainer}>
-          <NewInvoiceForm changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)} />
+          <NewInvoiceForm 
+          changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)}
+          defaultClientName={invoiceData?.clientName}
+          defaultClientEmail={invoiceData?.clientEmail}
+          />
         </div>
       </>
       }

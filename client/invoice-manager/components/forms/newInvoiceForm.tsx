@@ -7,15 +7,15 @@ import { createInvoice } from "../../actions/invoices"
 import Image from "next/image"
 import { parse } from 'node:path/win32'
 
-const NewInvoiceForm: NextPage = (props) => {
+const NewInvoiceForm: NextPage = (props, defaultClientName, defaultClientEmail) => {
     const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
         billFromStreet:"",
         billFromCity: "",
         billFromPostal: "",
         billFromCountry: "",
-        clientName: "",
-        clientEmail: "",
+        clientName: {defaultClientName},
+        clientEmail: {defaultClientEmail},
         billToStreet:"",
         billToCity: "",
         billToPostal: "",
@@ -205,6 +205,7 @@ const NewInvoiceForm: NextPage = (props) => {
     return (
         <>
         <div className={styles.invoiceFormContainer}>
+            {console.log(defaultClientName)}
             <h2 className={styles.title}>New Invoice</h2>
             <div className={styles.formContainer}>
                 <div className={styles.formSection}>
