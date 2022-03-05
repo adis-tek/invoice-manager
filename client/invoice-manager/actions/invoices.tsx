@@ -20,9 +20,9 @@ export const createInvoice = (invoice: any) => async (dispatch: any) => {
      }
 }  
 
-export const updateInvoice = (id: any, updatedInvoice: any) => async (dispatch: any) => {
+export const updateInvoice = (updatedInvoice: any, id: any) => async (dispatch: any) => {
     try {
-        const { data } = await api.updateInvoice(id, updatedInvoice);
+        const { data } = await api.updateInvoice(updatedInvoice, id);
 
         dispatch({ type: "UPDATE", payload: data })
     } catch (error) {

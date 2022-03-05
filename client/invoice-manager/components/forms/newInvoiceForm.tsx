@@ -204,7 +204,7 @@ const NewInvoiceForm: NextPage = (props) => {
         if (id?.length > 0) {
             console.log("Edited invoice.");
             props?.changeInvoiceForm(false);
-            dispatch(updateInvoice(id, invoiceData));
+            dispatch(updateInvoice(invoiceData, id));
         } else {
             console.log(invoiceData);
             console.log("Created new invoice.");
