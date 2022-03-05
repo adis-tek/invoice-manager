@@ -123,9 +123,9 @@ export const updateInvoice = async(req, res) => {
         const { id } = req.params;
         const editedInvoice = req.body;
         // const updateInvoice = await pool.query("UPDATE invoice_test SET total = $1 WHERE total = $2", [newTotal, id]);
-        console.log("This is the invoice data", editedInvoice);
+        console.log("This is the invoice data", req.body);
         console.log("This is the id", id);
-        // res.json("Invoice Updated")
+        res.status(200).json(editedInvoice);
 
         //Needs to be fixed.
     } catch (err) {
