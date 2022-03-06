@@ -10,3 +10,13 @@ ALTER TABLE
     invoice
 ADD
     COLUMN status VARCHAR(50) NOT NULL DEFAULT 'pending';
+
+UPDATE
+    bill_from
+SET
+    street_address = 'street2',
+    city = 'city2',
+    postal_code = '60661',
+    country = 'country2'
+WHERE
+    bill_from_id = 1;
