@@ -9,34 +9,34 @@ import Image from "next/image"
 const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
-        billFromStreet:"",
-        billFromCity: "",
-        billFromPostal: "",
-        billFromCountry: "",
+        billFromStreet:"street1",
+        billFromCity: "city1",
+        billFromPostal: "60660",
+        billFromCountry: "country1",
         clientName: props.defaultClientName,
         clientEmail: props.defaultClientEmail,
-        billToStreet:"",
-        billToCity: "",
-        billToPostal: "",
-        billToCountry: "",
-        invoiceDate: "",
-        paymentTerms: "",
-        projectDescription: "",
-        item_name_1: "",
-        item_quantity_1: "",
-        item_price_1: "",
-        item_name_2: "",
-        item_quantity_2: "",
-        item_price_2: "",
-        item_name_3: "",
-        item_quantity_3: "",
-        item_price_3: "",
-        item_name_4: "",
-        item_quantity_4: "",
-        item_price_4: "",
-        item_name_5: "",
-        item_quantity_5: "",
-        item_price_5: "",
+        billToStreet: props.defaultBillToStreet,
+        billToCity: props.defaultBillToCity,
+        billToPostal: props.defaultBillToPostal,
+        billToCountry: props.defaultBillToCountry,
+        invoiceDate: props.defaultInvoiceDate,
+        paymentTerms: props.defaultPaymentTerms,
+        projectDescription: props.defaultProjectDescription,
+        item_name_1: props.defaultItemName1,
+        item_quantity_1: props.defaultItemQuantity1,
+        item_price_1: props.defaultItemPrice1,
+        item_name_2: props.defaultItemName1,
+        item_quantity_2: props.ItemQuantity2,
+        item_price_2: props.ItemPrice2,
+        item_name_3: props.defaultItemName3,
+        item_quantity_3: props.defaultItemQuantity3,
+        item_price_3: props.defaultItemPrice3,
+        item_name_4: props.defaultItemName4,
+        item_quantity_4: props.defaultItemQuantity4,
+        item_price_4: props.defaultItemPrice4,
+        item_name_5: props.defaultItemName5,
+        item_quantity_5: props.defaultItemQuantity5,
+        item_price_5: props.defaultItemPrice5,
     }));
 
     //INVOICE ID
@@ -214,8 +214,8 @@ const NewInvoiceForm: NextPage = (props) => {
         
     }
 
-    console.log("State of form", state === true);
-
+    console.log("What is this", invoiceData.item_price_1);
+    console.log(invoiceData)
     return (
         <>
         <div className={styles.invoiceFormContainer}>
@@ -369,16 +369,14 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="text" 
                         name="itemName" 
+                        value={invoiceData.item_name_1}
                         onChange={(e) => setInvoiceData({...invoiceData, item_name_1: e.target.value})} 
                         className={styles.itemInput} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Qty.</p>
                         <input 
-                        type="number" 
-                        min="1"
-                        step="1"
-                        pattern="\d+"
+                        type='number'
                         name="quantity"
                         value={invoiceData.item_quantity_1}
                         onChange={(e) => {
@@ -400,7 +398,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="number" 
                         name="price"
-                        value={invoiceData.item_price_1}
+                        value={`${invoiceData.item_price_1}`}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;

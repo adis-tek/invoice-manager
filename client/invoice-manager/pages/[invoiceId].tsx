@@ -72,10 +72,10 @@ const InvoicePageId: NextPage = () => {
             invoiceDate: pageInvoice?.invoice_date,
             paymentTerms: pageInvoice?.payment_terms,
             projectDescription: pageInvoice?.project_description,
+            status: pageInvoice?.status,
             itemName1: pageInvoice?.item_name,
             itemQuantity1: pageInvoice?.quantity,
             itemPrice1: pageInvoice?.price,
-            status: pageInvoice?.status
             // itemName2: pageInvoice.item_name[1],
             // itemQuantity2: pageInvoice.item_quantity[1],
             // itemPrice2: pageInvoice.item_price[1],
@@ -103,7 +103,7 @@ const InvoicePageId: NextPage = () => {
     console.log(invoices[targetInvoice]);
     console.log(pageInvoice);
     console.log(invoices[0]?.clients_name);
-    console.log(invoiceId);
+    console.log("Quantity", pageInvoice?.quantity);
 
     function dispatchDeleteInvoice() {
         const id = invoiceId;
@@ -129,6 +129,28 @@ const InvoicePageId: NextPage = () => {
           dynamicId={invoiceId}
           defaultClientName={invoiceData?.clientName}
           defaultClientEmail={invoiceData?.clientEmail}
+          defaultBillToStreet={invoiceData?.billToStreet}
+          defaultBillToCity={invoiceData?.billToCity}
+          defaultBillToPostal={invoiceData?.billToPostal}
+          defaultBillToCountry={invoiceData?.billToCountry}
+          defaultInvoiceDate={invoiceData?.invoiceDate}
+          defaultPaymentTerms={invoiceData?.paymentTerms}
+          defaultProjectDescription={invoiceData?.projectDescription}
+          defaultItemName1={invoiceData?.itemName1}
+          defaultItemQuantity1={invoiceData?.itemQuantity1}
+          defaultItemPrice1={invoiceData?.itemPrice1}
+          defaultItemName2={invoiceData?.itemName2}
+          defaultItemQuantity2={invoiceData?.itemQuantity2}
+          defaultItemPrice2={invoiceData?.itemPrice2}
+          defaultItemName3={invoiceData?.itemName3}
+          defaultItemQuantity3={invoiceData?.itemQuantity3}
+          defaultItemPrice3={invoiceData?.itemPrice3}
+          defaultItemName4={invoiceData?.itemName4}
+          defaultItemQuantity4={invoiceData?.itemQuantity4}
+          defaultItemPrice4={invoiceData?.itemPrice4}
+          defaultItemName5={invoiceData?.itemName5}
+          defaultItemQuantity5={invoiceData?.itemQuantity5}
+          defaultItemPrice5={invoiceData?.itemPrice5}
           />
         </div>
       </>
