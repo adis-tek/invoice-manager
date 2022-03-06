@@ -5,9 +5,9 @@ const invoices = (invoices=[], action: any) => {
         case "CREATE":
             return [...invoices, action.payload];
         case "UPDATE":
-            return action.payload;
+            return invoices.map((invoice) => invoice.invoice_id === action.payload.invoice_id ? action.payload : invoice);
         case "DELETE":
-            return [...invoices, invoices.filter((invoice) => invoice.id !== action.payload)];
+            return invoices.filter((invoice) => invoice.invoice_id !== action.payload);
         default:
             return invoices;
     }
