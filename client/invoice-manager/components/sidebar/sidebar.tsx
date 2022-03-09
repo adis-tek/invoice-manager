@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import styles from "../../styles/sidebar.module.scss"
 
 import Image from "next/image"
+import Link from 'next/link'
 
 const Sidebar: NextPage = () => {
     return (
@@ -30,6 +31,7 @@ const Sidebar: NextPage = () => {
                 </div>
                 </div>
                 <div className={styles.line}></div>
+            
             <div className={styles.account}>
                 <div className={styles.ImageHolder}>
                     <Image 
