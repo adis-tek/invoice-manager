@@ -2,11 +2,14 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/SignIn.module.scss'
+import Sidebar from "../../components/sidebar/sidebar"
 
 const SignIn: NextPage = () => {
 
     return (
+        <>
         <div className={styles.main}>
+            <Sidebar />
             <h1>Welcome to Invoicer</h1>
             <h2>Sign in</h2>
                 <div className={styles.formContainer}>
@@ -25,6 +28,7 @@ const SignIn: NextPage = () => {
                     <Link href="/auth/signup"><p>Sign Up</p></Link>
                 </div>
         </div>
+    </>
     )
 }
 
