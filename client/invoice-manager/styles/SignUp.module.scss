@@ -1,0 +1,183 @@
+@use "app.scss";
+
+.mainContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    margin: 0px 0px;
+    background-color: app.$light-background;
+    .signUp {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      height: auto;
+      margin: 50px 0px 0px 0px;
+      h1 {
+        position: relative;
+        display: flex;
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0px 0px 5px 20px;
+      }
+      h2 {
+        position: relative;
+        display: flex;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0px 0px 0px 20px;
+      }
+      .formContainer {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin: 40px 0px 0px 0px;
+        .emailContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          margin: 0px 0px 20px 0px;
+          .formLabel {
+            position: relative;
+            display: flex;
+            font-size: 14px;
+            margin: 0px 0px 10px 20px;
+          }
+          .formInput {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            border-radius: 40px;
+            padding: 20px;
+            outline: none;
+            border: none;
+          }
+          .formInput::placeholder {
+            font-size: 12px;
+            opacity: 0.6;
+          }
+        }
+        .passwordContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          margin: 0px 0px 20px 0px;
+          .formLabel {
+            position: relative;
+            display: flex;
+            font-size: 14px;
+            margin: 0px 0px 10px 20px;
+          }
+          .formInput {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            border-radius: 40px;
+            padding: 0px 0px 0px 20px;
+            outline: none;
+            border: none;
+          }
+          .formInput::placeholder {
+            font-size: 12px;
+            opacity: 0.6;
+          }
+        }
+        .confirmPasswordContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          margin: 0px 0px 20px 0px;
+          .formLabel {
+            position: relative;
+            display: flex;
+            font-size: 14px;
+            margin: 0px 0px 10px 20px;
+          }
+          .formInput {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            border-radius: 40px;
+            padding: 0px 0px 0px 20px;
+            outline: none;
+            border: none;
+          }
+          .formInput::placeholder {
+            font-size: 12px;
+            opacity: 0.6;
+          }
+        }
+        .uploadPhotoContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          margin: 0px 0px 0px 0px;
+          .formLabel {
+            position: relative;
+            display: flex;
+            font-size: 14px;
+            margin: 0px 0px 10px 20px;
+          }
+          .fileFormInput {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            outline: none;
+            border: none;
+            margin: 0px 0px 0px 20px;
+          }
+          .formInput::placeholder {
+            font-size: 12px;
+            opacity: 0.6;
+          }
+        }
+        .submitButton {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 50px;
+          border-radius: 40px;
+          border: none;
+          background-color: app.$purple;
+          margin: 0px;
+          padding: 0px;
+          .buttonText {
+            position: relative;
+            display: flex;
+            color: app.$white;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+          }
+        }
+      }
+      .signUpContainer {
+        position: relative;
+        display: flex;
+        padding: 0px 0px 0px 20px;
+        a {
+          position: relative;
+          display: flex;
+          p {
+            position: relative;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

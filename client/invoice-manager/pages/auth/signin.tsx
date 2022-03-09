@@ -7,9 +7,10 @@ import Sidebar from "../../components/sidebar/sidebar"
 const SignIn: NextPage = () => {
 
     return (
-        <>
-        <div className={styles.main}>
+        <div className={styles.mainContainer}>
             <Sidebar />
+            <div className={styles.main}>
+            <div className={styles.signUp}>
             <h1>Welcome to Invoicer</h1>
             <h2>Sign in</h2>
                 <div className={styles.formContainer}>
@@ -21,14 +22,16 @@ const SignIn: NextPage = () => {
                     <label htmlFor="" className={styles.formLabel}>Password</label>
                     <input type="password" placeholder="Enter your password" className={styles.formInput} />
                     </div>
-                    <button type="submit" className={styles.submitButton}>Sign In</button>
+                    <button type="submit" className={styles.submitButton}>
+                        <p className={styles.buttonText}>Sign In</p>
+                        </button>
                 </div>
                 <div className={styles.signInContainer}>
-                    <p className={styles.text}>Or</p>
-                    <Link href="/auth/signup"><p>Sign Up</p></Link>
+                    <Link href="/auth/signup"><p>Or <u>Sign Up</u></p></Link>
                 </div>
         </div>
-    </>
+        </div>
+        </div>
     )
 }
 
