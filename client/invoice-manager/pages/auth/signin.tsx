@@ -3,8 +3,30 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/SignIn.module.scss'
 import Sidebar from "../../components/sidebar/sidebar"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { useRouter } from "next/router"
+
+const initialState = { email: '', password: '' };
 
 const SignIn: NextPage = () => {
+    const [formData, setFormData] = useState(initialState);
+    const dispatch = useDispatch;
+    // const history = useNavigate();
+    const router = useRouter();
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        // dispatch(signUp(formData, history));
+
+        console.log(formData);
+    }
+
+    const handleChange = (e: any) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
 
     return (
         <div className={styles.mainContainer}>
@@ -16,13 +38,13 @@ const SignIn: NextPage = () => {
                 <div className={styles.formContainer}>
                     <div className={styles.emailContainer}>
                     <label htmlFor="" className={styles.formLabel}>Email address</label>
-                    <input type="email" placeholder="Enter your email" className={styles.formInput} />
+                    <input type="email" name="email" onChange={handleChange} placeholder="Enter your email" className={styles.formInput} />
                     </div>
                     <div className={styles.passwordContainer}>
                     <label htmlFor="" className={styles.formLabel}>Password</label>
-                    <input type="password" placeholder="Enter your password" className={styles.formInput} />
+                    <input type="password" name="password" onChange={handleChange} placeholder="Enter your password" className={styles.formInput} />
                     </div>
-                    <button type="submit" className={styles.submitButton}>
+                    <button type="submit" onClick={handleSubmit} className={styles.submitButton}>
                         <p className={styles.buttonText}>Sign In</p>
                         </button>
                 </div>
