@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import { signin } from '../../actions/auth'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import styles from '../../styles/SignIn.module.scss'
 import Sidebar from "../../components/sidebar/sidebar"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { useRouter } from "next/router"
 
 const initialState = { email: '', password: '' };
@@ -12,15 +12,14 @@ const initialState = { email: '', password: '' };
 const SignIn: NextPage = () => {
     const [formData, setFormData] = useState(initialState);
     const dispatch = useDispatch;
-    // const history = useNavigate();
     const router = useRouter();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        // dispatch(signUp(formData, history));
+        dispatch(signin(formData));
 
-        console.log(formData);
+        // router.push('/');
     }
 
     const handleChange = (e: any) => {
