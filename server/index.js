@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import invoicesRoutes from "./routes/invoices.js";
+import userRoutes from './routes/users.js';
 
 const app = express();
 
@@ -17,6 +18,8 @@ dotenv.config();
 //ROUTES//
 
 app.use("/invoices", invoicesRoutes);
+
+app.use('/user', userRoutes);
 
 
 app.listen(5000, () => {
