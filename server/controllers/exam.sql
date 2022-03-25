@@ -20,3 +20,81 @@ SET
     country = 'country2'
 WHERE
     bill_from_id = 1;
+
+ALTER TABLE
+    identity DROP COLUMN username;
+
+ALTER TABLE
+    account_user DROP COLUMN profile_id;
+
+ALTER TABLE
+    profile DROP COLUMN first_name;
+
+ALTER TABLE
+    profile DROP COLUMN last_name;
+
+ALTER TABLE
+    account_user
+ADD
+    COLUMN email VARCHAR(255);
+
+ALTER TABLE
+    account_user
+ADD
+    COLUMN password VARCHAR(255);
+
+ALTER TABLE
+    account_user
+ADD
+    COLUMN photo BYTEA;
+
+INSERT INTO
+    account_user(
+        account_user_uuid,
+        created_at,
+        last_login,
+        email,
+        password,
+        photo
+    )
+VALUES
+($ 1, $ 2, $ 3, $ 4, $ 5, $ 6) RETURNING * [uuid_generate_v4(), CURRENT_DATE, CURRENT_TIMESTAMP, email, hashedPassword, photo]
+);
+
+insert into
+    account_user (
+        account_user_uuid,
+        created_at,
+        last_login,
+        email,
+        password,
+        photo
+    )
+values
+    (
+        uuid_generate_v4(),
+        CURRENT_DATE,
+        CURRENT_TIMESTAMP,
+        'adis@adis.com',
+        'thisisapassword',
+        null
+    );
+
+insert into
+    account_user (
+        account_user_uuid,
+        created_at,
+        last_login,
+        email,
+        password,
+        photo
+    )
+values
+    (
+        uuid_generate_v4(),
+        CURRENT_DATE,
+        CURRENT_TIMESTAMP,
+        null,
+        null,
+        null
+    );
