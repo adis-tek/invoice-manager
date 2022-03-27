@@ -14,6 +14,16 @@ const SignUp: NextPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
+    //Use this on the profile page for when users want to logout of the site
+    const logout = () => { 
+        dispatch({ type: "LOGOUT" });
+
+        // router.push('/auth/signin');
+
+        setUser(null)
+     }
+
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
 

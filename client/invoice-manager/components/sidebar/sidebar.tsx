@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import styles from "../../styles/sidebar.module.scss"
 
@@ -5,6 +6,16 @@ import Image from "next/image"
 import Link from 'next/link'
 
 const Sidebar: NextPage = () => {
+    const [user, setUser] = useState(null);
+
+    // This useEffect should be in the sidebar chacking on the user on every page
+    useEffect(() => {
+    const token = user?.token
+
+    //JWT
+
+    setUser(JSON.parse(localStorage.getItem('profile')))
+    }, [])
     return (
         <div className={styles.sidebar}>
             <div className={styles.logoContainer}>

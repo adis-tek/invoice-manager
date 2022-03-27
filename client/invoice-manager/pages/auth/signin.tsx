@@ -11,8 +11,12 @@ const initialState = { email: '', password: '' };
 
 const SignIn: NextPage = () => {
     const [formData, setFormData] = useState(initialState);
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
     const router = useRouter();
+
+    const handleChange = (e: any) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -20,10 +24,6 @@ const SignIn: NextPage = () => {
         dispatch(signin(formData));
 
         // router.push('/');
-    }
-
-    const handleChange = (e: any) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
 

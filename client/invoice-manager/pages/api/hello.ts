@@ -14,11 +14,15 @@ const billTo = "http://localhost:5000/invoices/bill-to";
 const billInfo = "http://localhost:5000/invoices/bill-info";
 const itemList = "http://localhost:5000/invoices/item-list";
 
-export const fetchInvoices = () => axios.get(url);
-export const createInvoice = (newInvoice: any) => axios.post(url, newInvoice);
-export const updateInvoice = (updatedInvoice: any, id: any) => axios.patch(`${url}/${id}`, updatedInvoice);
-export const deleteInvoice = (id: any) => axios.delete(`${url}/${id}`, id);
+const API = axios.create({ baseURL: 'http://localhost:5000' })
 
+export const fetchInvoices = () => API.get('/invoices');
+export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoice);
+export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/${id}`, updatedInvoice);
+export const deleteInvoice = (id: any) => API.delete(`/${id}`, id);
+
+export const signin = (formData: any) => API.post('/user/signin', formData);
+export const signup = (formData: any) => API.post('/user/signup', formData);
 
 export const fetchIdentity = () => axios.get(identity);
 export const fetchProfile = () => axios.get(profile);

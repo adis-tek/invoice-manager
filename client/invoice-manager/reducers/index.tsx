@@ -4,6 +4,7 @@ import billTo from "./billTo"
 import billInfo from "./billInfo"
 import itemList from "./itemList"
 import invoices from './invoices';
+import auth from './auth';
 
 export default combineReducers({
     billFrom,
@@ -11,4 +12,5 @@ export default combineReducers({
     billInfo,
     itemList,
     invoices,
+    auth
 })
