@@ -4,11 +4,14 @@ import cors from "cors";
 import dotenv from "dotenv"; 
 import session from 'express-session';
 import flash from 'express-flash';
+import passport from 'passport';
+import initializePassport from './config/passport.config.js'
 
 import invoicesRoutes from "./routes/invoices.js";
 import userRoutes from './routes/users.js';
 
 const app = express();
+initializePassport(passport);
 
 //middleware
 app.use(bodyParser.json({limit: "32mb", extended: true}))
@@ -21,6 +24,8 @@ app.use(session({
     saveUninitialized: false
 }))
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 dotenv.config();
 
 //ROUTES//
