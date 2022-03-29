@@ -1,9 +1,15 @@
-import LocalStrategy from 'passport-local';
+import passport from 'passport';
+import passportLocal from 'passport-local';
 import pool from './db.config.js';
 import bcrypt from 'bcrypt';
 
+const LocalStrategy = passportLocal.Strategy; // Get it working with es6 import format.
+
 function initializePassport (passport) {
+    console.log("Initialized");
+
     const authenticateUser = (email, password, done) => {
+        console.log(email, password);
 
         pool.query(
             `SELECT * FROM account_user WHERE email = $1`, 
@@ -37,26 +43,29 @@ function initializePassport (passport) {
     passport.use(
         new LocalStrategy (
             {
-                usernameField: 'email',
-                passwordField: 'password',
+                usernameField: "email",
+                passwordField: "password"
             },
             authenticateUser
         )
     );
-    passport.serializeUser((user, done) => done(null, account_user.email));
 
-    passport.deserializeUser((email, done) => {
+    passport.serializeUser(function(user, cb) {
+        cb(null, user.account_user_uuid);
+    });
+
+    passport.deserializeUser(function(account_user_uuid, cb) {
         pool.query(
-            `SELECT * FROM account_user WHERE email = $1`,
-            [email],
-            (err, results) => {
-                if (err) {
-                    return done(err);
-                }
-                console.log(`Email is ${results.rows[0].email}`);
-                return done(null, results.rows[0]);
+            `SELECT * FROM account_user WHERE account_user_uuid = $1`,
+            [account_user_uuid],
+            (err, user) => {
+                const userInformation = {
+                    userIdentification: user.account_user_uuid,
+                };
+                cb(err, userInformation);
             }
         )
+        // cb(null, user);
     })
 }
 

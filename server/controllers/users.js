@@ -1,23 +1,34 @@
+import passport from 'passport';
+import passportLocal from 'passport-local';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
 import session from 'express-session';
 import flash from 'express-flash';
 
 import pool from "../config/db.config.js";
+
+const LocalStrategy = passportLocal.Strategy; // Get it working with es6 import format.
  
 
-export const signin = async (req, res) => {
+export const signin = async (req, res, next) => {
     const { email, password } = req.body
 
     try {
-        const existingUser = "existing user";
-
-        const token = jwt.sign({ email: email, id: "1" }, 'test', { expiresIn: "1h" });
-
-        return res.status(200).json(req.body);
-
-        res.status(200).json({ result: token });
+        passport.authenticate("local", (err, user, info) => {
+            if (err) {
+                throw err;
+            } else if (!user) {
+                res.send("No user exists");
+            } else {
+                req.logIn(user, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    // res.send("Successfully authenticated.");
+                    console.log("This is it", req.session);
+                    console.log(req.session.passport.user)
+                });
+            }
+        })(req, res, next);
     } catch (error) {
         res.status(500).json({ message: "Something went wrong with sign in" });
     }
