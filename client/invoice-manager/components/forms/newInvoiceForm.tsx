@@ -208,8 +208,8 @@ const NewInvoiceForm: NextPage = (props) => {
         } else {
             console.log(invoiceData);
             console.log("Created new invoice.");
-            props?.changeInvoiceForm(false);
-            // dispatch(createInvoice(invoiceData));
+            // props?.changeInvoiceForm(false);
+            dispatch(createInvoice(invoiceData));
         }
         
     }

@@ -6,6 +6,8 @@ type Data = {
   name: string
 }
 
+axios.defaults.withCredentials = true;
+
 const url = "http://localhost:5000/invoices";
 const identity = "http://localhost:5000/invoices/identity";
 const profile = "http://localhost:5000/invoices/profile";
@@ -21,8 +23,8 @@ export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoi
 export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/${id}`, updatedInvoice);
 export const deleteInvoice = (id: any) => API.delete(`/${id}`, id);
 
-export const signin = (formData: any) => API.post('/user/signin', formData);
-export const signup = (formData: any) => API.post('/user/signup', formData);
+export const signin = (formData: any) => API.post('/user/signin', formData, { withCredentials: true });
+export const signup = (formData: any) => API.post('/user/signup', formData, { withCredentials: true });
 
 export const fetchIdentity = () => axios.get(identity);
 export const fetchProfile = () => axios.get(profile);
