@@ -25,32 +25,47 @@ CREATE TABLE account_user(
     FOREIGN KEY (identity_id) REFERENCES identity(profile_id)
 );
 
-CREATE TABLE profile(
-    profile_id BIGSERIAL NOT NULL PRIMARY KEY,
-    account_user_uuid uuid,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100),
-    profile_picture BYTEA,
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    last_login timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (account_user_uuid) REFERENCES account_user(account_user_uuid)
-);
+-- CREATE TABLE profile(
+--     profile_id BIGSERIAL NOT NULL PRIMARY KEY,
+--     account_user_uuid uuid,
+--     first_name VARCHAR(100),
+--     last_name VARCHAR(100),
+--     profile_picture BYTEA,
+--     created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+--     last_login timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (account_user_uuid) REFERENCES account_user(account_user_uuid)
+-- );
+-- CREATE TABLE identity(
+--     identity_id BIGSERIAL NOT NULL PRIMARY KEY,
+--     account_user_uuid uuid,
+--     username VARCHAR(100),
+--     email VARCHAR(200),
+--     password VARCHAR(100),
+--     created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+--     last_login timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (account_user_uuid) REFERENCES account_user(account_user_uuid)
+-- );
+DROP TABLE [CASCADE] item_list,
+bill_to,
+bill_info,
+bill_from;
 
-CREATE TABLE identity(
-    identity_id BIGSERIAL NOT NULL PRIMARY KEY,
-    account_user_uuid uuid,
-    username VARCHAR(100),
-    email VARCHAR(200),
-    password VARCHAR(100),
-    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-    last_login timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (account_user_uuid) REFERENCES account_user(account_user_uuid)
-);
+DROP TABLE invoice CASCADE;
 
+DROP TABLE bill_from CASCADE;
+
+DROP TABLE bill_info CASCADE;
+
+DROP TABLE bill_to CASCADE;
+
+DROP TABLE item_list CASCADE;
+
+/* ADD others, then invoice, then delete others, add others. */
 /* SECOND LAYER INVOICE SECTION */
 CREATE TABLE invoice(
     invoice_id BIGSERIAL NOT NULL PRIMARY KEY,
     account_user_uuid uuid,
+    status VARCHAR(255) NOT NULL DEFAULT 'pending',
     bill_from_id BIGSERIAL,
     bill_to_id BIGSERIAL,
     bill_info_id BIGSERIAL,
@@ -67,7 +82,7 @@ CREATE TABLE bill_from(
     bill_from_id BIGSERIAL NOT NULL PRIMARY KEY,
     street_address VARCHAR(255),
     city VARCHAR(100),
-    postal_code INTEGER,
+    postal_code NUMERIC(50),
     country VARCHAR(50)
 );
 
@@ -90,9 +105,21 @@ CREATE TABLE bill_info(
 
 CREATE TABLE item_list(
     item_list_id BIGSERIAL NOT NULL PRIMARY KEY,
-    item_name VARCHAR(100),
-    quantity INTEGER NOT NULL DEFAULT 1,
-    price MONEY NOT NULL DEFAULT 1.00
+    item_name_1 VARCHAR(100),
+    item_quantity_1 INTEGER,
+    item_price_1 MONEY,
+    item_name_2 VARCHAR(100),
+    item_quantity_2 INTEGER,
+    item_price_2 MONEY,
+    item_name_3 VARCHAR(100),
+    item_quantity_3 INTEGER,
+    item_price_3 MONEY,
+    item_name_4 VARCHAR(100),
+    item_quantity_4 INTEGER,
+    item_price_4 MONEY,
+    item_name_5 VARCHAR(100),
+    item_quantity_5 INTEGER,
+    item_price_5 MONEY
 );
 
 /*VALUE INPUT 

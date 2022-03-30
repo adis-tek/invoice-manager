@@ -19,70 +19,71 @@ export const getAccountUser = async(req, res) => {
     }
 }
 
-export const getIdentity = async(req, res) => {
-    try {
-        const allInvoices = await pool.query("SELECT * FROM identity join account_user on identity.account_user_uuid=account_user.account_user_uuid");
-        res.json(allInvoices.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getIdentity = async(req, res) => {
+//     try {
+//         const allInvoices = await pool.query("SELECT * FROM identity join account_user on identity.account_user_uuid=account_user.account_user_uuid");
+//         res.json(allInvoices.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
-export const getProfile = async(req, res) => {
-    try {
-        const allInvoices = await pool.query("SELECT * FROM profile join account_user on profile.account_user_uuid=account_user.account_user_uuid");
-        res.json(allInvoices.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getProfile = async(req, res) => {
+//     try {
+//         const allInvoices = await pool.query("SELECT * FROM profile join account_user on profile.account_user_uuid=account_user.account_user_uuid");
+//         res.json(allInvoices.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
 //READ INVOICES
 
 export const getInvoices = async(req, res) => {
+    const userId = req.session.passport?.user;
     try {
-        const allInvoices = await pool.query("SELECT * FROM invoice RIGHT OUTER JOIN bill_from ON invoice.bill_from_id = bill_from.bill_from_id RIGHT OUTER JOIN bill_to ON invoice.bill_to_id = bill_to.bill_to_id RIGHT OUTER JOIN bill_info ON invoice.bill_info_id = bill_info.bill_info_id RIGHT OUTER JOIN item_list ON invoice.item_list_id = item_list.item_list_id");
+        const allInvoices = await pool.query("SELECT * FROM invoice RIGHT OUTER JOIN bill_from ON invoice.bill_from_id = bill_from.bill_from_id RIGHT OUTER JOIN bill_to ON invoice.bill_to_id = bill_to.bill_to_id RIGHT OUTER JOIN bill_info ON invoice.bill_info_id = bill_info.bill_info_id RIGHT OUTER JOIN item_list ON invoice.item_list_id = item_list.item_list_id WHERE account_user_uuid = $1", [userId]);
         res.json(allInvoices.rows);
     } catch(err) {
         console.log(err.message)
     }
 }
 
-export const getBillFrom = async(req, res) => {
-    try {
-        const allBillFrom = await pool.query("SELECT * FROM invoice join bill_from on invoice.bill_from_id=bill_from.bill_from_id");
-        res.json(allBillFrom.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getBillFrom = async(req, res) => {
+//     try {
+//         const allBillFrom = await pool.query("SELECT * FROM invoice join bill_from on invoice.bill_from_id=bill_from.bill_from_id");
+//         res.json(allBillFrom.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
-export const getBillTo = async(req, res) => {
-    try {
-        const allBillFrom = await pool.query("SELECT * FROM invoice join bill_to on invoice.bill_to_id=bill_to.bill_to_id");
-        res.json(allBillFrom.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getBillTo = async(req, res) => {
+//     try {
+//         const allBillFrom = await pool.query("SELECT * FROM invoice join bill_to on invoice.bill_to_id=bill_to.bill_to_id");
+//         res.json(allBillFrom.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
-export const getBillInfo = async(req, res) => {
-    try {
-        const allBillInfo = await pool.query("SELECT * FROM invoice join bill_info on invoice.bill_info_id=bill_info.bill_info_id");
-        res.json(allBillInfo.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getBillInfo = async(req, res) => {
+//     try {
+//         const allBillInfo = await pool.query("SELECT * FROM invoice join bill_info on invoice.bill_info_id=bill_info.bill_info_id");
+//         res.json(allBillInfo.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
-export const getItemList = async(req, res) => {
-    try {
-        const allItemList = await pool.query("SELECT * FROM invoice join item_list on invoice.item_list_id=item_list.item_list_id");
-        res.json(allItemList.rows);
-    } catch(err) {
-        console.log(err.message)
-    }
-}
+// export const getItemList = async(req, res) => {
+//     try {
+//         const allItemList = await pool.query("SELECT * FROM invoice join item_list on invoice.item_list_id=item_list.item_list_id");
+//         res.json(allItemList.rows);
+//     } catch(err) {
+//         console.log(err.message)
+//     }
+// }
 
 //FILTER INVOICES
 
@@ -99,6 +100,7 @@ export const filterInvoices = async(req, res) => {
 //CREATE INVOICES
 
 export const createInvoice = async (req, res) => {
+    const userId = req.session.passport?.user;
     try {
         // const { amount } = req.body;
         // );
@@ -134,23 +136,25 @@ export const createInvoice = async (req, res) => {
         const itemQuantity5 = newInvoice.item_quantity_5;
         const itemPrice5 = newInvoice.item_price_5;
 
-        // const createInvoice = await pool.query("INSERT INTO invoice(street_address, city, postal_code, country) VALUES($1, $2, $3, $4) RETURNING *",
-        // [billFromStreet, billFromCity, billFromPostal, billFromCountry]);
+        const createInvoice = await pool.query("INSERT INTO invoice(account_user_uuid) VALUES($1) RETURNING *",
+        [userId]);
 
-        // const createBillFrom = await pool.query("INSERT INTO bill_from(street_address, city, postal_code, country) VALUES($1, $2, $3, $4) RETURNING *",
-        // [billFromStreet, billFromCity, billFromPostal, billFromCountry]);
+        const createBillFrom = await pool.query("INSERT INTO bill_from(street_address, city, postal_code, country) VALUES($1, $2, $3, $4) RETURNING *",
+        [billFromStreet, billFromCity, billFromPostal, billFromCountry]);
 
-        // const createBillTo = await pool.query("INSERT INTO bill_to(clients_name, clients_email, street_address, city, postal_code, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
-        // [clientName, clientEmail, billToStreet, billToCity, billToPostal, billToCountry]);
+        const createBillTo = await pool.query("INSERT INTO bill_to(clients_name, clients_email, street_address, city, postal_code, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+        [clientName, clientEmail, billToStreet, billToCity, billToPostal, billToCountry]);
 
-        // const createBillInfo = await pool.query("INSERT INTO bill_info(invoice_date, payment_terms, project_description) VALUES($1, $2, $3) RETURNING *",
-        // [invoiceDate, paymentTerms, projectDescription]);
+        const createBillInfo = await pool.query("INSERT INTO bill_info(invoice_date, payment_terms, project_description) VALUES($1, $2, $3) RETURNING *",
+        [invoiceDate, paymentTerms, projectDescription]);
 
-        // const createItemList = await pool.query("INSERT INTO bill_info(item_name, quantity, price) VALUES($1, $2, $3) RETURNING *",
-        // [itemName1, itemQuantity1, itemPrice1]);
+        const createItemList = await pool.query("INSERT INTO item_list(item_name_1, item_quantity_1, item_price_1, item_name_2, item_quantity_2, item_price_2, item_name_3, item_quantity_3, item_price_3, item_name_4, item_quantity_4, item_price_4, item_name_5, item_quantity_5, item_price_5) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *",
+        [itemName1, itemQuantity1, itemPrice1, itemName2, itemQuantity2, itemPrice2, itemName3, itemQuantity3, itemPrice3, itemName4, itemQuantity4, itemPrice4, itemName5, itemQuantity5, itemPrice5]);
 
         console.log(newInvoice);
         console.log(clientName);
+        console.log(userId);
+        res.status(200);
     }   catch (err) {
         console.log(err.message)
     }

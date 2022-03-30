@@ -26,11 +26,12 @@ export const signin = async (req, res, next) => {
                     // res.send("Successfully authenticated.");
                     console.log("This is it", req.session);
                     console.log(req.session.passport.user)
+                    res.send({ loggedIn: true, user: req.session.user });
                 });
             }
         })(req, res, next);
     } catch (error) {
-        res.status(500).json({ message: "Something went wrong with sign in" });
+        res.send({ loggedIn: false });
     }
 }
 
@@ -81,7 +82,7 @@ export const signup = async (req, res) => {
                              console.log(results.rows);
                             //  req.flash('success_msg, "You are now registered. Please log in.');
                             //  res.redirect("auth/signin");
-                            res.status(200).json({ message: "Registration complete." })
+                            return res.status(200);
                          }
                      )
                  }
@@ -93,7 +94,7 @@ export const signup = async (req, res) => {
 
         // const token = jwt.sign({ email: email, id: "1" }, 'test', { expiresIn: "1h" });
 
-        // return res.status(200).json(req.body);
+        return res.status(200).json(req.body);
     } catch (error) {
         res.status(500).json({ message: "Something went wrong with sign up" });
     }

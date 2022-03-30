@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv"; 
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import cookieSession from "cookie-session";
 import flash from 'express-flash';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js'
@@ -15,7 +16,7 @@ const app = express();
 initializePassport(passport);
 
 //middleware
-app.use(bodyParser.json({limit: "32mb", extended: true}))
+// app.use(bodyParser.json({limit: "32mb", extended: true}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     cors({
@@ -24,12 +25,20 @@ app.use(
     })
   );
 app.use(express.json()); //req.body
+// app.use(cookieSession({
+//   maxAge: 24 * 60 * 60 * 1000,
+//   keys: ["secret"]
+// }))
+app.use(cookieParser());
 app.use(session({
     secret: "secret",
-    resave: true,
-    saveUninitialized: true
+    key: "userId",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24 * 1000,
+    }
 }))
-app.use(cookieParser());
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
