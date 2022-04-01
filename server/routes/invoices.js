@@ -10,10 +10,10 @@ router.get("/account-users", getAccountUser);
 //GET INVOICE DATA
 router.get("/", auth, getInvoices);
 
-//FILTER INVOICES
-router.get("/:id", filterInvoices);
 //CREATE INVOICES
 router.post("/", auth, createInvoice);
+//FILTER INVOICES
+router.get("/:id", filterInvoices);
 //UPDATE INVOICE
 router.patch("/:id", auth, updateInvoice);
 //DELETE INVOICE

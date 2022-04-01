@@ -229,9 +229,13 @@ export const updateInvoice = async(req, res) => {
 export const deleteInvoice = async (req, res) => {
     try {
         const { id } = req.params;
-        // const deleteInvoice = await pool.query("DELETE FROM invoice_test WHERE total = $1", [id]);
-        console.log("Delete invoice", id);
+        const deleteInvoice = await pool.query("DELETE FROM invoice WHERE invoice_id = $1", [id]);
+        const deleteBillFrom = await pool.query("DELETE FROM bill_from WHERE bill_from_id = $1", [id]);
+        const deleteBillTo = await pool.query("DELETE FROM bill_to WHERE bill_to_id = $1", [id]);
+        const deleteBillInfo = await pool.query("DELETE FROM bill_info WHERE bill_info_id = $1", [id]);
+        const deleteItemList = await pool.query("DELETE FROM item_list WHERE item_list_id = $1", [id]);
         console.log(req.body);
+        console.log("Deleted invoice", id);
     } catch (err) {
         console.log(err.message);
     }
