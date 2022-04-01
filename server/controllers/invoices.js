@@ -211,8 +211,8 @@ export const updateInvoice = async(req, res) => {
             [invoiceDate, paymentTerms, projectDescription, id]);
 
         const updateItemList = await pool.query(
-            "UPDATE item_list SET item_name = $1, quantity = $2, price = $3 WHERE item_list_id = $4", 
-            [itemName1, itemPrice1, itemQuantity1, id]);
+            "UPDATE item_list SET item_name_1 = $1, item_quantity_1 = $2, item_price_1 = $3, item_name_2 = $4, item_quantity_2 = $5, item_price_2 = $6, item_name_3 = $7, item_quantity_3 = $8, item_price_3 = $9, item_name_4 = $10, item_quantity_4= $11, item_price_4 = $12, item_name_5 = $13, item_quantity_5 = $14, item_price_5 = $15 WHERE item_list_id = $16", 
+            [itemName1, itemPrice1, itemQuantity1, itemName2, itemQuantity2, itemPrice2, itemName3, itemQuantity3, itemPrice3, itemName4, itemQuantity4, itemPrice4, itemName5, itemQuantity5, itemPrice5, id]);
 
         console.log("This is the invoice data", editedInvoice);
         console.log("This is the id", id);
