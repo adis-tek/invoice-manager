@@ -5,7 +5,7 @@ import axios from "axios";
 type Data = {
   name: string
 }
-
+ 
 axios.defaults.withCredentials = true;
 
 const url = "http://localhost:5000/invoices";
@@ -20,8 +20,8 @@ const API = axios.create({ baseURL: 'http://localhost:5000' })
 
 export const fetchInvoices = () => API.get('/invoices');
 export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoice);
-export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/${id}`, updatedInvoice);
-export const deleteInvoice = (id: any) => API.delete(`/${id}`, id);
+export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/invoices/${id}`, updatedInvoice);
+export const deleteInvoice = (id: any) => API.delete(`/invoices/${id}`, id);
 
 export const signin = (formData: any) => API.post('/user/signin', formData, { withCredentials: true });
 export const signup = (formData: any) => API.post('/user/signup', formData, { withCredentials: true });
