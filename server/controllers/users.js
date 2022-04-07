@@ -7,7 +7,6 @@ import flash from 'express-flash';
 import pool from "../config/db.config.js";
 
 const LocalStrategy = passportLocal.Strategy; // Get it working with es6 import format.
- 
 
 export const signin = async (req, res, next) => {
     const { email, password } = req.body
@@ -26,21 +25,21 @@ export const signin = async (req, res, next) => {
                     // res.send("Successfully authenticated.");
                     console.log("This is it", req.session);
                     console.log(req.session.passport.user)
-                    res.send({ loggedIn: true, user: req.session.user });
+                    res.send(true);
                 });
             }
         })(req, res, next);
     } catch (error) {
-        res.send({ loggedIn: false });
+        res.send(false);
     }
 }
 
 export const signup = async (req, res) => {
     const { email, password, confirmPassword, photo } = req.body;
 
-    const userEmail = email.replaceAll('"', "'");
-    const userPassword = password.replaceAll('"', "'");
-    const userConfirmedPassword = confirmPassword.replaceAll('"', "'");
+    // const userEmail = email.replaceAll('"', "'");
+    // const userPassword = password.replaceAll('"', "'");
+    // const userConfirmedPassword = confirmPassword.replaceAll('"', "'");
 
     try {
         let errors = [];
@@ -68,7 +67,8 @@ export const signup = async (req, res) => {
                  if (results.rows.length > 0) {
                      errors.push({ message: "Email is taken" });
 
-                     res.status(400).json({ message: "Email is taken" })
+                     res.send({ message: "Email is taken" });
+                     return;
                  } else {
                      pool.query(
                          `INSERT INTO account_user (email, password, photo)
@@ -82,9 +82,10 @@ export const signup = async (req, res) => {
                              console.log(results.rows);
                             //  req.flash('success_msg, "You are now registered. Please log in.');
                             //  res.redirect("auth/signin");
-                            return res.status(200);
                          }
                      )
+                     res.send(true);
+                     return;
                  }
              }
         )
@@ -94,7 +95,7 @@ export const signup = async (req, res) => {
 
         // const token = jwt.sign({ email: email, id: "1" }, 'test', { expiresIn: "1h" });
 
-        return res.status(200).json(req.body);
+        return;
     } catch (error) {
         res.status(500).json({ message: "Something went wrong with sign up" });
     }
