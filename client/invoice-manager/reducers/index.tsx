@@ -7,10 +7,10 @@ import invoices from './invoices';
 import auth from './auth';
 
 export default combineReducers({
+    auth,
     billFrom,
     billTo,
     billInfo,
     itemList,
     invoices,
-    auth
 })

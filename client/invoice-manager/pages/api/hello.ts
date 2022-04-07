@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse, Redirect } from 'next'
+import Router from 'next/router'
 import axios from "axios";
 
 type Data = {
@@ -23,8 +24,24 @@ export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoi
 export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/invoices/${id}`, updatedInvoice);
 export const deleteInvoice = (id: any) => API.delete(`/invoices/${id}`, id);
 
-export const signin = (formData: any) => API.post('/user/signin', formData, { withCredentials: true });
-export const signup = (formData: any) => API.post('/user/signup', formData, { withCredentials: true });
+export const signin = (formData: any) => API.post('/user/signin', formData, { withCredentials: true }).then(response => {
+  if (response.data == true) {
+    {
+    console.log("Sign in successful.");
+    Router.push("/");
+    }
+  } else {
+    return {message: "Incorrect credentials."};
+  }
+});
+export const signup = (formData: any) => API.post('/user/signup', formData, { withCredentials: true }).then(response => {
+  if (response.data == true) {
+    {
+    console.log("Sign up successful.");
+    Router.push("/auth/signin");
+    }
+  }
+});;
 
 export const fetchIdentity = () => axios.get(identity);
 export const fetchProfile = () => axios.get(profile);

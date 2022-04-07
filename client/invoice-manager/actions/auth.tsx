@@ -2,9 +2,9 @@ import * as api from '../pages/api/hello'
 
 export const signin = (formData: any) => async (dispatch) => {
     try {
-        const { data } = await api.signin(formData);
+        const { message } = await api.signin(formData);
 
-        // dispatch({ type: "AUTH", data })
+        dispatch({ type: "AUTH", payload: message })
 
         console.log("Dispatched signin", formData);
     } catch (error) {
@@ -24,4 +24,4 @@ export const signup = (formData: any) => async (dispatch) => {
         console.log(error);
         
     }
-}
+} 

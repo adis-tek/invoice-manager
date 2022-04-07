@@ -6,13 +6,21 @@ import styles from '../../styles/SignIn.module.scss'
 import Sidebar from "../../components/sidebar/sidebar"
 import { useDispatch } from "react-redux"
 import { useRouter } from "next/router"
+import { useSelector } from 'react-redux'
 
 const initialState = { email: '', password: '' };
 
 const SignIn: NextPage = () => {
     const [formData, setFormData] = useState(initialState);
     const dispatch = useDispatch();
+    const message = useSelector((state: any) => state.auth);
     const router = useRouter();
+
+    console.log(message);
+
+    useEffect(() => {
+        console.log(message);
+    })
 
     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +51,7 @@ const SignIn: NextPage = () => {
                     <label htmlFor="" className={styles.formLabel}>Password</label>
                     <input type="password" name="password" onChange={handleChange} placeholder="Enter your password" className={styles.formInput} />
                     </div>
+                    <p className={styles.message}>{message}</p>
                     <button type="submit" onClick={handleSubmit} className={styles.submitButton}>
                         <p className={styles.buttonText}>Sign In</p>
                         </button>
