@@ -17,16 +17,16 @@ const Home: NextPage = () => {
   const [invoiceList, setInvoiceList] = useState<boolean>(false);
   const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
   const [numberOfInvoices, setNumberOfInvoices] = useState<number>(0);
-  const [invoiceForm, setInvoiceForm] = useState<boolean>(true);
+  const [invoiceForm, setInvoiceForm] = useState<boolean>(false);
   const [newArray, setNewArray] = useState<string[]>([])
+  const [pendingFilter, setPendingFilter] = useState(true);
+  const [paidFilter, setPaidFilter] = useState(true);
+  const [draftFilter, setDraftFilter] = useState(true);
+  const [filter, setFilter] = useState(false);
 
   const countRef = useRef<number>(0);
 
   const invoices = useSelector((state: any) => state.invoices);
-  const billFrom = useSelector((state: any) => state.billFrom);
-  const billTo = useSelector((state: any) => state.billTo);
-  const billInfo = useSelector((state: any) => state.billInfo);
-  const itemList = useSelector((state: any) => state.itemList);
 
   const loadData = useCallback(async () => {
     dispatch(getInvoices());
@@ -73,18 +73,61 @@ const Home: NextPage = () => {
       countInvoices();
   }, [countRef]);
 
-  console.log("invoices",invoices);
-  console.log("billFrom", billFrom);
-  console.log("billTo", billTo);
-  console.log("billInfo", billInfo);
-  console.log("itemList", itemList);
+  console.log("invoice", invoices[4]?.status);
 
+  function filterByPaid (item) {
+    if (item.status === "paid") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  function filterByDraft (item) {
+    if (item.status === "draft") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function filterByPending (item) {
+    if (item.status === "pending") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  let paidInvoices = invoices.filter(filterByPaid);
+  let draftInvoices = invoices.filter(filterByDraft);
+  let pendingInvoices = invoices.filter(filterByPending);
+
+  function openFilter () {
+    setFilter(!filter);
+  }
+
+  function pendingToggle () {
+    setPendingFilter(!pendingFilter);
+  }
+
+  function paidToggle () {
+    setPaidFilter(!paidFilter);
+  }
+
+  function draftToggle () {
+    setDraftFilter(!draftFilter);
+  }
+
+  console.log("Paid", paidInvoices);
+  console.log("Pending", pendingInvoices);
+  console.log("Draft", draftInvoices);
 
   // Checking my variables
   // console.log(data);
   // console.log(invoiceList);
   // console.log(invoiceCount);
+
 
   return (
     <div className={styles.container}>
@@ -114,7 +157,7 @@ const Home: NextPage = () => {
           }
         </div>
         <div className={styles.rightEnd}>
-          <div className={styles.filterByStatusButton}>
+          <div className={styles.filterByStatusButton} onClick={openFilter}>
           <h3>Filter by status</h3>
           <div className={styles.imageHolder}>
             <Image
@@ -125,6 +168,70 @@ const Home: NextPage = () => {
                 />
           </div>
           </div>
+          {filter &&
+          <div className={styles.filterContainer}>
+          <div className={styles.toggleContainer}>
+          {draftFilter === true && 
+          <>
+          <div className={styles.checkMarkContainer} onClick={draftToggle}>
+              <Image
+              src="/check-mark.png"
+              alt="check-mark"
+              width={10}
+              height={10}
+                />
+          </div>
+          </>
+          }
+          {draftFilter === false && 
+          <>
+          <div className={styles.emptyContainer} onClick={draftToggle} />
+          </>
+          }
+          <h3>Draft</h3>
+          </div>
+          <div className={styles.toggleContainer}>
+          {pendingFilter === true && 
+          <>
+          <div className={styles.checkMarkContainer} onClick={pendingToggle}>
+              <Image
+              src="/check-mark.png"
+              alt="check-mark"
+              width={10}
+              height={10}
+                />
+          </div>
+          </>
+          }
+          {pendingFilter === false && 
+          <>
+          <div className={styles.emptyContainer} onClick={pendingToggle} />
+          </>
+          }
+          <h3>Pending</h3>
+          </div>
+          <div className={styles.toggleContainer}>
+          {paidFilter === true && 
+          <>
+          <div className={styles.checkMarkContainer} onClick={paidToggle}>
+              <Image
+              src="/check-mark.png"
+              alt="check-mark"
+              width={10}
+              height={10}
+                />
+          </div>
+          </>
+          }
+          {paidFilter === false && 
+          <>
+          <div className={styles.emptyContainer} onClick={paidToggle} />
+          </>
+          }
+          <h3>Paid</h3>
+          </div>
+          </div>
+          }
           <div className={styles.newInvoiceButton} onClick={toggleNewInvoiceForm}>
             <Image
               src="/plus.png"
@@ -135,12 +242,6 @@ const Home: NextPage = () => {
               <h3>New Invoice</h3>
           </div>
         </div>
-      </div>
-      <div>
-      {invoices.map((item: any) => {
-        <p>{item.invoice_id}</p>
-      })}
-      <p>{invoices.invoice_id}</p>
       </div>
       {invoiceList === false &&
       <div className={styles.noInvoicesContainer}>
@@ -155,10 +256,11 @@ const Home: NextPage = () => {
         <b> New Invoice </b>button and get started</p>
       </div>
       }
-      {invoiceList === true &&
-      <>
       <div className={styles.invoiceListContainer}>
-      {invoices?.map((invoice: any) => {
+      {/* Pending invoices */}
+      {pendingFilter === true &&
+      <>
+      {pendingInvoices?.map((invoice: any) => {
           {console.log(invoice?.clients_name)}
           return(
             <>
@@ -190,6 +292,82 @@ const Home: NextPage = () => {
           </>
           )
         })}
+        </>
+        }
+      {/* Paid invoices */}
+      {paidFilter === true &&
+      <>
+      {paidInvoices?.map((invoice: any) => {
+          {console.log(invoice?.clients_name)}
+          return(
+            <>
+            <Link href={`/${invoice?.invoice_id}`}>
+            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
+            <div className={styles.firstHalf}>
+            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
+            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
+            <p className={styles.clientName}>{invoice.clients_name}</p>
+            </div>
+            <div className={styles.secondHalf}>
+            <p className={styles.total}><b>{invoice.price}</b></p>
+            <div className={styles.statusContainer}>
+              <div className={styles.circle} />
+              <p className={styles.status}>{invoice.status}</p>
+            </div>
+            <div className={styles.invoiceArrow}>
+            <Image
+              src="/invoice-arrow.png"
+              alt="invoice-arrow"
+              width={7}
+              height={10}
+              layout="fixed"
+            />
+            </div>
+            </div>
+          </div>
+          </Link>
+          </>
+          )
+        })}
+        </>
+        }
+      {/* Draft invoices */}
+      {draftFilter === true &&
+      <>
+      {draftInvoices?.map((invoice: any) => {
+          {console.log(invoice?.clients_name)}
+          return(
+            <>
+            <Link href={`/${invoice?.invoice_id}`}>
+            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
+            <div className={styles.firstHalf}>
+            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
+            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
+            <p className={styles.clientName}>{invoice.clients_name}</p>
+            </div>
+            <div className={styles.secondHalf}>
+            <p className={styles.total}><b>{invoice.price}</b></p>
+            <div className={styles.statusContainer}>
+              <div className={styles.circle} />
+              <p className={styles.status}>{invoice.status}</p>
+            </div>
+            <div className={styles.invoiceArrow}>
+            <Image
+              src="/invoice-arrow.png"
+              alt="invoice-arrow"
+              width={7}
+              height={10}
+              layout="fixed"
+            />
+            </div>
+            </div>
+          </div>
+          </Link>
+          </>
+          )
+        })}
+        </>
+        }
         <div className={styles.invoiceContainer}>
           <div className={styles.firstHalf}>
           <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
@@ -237,8 +415,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      </>
-}
       </main>
     </div>
   )
