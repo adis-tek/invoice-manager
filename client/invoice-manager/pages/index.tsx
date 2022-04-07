@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   const dispatch = useDispatch();
   const [invoiceList, setInvoiceList] = useState<boolean>(false);
   const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
+  const [numberOfInvoices, setNumberOfInvoices] = useState<number>(0);
   const [invoiceForm, setInvoiceForm] = useState<boolean>(true);
   const [newArray, setNewArray] = useState<string[]>([])
 
@@ -61,10 +62,15 @@ const Home: NextPage = () => {
      }
    }
 
+   function countInvoices () {
+     setNumberOfInvoices(invoices.length);
+   }
+
   useEffect(() => {
       checkInvoices();
       showInvoices();
       loadData();
+      countInvoices();
   }, [countRef]);
 
   console.log("invoices",invoices);
@@ -100,7 +106,12 @@ const Home: NextPage = () => {
       <div className={styles.header}>
         <div className={styles.invoiceHeaderContainer}>
           <h2>Invoices</h2>
-          <p>No invoices</p>
+          {numberOfInvoices === 0 &&
+            <p>No Invoices</p>
+          }
+          {numberOfInvoices > 0 && 
+          <p>{numberOfInvoices} Invoices</p>
+          }
         </div>
         <div className={styles.rightEnd}>
           <div className={styles.filterByStatusButton}>
