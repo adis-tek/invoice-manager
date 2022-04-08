@@ -24,6 +24,32 @@ export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoi
 export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/invoices/${id}`, updatedInvoice);
 export const deleteInvoice = (id: any) => API.delete(`/invoices/${id}`, id);
 
+export const getUser = () => API.get('/user/profile', { withCredentials: true }).then(response => {
+  if (response.data == true) {
+    {
+    console.log("User is logged in.");
+    return true;
+    }
+  } else {
+    console.log("User must sign in.")
+    return false;
+
+  }
+});
+
+export const updateUser = (formData: any) => API.post('/user/profile', formData, { withCredentials: true }).then(response => {
+  if (response.data == true) {
+    {
+    console.log("User updated.");
+    return true;
+    }
+  } else {
+    console.log("User update failed.")
+    return false;
+
+  }
+});
+
 export const signin = (formData: any) => API.post('/user/signin', formData, { withCredentials: true }).then(response => {
   if (response.data == true) {
     {
@@ -34,6 +60,7 @@ export const signin = (formData: any) => API.post('/user/signin', formData, { wi
     return {message: "Incorrect credentials."};
   }
 });
+
 export const signup = (formData: any) => API.post('/user/signup', formData, { withCredentials: true }).then(response => {
   if (response.data == true) {
     {
