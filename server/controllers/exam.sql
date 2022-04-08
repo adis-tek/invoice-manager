@@ -105,3 +105,17 @@ SET
     (email, password, photo) = ('adismail@mail.com', 'testpass', null)
 WHERE
     account_user_uuid = '95363623-047c-4b31-bf46-6bd370a2a800';
+
+UPDATE
+    account_user
+SET
+    (email, password, photo) = ('adis00@gmail.com', 'testpass', null)
+WHERE
+    account_user_uuid = '70f32842-a298-4bf0-88c2-42532f8fcacd';
+
+UPDATE
+    invoice
+SET
+    (account_user_uuid) = ('4c9deba8-a6bf-4467-ac56-0dd9b2ef0102')
+WHERE
+    account_user_uuid = '70f32842-a298-4bf0-88c2-42532f8fcacd';
