@@ -6,6 +6,8 @@ import styles from '../../styles/SignUp.module.scss'
 import Sidebar from "../../components/sidebar/sidebar"
 import { useDispatch } from "react-redux"
 import { useRouter } from 'next/router'
+import * as api from '../api/hello'
+import Router from 'next/router'
 
 const initialState = { email: '', password: '', confirmPassword: '', profilePhoto: ''};
 
@@ -15,6 +17,21 @@ const SignUp: NextPage = () => {
     const router = useRouter();
 
     //Use this on the profile page for when users want to logout of the site
+
+    async function checkuser () {
+        try {
+            const user = await api.getUser();
+            if (user) {
+                console.log("User is logged in.");
+                Router.push("/");
+            } else {
+                console.log("User is not logged in.");
+            }
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
     const logout = () => { 
         dispatch({ type: "LOGOUT" });
 
@@ -22,6 +39,10 @@ const SignUp: NextPage = () => {
 
         setUser(null)
      }
+
+     useEffect(() => {
+        checkuser();
+    })
 
 
     const handleSubmit = (e: any) => {

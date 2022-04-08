@@ -7,6 +7,8 @@ import Sidebar from "../../components/sidebar/sidebar"
 import { useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
+import * as api from '../api/hello'
+import Router from 'next/router'
 
 const initialState = { email: '', password: '' };
 
@@ -18,8 +20,23 @@ const SignIn: NextPage = () => {
 
     console.log(message);
 
+    async function checkuser () {
+        try {
+            const user = await api.getUser();
+            if (user) {
+                console.log("User is logged in.");
+                Router.push("/");
+            } else {
+                console.log("User is not logged in.");
+            }
+        } catch (error) {
+            console.log("Error");
+        }
+    }
+
     useEffect(() => {
         console.log(message);
+        checkuser();
     })
 
     const handleChange = (e: any) => {
