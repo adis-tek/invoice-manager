@@ -58,7 +58,7 @@ INSERT INTO
         photo
     )
 VALUES
-($ 1, $ 2, $ 3, $ 4, $ 5, $ 6) RETURNING * [uuid_generate_v4(), CURRENT_DATE, CURRENT_TIMESTAMP, email, hashedPassword, photo]
+    ($ 1, $ 2, $ 3, $ 4, $ 5, $ 6) RETURNING * [uuid_generate_v4(), CURRENT_DATE, CURRENT_TIMESTAMP, email, hashedPassword, photo]
 );
 
 insert into
@@ -98,3 +98,10 @@ values
         null,
         null
     );
+
+UPDATE
+    account_user
+SET
+    (email, password, photo) = ('adismail@mail.com', 'testpass', null)
+WHERE
+    account_user_uuid = '95363623-047c-4b31-bf46-6bd370a2a800';

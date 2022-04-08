@@ -8,6 +8,53 @@ import pool from "../config/db.config.js";
 
 const LocalStrategy = passportLocal.Strategy; // Get it working with es6 import format.
 
+export const getProfile = async (req, res, next) => {
+    try {
+        if (req.session.passport?.user) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+
+        next();
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateProfile = async (req, res, next) => {
+    const { email, password, confirmPassword, profilePhoto } = req.body;
+    const user = req.session.passport?.user;
+
+    console.log(email, password, confirmPassword, profilePhoto);
+
+    try {
+        let errors = [];
+
+        if (password !== confirmPassword) return res.status(400).json({ message: "Passwords don't match" })
+
+        if (!user) {return res.send(false)};
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        pool.query(
+            `UPDATE account_user 
+            SET (email, password, photo) = ($1, $2, $3) 
+            WHERE account_user_uuid = $4;`, [email, hashedPassword, profilePhoto, user], (err, results) => {
+                if (err) {
+                    throw err;
+                }
+                console.log(req.session.passport.user)
+                res.send(true);
+             }
+        )
+        return;
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong with updating your profile." });
+    }
+}
+
 export const signin = async (req, res, next) => {
     const { email, password } = req.body
 
@@ -53,7 +100,7 @@ export const signup = async (req, res) => {
 
         // if (password !== confirmPassword) return res.status(400).json({ message: "Passwords don't match" })
 
-        const hashedPassword = await bcrypt.hash(password, 12)
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         pool.query(
             `SELECT * FROM account_user
