@@ -1,5 +1,5 @@
 import express from "express";
-import { getAccountUser, getInvoices, filterInvoices, createInvoice, updateInvoice, deleteInvoice } from "../controllers/invoices.js";
+import { getAccountUser, getInvoices, getInvoicesDrafts, getInvoicesPending, getInvoicesPaid, filterInvoices, createInvoice, updateInvoice, deleteInvoice } from "../controllers/invoices.js";
 import auth from '../middleware/auth.js'
 
 
@@ -9,6 +9,9 @@ const router = express.Router();
 router.get("/account-users", getAccountUser);
 //GET INVOICE DATA
 router.get("/", auth, getInvoices);
+router.get("/draft", auth, getInvoicesDrafts);
+router.get("/pending", auth, getInvoicesPending);
+router.get("/paid", auth, getInvoicesPaid);
 
 //CREATE INVOICES
 router.post("/", auth, createInvoice);
