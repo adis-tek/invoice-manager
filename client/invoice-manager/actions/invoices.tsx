@@ -10,6 +10,33 @@ export const getInvoices = () => async (dispatch: any) => {
     }
 }
 
+export const getDraft = () => async (dispatch: any) => {
+    try {
+        const { data } = await api.fetchdraft()
+        dispatch({ type: "FETCH_DRAFT", payload: data })
+    } catch (err) {
+        console.log((err as Error).message);
+    }
+}
+
+export const getPending = () => async (dispatch: any) => {
+    try {
+        const { data } = await api.fetchPending()
+        dispatch({ type: "FETCH_PENDING", payload: data })
+    } catch (err) {
+        console.log((err as Error).message);
+    }
+}
+
+export const getPaid = () => async (dispatch: any) => {
+    try {
+        const { data } = await api.fetchPaid()
+        dispatch({ type: "FETCH_PAID", payload: data })
+    } catch (err) {
+        console.log((err as Error).message);
+    }
+}
+ 
 export const createInvoice = (invoice: any) => async (dispatch: any) => {
      try {
          const { data } = await api.createInvoice(invoice);

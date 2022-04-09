@@ -18,7 +18,7 @@ import { getInvoices, deleteInvoice } from '../actions/invoices'
 const InvoicePageId: NextPage = () => {
     const router = useRouter();
     const invoiceId = router.query.invoiceId;
-    const targetInvoice = parseInt(invoiceId) - 1;
+    const targetInvoice = parseInt(invoiceId);
     const dispatch = useDispatch();
     const invoices = useSelector((state: any) => state.invoices);
     const pageInvoice = invoices[targetInvoice];
@@ -55,6 +55,8 @@ const InvoicePageId: NextPage = () => {
         itemPrice5: "",
         status: "",
     }));
+
+    console.log("Page invoice", pageInvoice);
 
     const loadData = useCallback(async () => {
         await dispatch(getInvoices());
@@ -196,7 +198,7 @@ const InvoicePageId: NextPage = () => {
               <div className={styles.invoiceDetailsContainer}>
                     <div className={styles.topContainer}>
                         <div className={styles.leftSide}>
-                            <h2 className={styles.id}>#<b>{invoiceId}</b></h2>
+                            <h2 className={styles.id}>#<b>000{targetInvoice + 1}</b></h2>
                             <p className={styles.description}>{invoiceData.projectDescription}</p>
                         </div>
                         <div className={styles.rightSide}>

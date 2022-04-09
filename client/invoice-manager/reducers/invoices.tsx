@@ -1,4 +1,4 @@
-const invoices = (invoices=["Something"], action: any) => {
+const invoices = (invoices=[], action: any) => {
     switch (action.type) {
         case "FETCH_ALL":
             return action.payload;

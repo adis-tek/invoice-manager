@@ -20,6 +20,9 @@ const itemList = "http://localhost:5000/invoices/item-list";
 const API = axios.create({ baseURL: 'http://localhost:5000' })
 
 export const fetchInvoices = () => API.get('/invoices');
+export const fetchdraft = () => API.get('/invoices/draft');
+export const fetchPending = () => API.get('/invoices/pending');
+export const fetchPaid = () => API.get('/invoices/paid');
 export const createInvoice = (newInvoice: any) => API.post('/invoices', newInvoice);
 export const updateInvoice = (updatedInvoice: any, id: any) => API.patch(`/invoices/${id}`, updatedInvoice);
 export const deleteInvoice = (id: any) => API.delete(`/invoices/${id}`, id);

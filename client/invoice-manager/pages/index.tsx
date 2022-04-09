@@ -7,7 +7,7 @@ import styles from '../styles/Home.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
-import { getInvoices, getBillFrom, getBillTo, getBillInfo, getItemList } from '../actions/invoices'
+import { getInvoices, getDraft, getPending, getPaid, getBillFrom, getBillTo, getBillInfo, getItemList } from '../actions/invoices'
 import Sidebar from "../components/sidebar/sidebar"
 import NewInvoiceForm from "../components/forms/newInvoiceForm"
 import data from "../dummy-data.json"
@@ -15,7 +15,7 @@ import data from "../dummy-data.json"
 const Home: NextPage = () => {
   const dispatch = useDispatch();
   const [invoiceList, setInvoiceList] = useState<boolean>(false);
-  const [invoiceCount, setInvoiceCount] = useState<string[]>([""]);
+  const [invoiceCount1, setInvoiceCount] = useState<string[]>([""]);
   const [numberOfInvoices, setNumberOfInvoices] = useState<number>(0);
   const [invoiceForm, setInvoiceForm] = useState<boolean>(false);
   const [newArray, setNewArray] = useState<string[]>([])
@@ -26,11 +26,34 @@ const Home: NextPage = () => {
 
   const countRef = useRef<number>(0);
 
+  const invoiceCount = useRef<number>(0);
+
+  const example = ["1", "2", "3"];
+
   const invoices = useSelector((state: any) => state.invoices);
+  const draft = useSelector((state: any) => state.draft);
+  const pending = useSelector((state: any) => state.pending);
+  const paid = useSelector((state: any) => state.paid);
+
 
   const loadData = useCallback(async () => {
     dispatch(getInvoices());
     console.log("Loading invoices.")
+  }, [dispatch]);
+
+  const loadDraft = useCallback(async () => {
+    dispatch(getDraft());
+    console.log("Loading drafts.")
+  }, [dispatch]);
+
+  const loadPending = useCallback(async () => {
+    dispatch(getPending());
+    console.log("Loading pending.")
+  }, [dispatch]);
+
+  const loadPaid = useCallback(async () => {
+    dispatch(getPaid());
+    console.log("Loading paid.")
   }, [dispatch]);
 
   // const constructedInvoice = 
@@ -70,38 +93,65 @@ const Home: NextPage = () => {
       checkInvoices();
       showInvoices();
       loadData();
+      loadDraft();
+      loadPending();
+      loadPaid();
       countInvoices();
   }, [countRef]);
 
-  console.log("invoice", invoices[4]?.status);
+  const [fetch, setFetch] = useState("");
 
-  function filterByPaid (item) {
-    if (item.status === "paid") {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  function filterByDraft (item) {
-    if (item.status === "draft") {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  let draftAndPending = [
+    draft[0],
+    pending[0],
+  ];
 
-  function filterByPending (item) {
-    if (item.status === "pending") {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  let draftAndPaid = [
+  draft[0],
+  paid[0]
+  ];
 
-  let paidInvoices = invoices.filter(filterByPaid);
-  let draftInvoices = invoices.filter(filterByDraft);
-  let pendingInvoices = invoices.filter(filterByPending);
+  let pendingAndPaid = [
+    pending[0],
+    paid[0],
+  ];
+
+  let none: [] = [];
+
+  console.log("draftAndPaid", draftAndPaid);
+
+  const [filterInvoices, setFilterInvoices] = useState(invoices);
+
+  // function filterByPaid (item) {
+  //   if (item.status === "paid") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // function filterByDraft (item) {
+  //   if (item.status === "draft") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // function filterByPending (item) {
+  //   if (item.status === "pending") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // let paidInvoices = invoices.filter(filterByPaid);
+  // console.log(paidInvoices);
+  // let draftInvoices = invoices.filter(filterByDraft);
+  // let pendingInvoices = invoices.filter(filterByPending);
+  // console.log(paidInvoices);
 
   function openFilter () {
     setFilter(!filter);
@@ -119,9 +169,107 @@ const Home: NextPage = () => {
     setDraftFilter(!draftFilter);
   }
 
-  console.log("Paid", paidInvoices);
-  console.log("Pending", pendingInvoices);
-  console.log("Draft", draftInvoices);
+  // console.log(paidInvoices);
+
+  // let all = Object.assign(paidInvoices, draftInvoices, pendingInvoices);
+  // console.log("All", all);
+  // let pending = pendingInvoices;
+  // console.log(paidInvoices);
+  // let paid = paidInvoices;
+  // let draft = draftInvoices;
+  // let pendingPaid = Object.assign(pendingInvoices, paidInvoices);
+  // let pendingDraft = Object.assign(pendingInvoices, draftInvoices);
+  // // let paidPending = Object.assign(paidInvoices, pendingInvoices);
+  // let paidDraft = Object.assign(paidInvoices, draftInvoices);
+  // let none: [] = [];
+
+  // console.log(paidInvoices);
+
+  // const [currentFilter, setCurentFilter] = useState(all);
+
+  // function filterInvoices () {
+  //   if (pendingFilter === true && paidFilter === false && draftFilter === true) {
+  //     setCurentFilter(all);
+  //   }
+  //   if (pendingFilter === true && paidFilter === false && draftFilter === false) {
+  //     setCurentFilter(pending);
+  //   }
+  //   if (pendingFilter === false && paidFilter === true && draftFilter === false) {
+  //     setCurentFilter(paid);
+  //   }
+  //   if (pendingFilter === false && paidFilter === false && draftFilter === true) {
+  //     setCurentFilter(draft);
+  //   }
+  //   if (pendingFilter === true && paidFilter === true && draftFilter === false) {
+  //     setCurentFilter(pendingPaid);
+  //   }
+  //   if (pendingFilter === true && paidFilter === false && draftFilter === true) {
+  //     setCurentFilter(pendingDraft);
+  //   }
+  //   if (paidFilter === true && draftFilter === true && pendingFilter === false) {
+  //     setCurentFilter(paidDraft);
+  //   }
+  //   if (paidFilter === false && draftFilter === false && pendingFilter === false) {
+  //     setCurentFilter(none);
+  //   }
+  // }
+
+  useEffect(() => {
+    if (pendingFilter === true) {
+      if (paidFilter === true && draftFilter === true) {
+        setFilterInvoices(invoices);
+        console.log("invoices");
+      }
+    }
+      if (pendingFilter === true) {
+        if (paidFilter === false && draftFilter === false) {
+          setFilterInvoices(pending);
+          console.log("pending");
+        }
+      }
+      if (paidFilter === true) {
+        if (draftFilter === false && pendingFilter === false) {
+          setFilterInvoices(paid);
+          console.log("paid");
+        }
+      }
+      if (draftFilter === true) {
+        if (pendingFilter === false && paidFilter === false) {
+          setFilterInvoices(draft);
+          console.log("draft");
+        }
+      }
+      if (pendingFilter === true && paidFilter === true) {
+        if (draftFilter === false) {
+          setFilterInvoices(pendingAndPaid);
+          console.log("pendingPaid");
+        }
+      }
+      if (draftFilter === true && pendingFilter === true) {
+        if (paidFilter === false) {
+          setFilterInvoices(draftAndPending);
+          console.log("pendingDraft");
+        }
+      }
+      if (draftFilter === true && paidFilter === true) {
+        if (pendingFilter === false) {
+          setFilterInvoices(draftAndPaid);
+          console.log("paidDraft");
+        }
+      }
+      if (paidFilter === false && draftFilter === false) {
+        if (pendingFilter === false) {
+          setFilterInvoices(none);
+          console.log("None");
+        }
+      }
+  }, [pendingFilter, paidFilter, draftFilter])
+
+  // console.log("Paid", paidInvoices);
+  // console.log("Pending", pendingInvoices);
+  // console.log("Draft", draftInvoices);
+
+  // console.log("Current Filter", currentFilter);
 
   // Checking my variables
   // console.log(data);
@@ -257,17 +405,14 @@ const Home: NextPage = () => {
       </div>
       }
       <div className={styles.invoiceListContainer}>
-      {/* Pending invoices */}
-      {pendingFilter === true &&
-      <>
-      {pendingInvoices?.map((invoice: any) => {
+      {filterInvoices?.map((invoice: any, index: number) => {
           {console.log(invoice?.clients_name)}
           return(
             <>
-            <Link href={`/${invoice?.invoice_id}`}>
+            <Link href={`/${index}`}>
             <div key={invoice.invoice_id} className={styles.invoiceContainer}>
             <div className={styles.firstHalf}>
-            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
+            <p className={styles.id}>#<b>000{index + 1}</b></p>
             <p className={styles.payDate}>Due {invoice.invoice_date}</p>
             <p className={styles.clientName}>{invoice.clients_name}</p>
             </div>
@@ -292,82 +437,6 @@ const Home: NextPage = () => {
           </>
           )
         })}
-        </>
-        }
-      {/* Paid invoices */}
-      {paidFilter === true &&
-      <>
-      {paidInvoices?.map((invoice: any) => {
-          {console.log(invoice?.clients_name)}
-          return(
-            <>
-            <Link href={`/${invoice?.invoice_id}`}>
-            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
-            <div className={styles.firstHalf}>
-            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
-            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
-            <p className={styles.clientName}>{invoice.clients_name}</p>
-            </div>
-            <div className={styles.secondHalf}>
-            <p className={styles.total}><b>{invoice.price}</b></p>
-            <div className={styles.statusContainer}>
-              <div className={styles.circle} />
-              <p className={styles.status}>{invoice.status}</p>
-            </div>
-            <div className={styles.invoiceArrow}>
-            <Image
-              src="/invoice-arrow.png"
-              alt="invoice-arrow"
-              width={7}
-              height={10}
-              layout="fixed"
-            />
-            </div>
-            </div>
-          </div>
-          </Link>
-          </>
-          )
-        })}
-        </>
-        }
-      {/* Draft invoices */}
-      {draftFilter === true &&
-      <>
-      {draftInvoices?.map((invoice: any) => {
-          {console.log(invoice?.clients_name)}
-          return(
-            <>
-            <Link href={`/${invoice?.invoice_id}`}>
-            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
-            <div className={styles.firstHalf}>
-            <p className={styles.id}>#<b>{invoice.invoice_id}</b></p>
-            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
-            <p className={styles.clientName}>{invoice.clients_name}</p>
-            </div>
-            <div className={styles.secondHalf}>
-            <p className={styles.total}><b>{invoice.price}</b></p>
-            <div className={styles.statusContainer}>
-              <div className={styles.circle} />
-              <p className={styles.status}>{invoice.status}</p>
-            </div>
-            <div className={styles.invoiceArrow}>
-            <Image
-              src="/invoice-arrow.png"
-              alt="invoice-arrow"
-              width={7}
-              height={10}
-              layout="fixed"
-            />
-            </div>
-            </div>
-          </div>
-          </Link>
-          </>
-          )
-        })}
-        </>
-        }
         <div className={styles.invoiceContainer}>
           <div className={styles.firstHalf}>
           <p className={styles.id}>#<b>{data.user1[0].id}</b></p>
