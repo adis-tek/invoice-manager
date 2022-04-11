@@ -29,6 +29,8 @@ const Home: NextPage = () => {
 
   const invoiceCount = useRef<number>(0);
 
+  console.log(new Date())
+
   const example = ["1", "2", "3"];
 
   const invoices = useSelector((state: any) => state.invoices);

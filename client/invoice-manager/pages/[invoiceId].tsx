@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import type { NextPage } from "next";
 import { useRouter } from "next/router"
-import { addDays, format, parse } from 'date-fns'
+import { addDays, format, parse, parseISO } from 'date-fns'
 import Link from 'next/link'
 import styles from '../styles/InvoicePage.module.scss'
 
@@ -67,11 +67,12 @@ const InvoicePageId: NextPage = () => {
     const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
     const processedInvoiceDate = new Date(fullInvoiceDate);
     const paymentDateProcessed = addDays(processedInvoiceDate, paymentTerms);
+    console.log(processedInvoiceDate);
     const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
     console.log(fullInvoiceDate);
     const [parsedDate, setParsedDate] = useState(date);
     // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
-
+    console.log("CHECK", processedInvoiceDate);
     // console.log(processedInvoiceDate);
     // console.log(paymentDate);
     // console.log(paymentDate.toString());
@@ -139,9 +140,21 @@ const InvoicePageId: NextPage = () => {
             paymentTerms: pageInvoice?.payment_terms,
             projectDescription: pageInvoice?.project_description,
             status: pageInvoice?.status,
-            itemName1: pageInvoice?.item_name,
-            itemQuantity1: pageInvoice?.quantity,
-            itemPrice1: pageInvoice?.price,
+            itemName1: pageInvoice?.item_name_1,
+            itemQuantity1: pageInvoice?.item_quantity_1,
+            itemPrice1: pageInvoice?.item_price_1,
+            itemName2: pageInvoice?.item_name_2,
+            itemQuantity2: pageInvoice?.item_quantity_2,
+            itemPrice2: pageInvoice?.item_price_2,
+            itemName3: pageInvoice?.item_name_3,
+            itemQuantity3: pageInvoice?.item_quantity_3,
+            itemPrice3: pageInvoice?.item_price_3,
+            itemName4: pageInvoice?.item_name_4,
+            itemQuantity4: pageInvoice?.item_quantity_4,
+            itemPrice4: pageInvoice?.item_price_4,
+            itemName5: pageInvoice?.item_name_5,
+            itemQuantity5: pageInvoice?.item_quantity_5,
+            itemPrice5: pageInvoice?.item_price_5,
             // itemName2: pageInvoice.item_name[1],
             // itemQuantity2: pageInvoice.item_quantity[1],
             // itemPrice2: pageInvoice.item_price[1],
@@ -307,16 +320,54 @@ const InvoicePageId: NextPage = () => {
                             <p className={styles.itemPrice}>Price</p>
                             <p className={styles.itemTotal}>Total</p>
                         </div>
+                        {invoiceData?.itemPrice1 &&
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName1}</p>
                         <p className={styles.itemQuantityData}>{invoiceData.itemQuantity1}</p>
-                        <p className={styles.itemPriceData}>$ {invoiceData.itemPrice1}</p>
-                        <p className={styles.itemTotalData}>$ TOTAL</p>
+                        <p className={styles.itemPriceData}>{invoiceData.itemPrice1}</p>
+                        <p className={styles.itemTotalData}>${((Number(invoiceData.itemPrice1.slice(1))) * (Number(invoiceData.itemQuantity1))).toFixed(2)}</p>
                         </div>
+                        }
+                        {invoiceData?.itemPrice2 &&
+                        <div className={styles.itemListDataContainer}>
+                        <p className={styles.itemNameData}>{invoiceData.itemName2}</p>
+                        <p className={styles.itemQuantityData}>{invoiceData.itemQuantity2}</p>
+                        <p className={styles.itemPriceData}>{invoiceData.itemPrice2}</p>
+                        <p className={styles.itemTotalData}>${((Number(invoiceData.itemPrice2.slice(1))) * (Number(invoiceData.itemQuantity2))).toFixed(2)}</p>
+                        </div>
+                        }
+                        {invoiceData?.itemPrice3 &&
+                        <div className={styles.itemListDataContainer}>
+                        <p className={styles.itemNameData}>{invoiceData.itemName3}</p>
+                        <p className={styles.itemQuantityData}>{invoiceData.itemQuantity3}</p>
+                        <p className={styles.itemPriceData}>{invoiceData.itemPrice3}</p>
+                        <p className={styles.itemTotalData}>${((Number(invoiceData.itemPrice3.slice(1))) * (Number(invoiceData.itemQuantity3))).toFixed(2)}</p>
+                        </div>
+                        }
+                        {invoiceData?.itemPrice4 &&
+                        <div className={styles.itemListDataContainer}>
+                        <p className={styles.itemNameData}>{invoiceData.itemName4}</p>
+                        <p className={styles.itemQuantityData}>{invoiceData.itemQuantity4}</p>
+                        <p className={styles.itemPriceData}>{invoiceData.itemPrice4}</p>
+                        <p className={styles.itemTotalData}>${((Number(invoiceData.itemPrice4.slice(1))) * (Number(invoiceData.itemQuantity4))).toFixed(2)}</p>
+                        </div>
+                        }
+                        {invoiceData?.itemPrice5 &&
+                        <div className={styles.itemListDataContainer}>
+                        <p className={styles.itemNameData}>{invoiceData.itemName5}</p>
+                        <p className={styles.itemQuantityData}>{invoiceData.itemQuantity5}</p>
+                        <p className={styles.itemPriceData}>{invoiceData.itemPrice5}</p>
+                        <p className={styles.itemTotalData}>${((Number(invoiceData.itemPrice5.slice(1))) * (Number(invoiceData.itemQuantity5))).toFixed(2)}</p>
+                        </div>
+                        }
                     </div>
                     <div className={styles.amountContainer}>
                         <p>Amount Due</p>
-                        <h1>$ TOTAL</h1>
+                        <h1>$ {((invoiceData?.itemPrice1 ? (((Number(invoiceData?.itemPrice1.slice(1))) * (Number(invoiceData?.itemQuantity1)))) : 0)
+                        + (invoiceData?.itemPrice2 ? (((Number(invoiceData?.itemPrice2.slice(1))) * (Number(invoiceData?.itemQuantity2)))) : 0)
+                        + (invoiceData?.itemPrice3 ? (((Number(invoiceData?.itemPrice3.slice(1))) * (Number(invoiceData?.itemQuantity3)))) : 0)
+                        + (invoiceData?.itemPrice4 ? (((Number(invoiceData?.itemPrice4.slice(1))) * (Number(invoiceData?.itemQuantity4)))) : 0)
+                        + (invoiceData?.itemPrice5 ? (((Number(invoiceData?.itemPrice5.slice(1))) * (Number(invoiceData?.itemQuantity5)))) : 0)).toFixed(2)}</h1>
                     </div>
               </div>
           </div>
