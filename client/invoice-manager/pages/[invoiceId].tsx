@@ -59,10 +59,10 @@ const InvoicePageId: NextPage = () => {
     const date = new Date();
     const invoiceDate = pageInvoice?.invoice_date.slice(0, 10);
     const paymentTerms = pageInvoice?.payment_terms;
-    const invoiceDateYear = invoiceDate.slice(0, 4);
-    const invoiceDateMonth = invoiceDate.slice(5, 7);
+    const invoiceDateYear = invoiceDate?.slice(0, 4);
+    const invoiceDateMonth = invoiceDate?.slice(5, 7);
     const invoiceDateMonthFormatted = getMonth(invoiceDateMonth);
-    const invoiceDateDay = invoiceDate.slice(8, 11);
+    const invoiceDateDay = invoiceDate?.slice(8, 11);
     const fullInvoiceDate = (invoiceDateMonthFormatted + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
     const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
     const processedInvoiceDate = new Date(fullInvoiceDate);
@@ -72,9 +72,9 @@ const InvoicePageId: NextPage = () => {
     const [parsedDate, setParsedDate] = useState(date);
     // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
 
-    console.log(processedInvoiceDate);
-    console.log(paymentDate);
-    console.log(paymentDate.toString());
+    // console.log(processedInvoiceDate);
+    // console.log(paymentDate);
+    // console.log(paymentDate.toString());
 
     // const invoiceDateFormatted = format(invoiceDateRaw, 'mm/dd/yyyy');
 

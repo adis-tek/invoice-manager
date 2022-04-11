@@ -86,7 +86,7 @@ const Home: NextPage = () => {
    }
 
    function countInvoices () {
-     setNumberOfInvoices(invoices.length);
+      setNumberOfInvoices(invoices?.length);
    }
 
   useEffect(() => {
@@ -96,7 +96,9 @@ const Home: NextPage = () => {
       loadDraft();
       loadPending();
       loadPaid();
-      countInvoices();
+      setTimeout(() => {
+        countInvoices();
+      }, 1200);
   }, [countRef]);
 
 
@@ -117,7 +119,7 @@ const Home: NextPage = () => {
 
   let none: [] = [];
 
-  console.log("draftAndPaid", draftAndPaid);
+  console.log("invoices", invoices);
 
   const [filterInvoices, setFilterInvoices] = useState(invoices);
 
@@ -274,6 +276,8 @@ const Home: NextPage = () => {
   // console.log(invoiceList);
   // console.log(invoiceCount);
 
+    console.log(Number(invoices[0]?.item_price_1.slice(1)))
+    console.log(invoices[0]?.item_price_1.slice(1))
 
   return (
     <div className={styles.container}>
@@ -415,7 +419,13 @@ const Home: NextPage = () => {
             <p className={styles.clientName}>{invoice.clients_name}</p>
             </div>
             <div className={styles.secondHalf}>
-            <p className={styles.total}><b>{invoice.price}</b></p>
+            <p className={styles.total}><b>$</b><b>{
+              ((invoice.item_price_1?.slice(1) ? (Number(invoice.item_price_1?.slice(1)) * invoice?.item_quantity_1) : 0) 
+              + (invoice.item_price_2?.slice(1) ? (Number(invoice.item_price_2?.slice(1)) * invoice?.item_quantity_2) : 0)
+              + (invoice.item_price_3?.slice(1) ? (Number(invoice.item_price_3?.slice(1)) * invoice?.item_quantity_3) : 0)
+              + (invoice.item_price_4?.slice(1) ? (Number(invoice.item_price_4?.slice(1)) * invoice?.item_quantity_4) : 0)
+              + (invoice.item_price_5?.slice(1) ? (Number(invoice.item_price_5?.slice(1)) * invoice?.item_quantity_5) : 0)).toFixed(2)
+            }</b></p>
             <div className={styles.statusContainer}>
               <div className={styles.circle} />
               <p className={styles.status}>{invoice.status}</p>
