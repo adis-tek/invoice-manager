@@ -99,8 +99,6 @@ const Home: NextPage = () => {
       countInvoices();
   }, [countRef]);
 
-  const [fetch, setFetch] = useState("");
-
 
   let draftAndPending = [
     draft[0],
@@ -263,7 +261,7 @@ const Home: NextPage = () => {
           console.log("None");
         }
       }
-  }, [pendingFilter, paidFilter, draftFilter])
+  }, [pendingFilter, paidFilter, draftFilter, invoices])
 
   // console.log("Paid", paidInvoices);
   // console.log("Pending", pendingInvoices);

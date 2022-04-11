@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import type { NextPage } from "next";
 import { useRouter } from "next/router"
+import { addDays, format, parse } from 'date-fns'
 import Link from 'next/link'
 import styles from '../styles/InvoicePage.module.scss'
 
@@ -55,8 +56,71 @@ const InvoicePageId: NextPage = () => {
         itemPrice5: "",
         status: "",
     }));
+    const date = new Date();
+    const invoiceDate = pageInvoice?.invoice_date.slice(0, 10);
+    const paymentTerms = pageInvoice?.payment_terms;
+    const invoiceDateYear = invoiceDate.slice(0, 4);
+    const invoiceDateMonth = invoiceDate.slice(5, 7);
+    const invoiceDateMonthFormatted = getMonth(invoiceDateMonth);
+    const invoiceDateDay = invoiceDate.slice(8, 11);
+    const fullInvoiceDate = (invoiceDateMonthFormatted + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
+    const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
+    const processedInvoiceDate = new Date(fullInvoiceDate);
+    const paymentDateProcessed = addDays(processedInvoiceDate, paymentTerms);
+    const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
+    console.log(fullInvoiceDate);
+    const [parsedDate, setParsedDate] = useState(date);
+    // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
 
-    console.log("Page invoice", pageInvoice);
+    console.log(processedInvoiceDate);
+    console.log(paymentDate);
+    console.log(paymentDate.toString());
+
+    // const invoiceDateFormatted = format(invoiceDateRaw, 'mm/dd/yyyy');
+
+    function getMonth (conversion: string) {
+        switch(conversion) {
+            case '01' :
+                return 'Jan'
+                break;
+            case '02' :
+                return 'Feb'
+                break;
+            case '03' :
+                return 'Mar'
+                break;
+            case '04' :
+                return 'Apr'
+                break;
+            case '05' :
+                return 'May'
+                break;
+            case '06' :
+                return 'Jun'
+                break;
+            case '07' :
+                return 'Jul'
+                break;
+            case '08' :
+                return 'Aug'
+                break;
+            case '09' :
+                return 'Sep'
+                break;
+            case '10' :
+                return 'Oct'
+                break;
+            case '11' :
+                return 'Nov'
+                break;
+            case '12' :
+                return 'Dec'
+                break;
+            default:
+                return ''
+        }
+    }
+
 
     const loadData = useCallback(async () => {
         await dispatch(getInvoices());
@@ -212,11 +276,11 @@ const InvoicePageId: NextPage = () => {
                         <div className={styles.leftSide}>
                             <div className={styles.invoiceDateContainer}>
                                 <p>Invoice Date</p>
-                                <h2>{invoiceData.invoiceDate}</h2>
+                                <h2>{fullInvoiceDateDisplayed}</h2>
                             </div>
                             <div className={styles.paymentDateContainer}>
                                 <p>Payment Date</p>
-                                <h2>{invoiceData.invoiceDate} + Payment Terms</h2>
+                                <h2>{paymentDate}</h2>
                             </div>
                         </div>
                         <div className={styles.middle}>
