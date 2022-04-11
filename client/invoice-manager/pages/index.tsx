@@ -6,6 +6,7 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { addDays, format } from 'date-fns'
 
 import { getInvoices, getDraft, getPending, getPaid, getBillFrom, getBillTo, getBillInfo, getItemList } from '../actions/invoices'
 import Sidebar from "../components/sidebar/sidebar"
@@ -415,7 +416,37 @@ const Home: NextPage = () => {
             <div key={invoice.invoice_id} className={styles.invoiceContainer}>
             <div className={styles.firstHalf}>
             <p className={styles.id}>#<b>000{index + 1}</b></p>
-            <p className={styles.payDate}>Due {invoice.invoice_date}</p>
+            <p className={styles.payDate}>Due {
+
+                format(addDays(new Date(`${(invoice?.invoice_date.slice(0, 10).slice(8, 11))}
+                ${(invoice?.invoice_date.slice(0, 10).slice(5, 7) === "01" ? "Jan" : 
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "02" ? "Feb" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "03" ? "Mar" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "04" ? "Apr" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "05" ? "May" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "06" ? "Jun" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "07" ? "Jul" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "08" ? "Aug" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "09" ? "Sep" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "10" ? "Oct" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "11" ? "Nov" :
+                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "12" ? "Dec" :
+                ""
+                )}
+                ${invoice?.invoice_date.slice(0, 10).slice(0, 4)}`), invoice?.payment_terms), "dd MMM yyyy").toString()
+
+            //       const invoiceDate = invoice?.invoice_date.slice(0, 10);
+            //       const paymentTerms = invoice?.payment_terms;
+            //       const invoiceDateYear = invoice?.invoice_date.slice(0, 10).slice(0, 4);
+            //       const invoiceDateMonth = invoice?.invoice_date.slice(0, 10).slice(5, 7);
+            //       const invoiceDateDay = invoice?.invoice_date.slice(0, 10).slice(8, 11);
+            //       const fullInvoiceDate = ((invoice?.invoice_date.slice(0, 10).slice(5, 7)) + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
+            //       const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
+            //       const processedInvoiceDate = new Date(fullInvoiceDate);
+            //       const paymentDateProcessed = addDays(processedInvoiceDate, invoice?.payment_terms);
+            //       const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
+            // invoice.invoice_date
+            }</p>
             <p className={styles.clientName}>{invoice.clients_name}</p>
             </div>
             <div className={styles.secondHalf}>
