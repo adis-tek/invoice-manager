@@ -40,6 +40,8 @@ export const getUser = () => API.get('/user/profile', { withCredentials: true })
   }
 });
 
+export const getUserPhoto = () => API.get('/user/profile-picture', { withCredentials: true });
+
 export const updateUser = (formData: any) => API.post('/user/profile', formData, { withCredentials: true }).then(response => {
   if (response.data == true) {
     {
