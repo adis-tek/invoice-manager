@@ -23,6 +23,16 @@ export const getProfile = async (req, res, next) => {
     }
 }
 
+export const getProfilePicture = async(req, res) => {
+    const userId = req.session.passport?.user;
+    try {
+        const profilePicture = await pool.query("SELECT photo FROM account_user WHERE account_user_uuid = $1", [userId]);
+        res.json(profilePicture.rows);
+    } catch(err) {
+        console.log(err.message)
+    }
+}
+
 export const updateProfile = async (req, res, next) => {
     const { email, password, confirmPassword, profilePhoto } = req.body;
     const user = req.session.passport?.user;
