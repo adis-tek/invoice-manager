@@ -31,19 +31,19 @@ const NewInvoiceForm: NextPage = (props) => {
         projectDescription: props.defaultProjectDescription,
         item_name_1: props.defaultItemName1,
         item_quantity_1: props.defaultItemQuantity1,
-        item_price_1: props.defaultItemPrice1,
+        item_price_1: parseFloat(props.defaultItemPrice1?.slice(1)).toFixed(2),
         item_name_2: props.defaultItemName1,
-        item_quantity_2: props.ItemQuantity2,
-        item_price_2: props.ItemPrice2,
+        item_quantity_2: props.defaultItemQuantity2,
+        item_price_2: parseFloat(props.defaultItemPrice2?.slice(1)).toFixed(2),
         item_name_3: props.defaultItemName3,
         item_quantity_3: props.defaultItemQuantity3,
-        item_price_3: props.defaultItemPrice3,
+        item_price_3: parseFloat(props.defaultItemPrice3?.slice(1)).toFixed(2),
         item_name_4: props.defaultItemName4,
         item_quantity_4: props.defaultItemQuantity4,
-        item_price_4: props.defaultItemPrice4,
+        item_price_4: parseFloat(props.defaultItemPrice4?.slice(1)).toFixed(2),
         item_name_5: props.defaultItemName5,
         item_quantity_5: props.defaultItemQuantity5,
-        item_price_5: props.defaultItemPrice5,
+        item_price_5: parseFloat(props.defaultItemPrice5?.slice(1)).toFixed(2),
     }));
 
     // console.log("PROPS", props.defaultItemPrice1.slice(1));
@@ -53,9 +53,8 @@ const NewInvoiceForm: NextPage = (props) => {
     //INVOICE ID
     const id = props.dynamicId;
 
-    console.log(id);
-    console.log(id?.length);
-    console.log(id === true);
+    console.log("Quantity", invoiceData.item_quantity_1);
+    console.log(typeof invoiceData.item_quantity_1);
 
     //ITEM COMPONENT STATE
     const [item1, setItem1] = useState<boolean>(true);
@@ -195,7 +194,7 @@ const NewInvoiceForm: NextPage = (props) => {
     console.log(quantity1);
     console.log(invoiceData.item_quantity_1);
 
-    console.log(parseFloat(invoiceData.item_quantity_1) * parseFloat(invoiceData.item_price_1))
+    console.log("TESTING",(Number(invoiceData.item_quantity_1) + 1))
 
     function checkProps(props){
         if (props === true) {
@@ -346,7 +345,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         value={invoiceData.invoiceDate} 
                         onChange={(e) => setInvoiceData({...invoiceData, invoiceDate: e.target.value})} 
                         className={styles.halfInput} /> */}
-                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             value={invoiceData.invoiceDate}
                             onChange={(date) => setInvoiceData({...invoiceData, invoiceDate: date})}
@@ -396,23 +395,26 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="text" 
                         name="itemName" 
-                        value={props.defaultItemName1}
+                        value={invoiceData.item_name_1}
                         onChange={(e) => setInvoiceData({...invoiceData, item_name_1: e.target.value})} 
                         className={styles.itemInput} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Qty.</p>
                         <input 
-                        type='number'
+                        type="number" 
+                        min="1"
+                        step="1"
+                        pattern="\d+"
                         name="quantity"
-                        value={props.defaultItemQuantity1}
+                        value={invoiceData.item_quantity_1}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
                                 setInvoiceData({...invoiceData, item_quantity_1: realInput})
-                                setQuantity1(realInput);
+                                setQuantity3(realInput);
                         }
                         else {
                                 setInvoiceData({...invoiceData, item_quantity_1: e.target.value});
@@ -425,7 +427,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="number" 
                         name="price"
-                        value={props.defaultItemPrice1?.slice(1)}
+                        value={invoiceData.item_price_1}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
@@ -451,9 +453,9 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(props.defaultItemQuantity1)) * (parseFloat(props.defaultItemPrice1?.slice(1)))).toFixed(2)))}</p>
-                        {console.log(invoiceData.item_quantity_1)}
-                        {console.log(invoiceData.item_price_1)}
+                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_1)) * (parseFloat(invoiceData.item_price_1))).toFixed(2)))}</p>
+                        {console.log(Number(invoiceData.item_quantity_1))}
+                        {console.log(invoiceData.item_price_1?.slice(1))}
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -497,7 +499,7 @@ const NewInvoiceForm: NextPage = (props) => {
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
                                 setInvoiceData({...invoiceData, item_quantity_2: realInput})
-                                setQuantity2(realInput);
+                                setQuantity3(realInput);
                         }
                         else {
                                 setInvoiceData({...invoiceData, item_quantity_2: e.target.value});
