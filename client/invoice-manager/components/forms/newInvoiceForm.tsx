@@ -224,8 +224,27 @@ const NewInvoiceForm: NextPage = (props) => {
         
     }
 
-    console.log("What is this", invoiceData.item_price_1);
-    console.log("Invoice date", invoiceData.invoiceDate)
+    const options = [
+        { value: 1, label: "1 Day"},
+        { value: 7, label: "7 Days"},
+        { value: 14, label: "14 Days"},
+        { value: 30, label: "30 Days"},
+    ];
+
+    const [selectLabel, setSelectLabel] = useState(
+        invoiceData?.paymentTerms === 1 ? { value: 1, label: "1 Day"} :
+        invoiceData?.paymentTerms === 7 ? { value: 7, label: "7 Day"} :
+        invoiceData?.paymentTerms === 14 ? { value: 14, label: "14 Day"} :
+        invoiceData?.paymentTerms === 30 ? { value: 30, label: "30 Day"} :
+        { value: 1, label: "1 Day"}
+        )
+
+    function onSelectChange (e) {
+        setInvoiceData({...invoiceData, paymentTerms: e.value});
+        console.log(e.value);
+        setSelectLabel(e);
+    }
+
     return (
         <>
         <div className={styles.invoiceFormContainer}>
@@ -371,9 +390,11 @@ const NewInvoiceForm: NextPage = (props) => {
                             <option value="30">Next 30 Day</option>
                         </select> */}
                         <Select
-                        value={props.defaultPaymentTerms}
-                        onChange={(e) => setInvoiceData({...invoiceData, paymentTerms: e.target.value})} 
+                        value={selectLabel}
+                        options={options}
+                        onChange={(e) => onSelectChange(e)}
                         />
+                        {console.log(invoiceData.paymentTerms)}
                     </div>
                     </div>
                     <div className={styles.inputContainer}>
