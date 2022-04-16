@@ -16,10 +16,10 @@ import Image from "next/image"
 const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
     const [invoiceData, setInvoiceData] = useState(({
-        billFromStreet:"street1",
-        billFromCity: "city1",
-        billFromPostal: "60660",
-        billFromCountry: "country1",
+        billFromStreet: props.defaultBillFromStreet,
+        billFromCity: props.defaultBillFromCity,
+        billFromPostal: props.defaultBillFromPostal,
+        billFromCountry: props.defaultBillFromCountry,
         clientName: props.defaultClientName,
         clientEmail: props.defaultClientEmail,
         billToStreet: props.defaultBillToStreet,
@@ -250,6 +250,18 @@ const NewInvoiceForm: NextPage = (props) => {
         return total;
     }
 
+    function checkItems () {
+        invoiceData.item_name_1 ? setItem1(true) : setItem1(false);
+        invoiceData.item_name_2 ? setItem2(true) : setItem2(false);
+        invoiceData.item_name_3 ? setItem3(true) : setItem3(false);
+        invoiceData.item_name_4 ? setItem4(true) : setItem4(false);
+        invoiceData.item_name_5 ? setItem5(true) : setItem5(false);
+    }
+
+    useEffect(() => {
+        checkItems();
+    }, [])
+
     return (
         <>
         <div className={styles.invoiceFormContainer}>
@@ -464,9 +476,9 @@ const NewInvoiceForm: NextPage = (props) => {
                                 setInvoiceData({...invoiceData, item_price_1: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
-                                    let rounded = Math.round(converted * 100) / 100;
-                                    let realInput = rounded.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_1: realInput});
+                                    let floor = Math.floor(converted * 100) / 100;
+                                    let realInput = floor.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_3: realInput});
                                     setPrice1(realInput);
                                  } else {
                                     setInvoiceData({...invoiceData, item_price_1: e.target.value});
@@ -479,7 +491,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_1)) * (parseFloat(invoiceData.item_price_1))).toFixed(2)))}</p>
+                            <p>{checkTotal(calcTotal(invoiceData.item_quantity_1, parseFloat(invoiceData.item_price_1)).toFixed(2))}</p>
                         {console.log(Number(invoiceData.item_quantity_1))}
                         {console.log(invoiceData.item_price_1?.slice(1))}
                     </div>
@@ -547,9 +559,9 @@ const NewInvoiceForm: NextPage = (props) => {
                                 setInvoiceData({...invoiceData, item_price_2: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
-                                    let rounded = Math.round(converted * 100) / 100;
-                                    let realInput = rounded.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_2: realInput});
+                                    let floor = Math.floor(converted * 100) / 100;
+                                    let realInput = floor.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_3: realInput});
                                     setPrice2(realInput);
                                  } else {
                                     setInvoiceData({...invoiceData, item_price_2: e.target.value});
@@ -562,7 +574,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_2)) * (parseFloat(invoiceData.item_price_2))).toFixed(2)))}</p>
+                            <p>{checkTotal(calcTotal(invoiceData.item_quantity_2, parseFloat(invoiceData.item_price_2)).toFixed(2))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -587,6 +599,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="text" 
                         name="itemName" 
+                        value={invoiceData.item_name_3}
                         onChange={(e) => setInvoiceData({...invoiceData, item_name_3: e.target.value})} 
                         className={styles.itemInput} />
                     </div>
@@ -667,6 +680,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         <input 
                         type="text" 
                         name="itemName" 
+                        value={invoiceData.item_name_4}
                         onChange={(e) => setInvoiceData({...invoiceData, item_name_4: e.target.value})} 
                         className={styles.itemInput} />
                     </div>
@@ -707,9 +721,9 @@ const NewInvoiceForm: NextPage = (props) => {
                                 setInvoiceData({...invoiceData, item_price_4: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
-                                    let rounded = Math.round(converted * 100) / 100;
-                                    let realInput = rounded.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_4: realInput});
+                                    let floor = Math.floor(converted * 100) / 100;
+                                    let realInput = floor.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_3: realInput});
                                     setPrice4(realInput);
                                  } else {
                                     setInvoiceData({...invoiceData, item_price_4: e.target.value});
@@ -722,7 +736,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_4)) * (parseFloat(invoiceData.item_price_4))).toFixed(2)))}</p>
+                            <p>{checkTotal(calcTotal(invoiceData.item_quantity_4, parseFloat(invoiceData.item_price_4)).toFixed(2))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -746,7 +760,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
-                        name="itemName" 
+                        name="itemName"
+                        value={invoiceData.item_name_5}
                         onChange={(e) => setInvoiceData({...invoiceData, item_name_5: e.target.value})} 
                         className={styles.itemInput} />
                     </div>
@@ -787,9 +802,9 @@ const NewInvoiceForm: NextPage = (props) => {
                                 setInvoiceData({...invoiceData, item_price_5: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
-                                    let rounded = Math.round(converted * 100) / 100;
-                                    let realInput = rounded.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_5: realInput});
+                                    let floor = Math.floor(converted * 100) / 100;
+                                    let realInput = floor.toFixed(2);
+                                    setInvoiceData({...invoiceData, item_price_3: realInput});
                                     setPrice5(realInput);
                                  } else {
                                     setInvoiceData({...invoiceData, item_price_5: e.target.value});
@@ -802,7 +817,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_5)) * (parseFloat(invoiceData.item_price_5))).toFixed(2)))}</p>
+                            <p>{checkTotal(calcTotal(invoiceData.item_quantity_5, parseFloat(invoiceData.item_price_5)).toFixed(2))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>

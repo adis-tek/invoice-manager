@@ -124,7 +124,8 @@ const InvoicePageId: NextPage = () => {
 
     function markAsPaid () {
         setInvoiceData({...invoiceData, status: "paid"});
-        dispatch(updateInvoice(invoiceData, targetInvoice));
+        console.log("Mark as paid", invoiceData);
+        // dispatch(updateInvoice(invoiceData, targetInvoice));
     }
 
 
@@ -135,16 +136,20 @@ const InvoicePageId: NextPage = () => {
 
     const handleLoadedData = useCallback(async () => {
         await setInvoiceData({...invoiceData, 
-            clientName: pageInvoice?.clients_name,
-            clientEmail: pageInvoice?.clients_email,
-            billToStreet: pageInvoice?.street_address,
-            billToCity: pageInvoice?.city,
-            billToPostal: pageInvoice?.postal_code,
-            billToCountry: pageInvoice?.country,
+            clientName: pageInvoice?.client_name,
+            clientEmail: pageInvoice?.client_email,
+            billToStreet: pageInvoice?.client_street_address,
+            billToCity: pageInvoice?.client_city,
+            billToPostal: pageInvoice?.client_postal_code,
+            billToCountry: pageInvoice?.client_country,
             invoiceDate: pageInvoice?.invoice_date,
             paymentTerms: pageInvoice?.payment_terms,
             projectDescription: pageInvoice?.project_description,
             status: pageInvoice?.status,
+            billFromStreet: pageInvoice?.street_address,
+            billFromCity: pageInvoice?.city,
+            billFromPostal: pageInvoice?.postal_code,
+            billFromCountry: pageInvoice?.country,
             itemName1: pageInvoice?.item_name_1,
             itemQuantity1: pageInvoice?.item_quantity_1,
             itemPrice1: pageInvoice?.item_price_1,
@@ -183,6 +188,8 @@ const InvoicePageId: NextPage = () => {
         dispatch(deleteInvoice(id));
     }
 
+    console.log();
+
     return (
         <div className={styles.container}>
       <Head>
@@ -201,6 +208,10 @@ const InvoicePageId: NextPage = () => {
           dynamicId={invoiceId}
           defaultClientName={invoiceData?.clientName}
           defaultClientEmail={invoiceData?.clientEmail}
+          defaultBillFromStreet={invoiceData?.billFromStreet}
+          defaultBillFromCity={invoiceData?.billFromCity}
+          defaultBillFromPostal={invoiceData?.billFromPostal}
+          defaultBillFromCountry={invoiceData?.billFromCountry}
           defaultBillToStreet={invoiceData?.billToStreet}
           defaultBillToCity={invoiceData?.billToCity}
           defaultBillToPostal={invoiceData?.billToPostal}
