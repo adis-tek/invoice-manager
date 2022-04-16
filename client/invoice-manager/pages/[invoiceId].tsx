@@ -13,7 +13,7 @@ import NewInvoiceForm from "../components/forms/newInvoiceForm"
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
-import { getInvoices, deleteInvoice } from '../actions/invoices'
+import { getInvoices, updateInvoice, deleteInvoice } from '../actions/invoices'
 
 
 const InvoicePageId: NextPage = () => {
@@ -122,6 +122,11 @@ const InvoicePageId: NextPage = () => {
         }
     }
 
+    function markAsPaid () {
+        setInvoiceData({...invoiceData, status: "paid"});
+        dispatch(updateInvoice(invoiceData, targetInvoice));
+    }
+
 
     const loadData = useCallback(async () => {
         await dispatch(getInvoices());
@@ -155,18 +160,6 @@ const InvoicePageId: NextPage = () => {
             itemName5: pageInvoice?.item_name_5,
             itemQuantity5: pageInvoice?.item_quantity_5,
             itemPrice5: pageInvoice?.item_price_5,
-            // itemName2: pageInvoice.item_name[1],
-            // itemQuantity2: pageInvoice.item_quantity[1],
-            // itemPrice2: pageInvoice.item_price[1],
-            // itemName3: pageInvoice.item_name[2],
-            // itemQuantity3: pageInvoice.item_quantity[2],
-            // itemPrice3: pageInvoice.item_price[2],
-            // itemName4: pageInvoice.item_name[3],
-            // itemQuantity4: pageInvoice.item_quantity[3],
-            // itemPrice4: pageInvoice.item_price[3],
-            // itemName5: pageInvoice.item_name[4],
-            // itemQuantity5: pageInvoice.item_quantity[4],
-            // itemPrice5: pageInvoice.item_price[4],
         });
     }, [setInvoiceData]);
 
@@ -266,7 +259,7 @@ const InvoicePageId: NextPage = () => {
               className={styles.deleteButtonContainer}>
                   <p className={styles.deleteText}>Delete</p>
               </div>
-              <div className={styles.markButtonContainer}>
+              <div onClick={markAsPaid} className={styles.markButtonContainer}>
                   <p className={styles.markText}>Mark as Paid</p>
               </div>
           </div>

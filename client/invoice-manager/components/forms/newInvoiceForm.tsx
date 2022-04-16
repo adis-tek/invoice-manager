@@ -245,6 +245,11 @@ const NewInvoiceForm: NextPage = (props) => {
         setSelectLabel(e);
     }
 
+    function calcTotal (quantity: number, price: number) {
+        const total = (quantity * (price * 100)) / 100;
+        return total;
+    }
+
     return (
         <>
         <div className={styles.invoiceFormContainer}>
@@ -622,8 +627,8 @@ const NewInvoiceForm: NextPage = (props) => {
                                 setInvoiceData({...invoiceData, item_price_3: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
-                                    let rounded = Math.round(converted * 100) / 100;
-                                    let realInput = rounded.toFixed(2);
+                                    let floor = Math.floor(converted * 100) / 100;
+                                    let realInput = floor.toFixed(2);
                                     setInvoiceData({...invoiceData, item_price_3: realInput});
                                     setPrice3(realInput);
                                  } else {
@@ -637,7 +642,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.totalContainer}>
                         <p className={styles.totalTitle}>Total</p>
-                            <p>{checkTotal((((parseFloat(invoiceData.item_quantity_3)) * (parseFloat(invoiceData.item_price_3))).toFixed(2)))}</p>
+                            <p>{checkTotal(calcTotal(invoiceData.item_quantity_3, parseFloat(invoiceData.item_price_3)).toFixed(2))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
