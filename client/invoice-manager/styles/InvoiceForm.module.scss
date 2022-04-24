@@ -4,12 +4,25 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 504px;
+  width: 560px;
   height: auto;
   align-items: flex-start;
-  border: 1px solid red;
-  overflow: scroll;
-  padding: 2rem 0px 0px 0px;
+  overflow-y: scroll;
+  overflow-x: none;
+  padding: 2rem 10px 0px 10px;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    background: transparent;
+  }
   .title {
     position: relative;
   }
@@ -42,9 +55,18 @@
         .fullInput {
           position: relative;
           display: flex;
+          font-family: Spartan;
+          font-size: 12px;
+          font-weight: 700;
+          color: app.$font;
           width: 100%;
-          height: auto;
-          border: 1px solid red;
+          height: 48px;
+          border: 1px solid app.$light-purple-gray;
+          border-radius: 5px;
+          padding: 0px 0px 0px 20px;
+        }
+        .fullInput:focus {
+          outline: 1px solid app.$light-purple;
         }
       }
       .multiInputContainer {
@@ -54,23 +76,97 @@
         align-items: center;
         width: 100%;
         height: auto;
-        .inputContainer {
+        .inputContainerCity {
           position: relative;
           display: flex;
           flex-direction: column;
-          width: 152px;
+          align-self: flex-start;
+          width: 30%;
           height: auto;
           padding: 0px 0px;
           .inputTitle {
+            display: flex;
             color: app.$subtitle;
             font-size: 12px;
           }
           .thirdInput {
             position: relative;
             display: flex;
+            align-self: flex-start;
             width: 100%;
-            height: auto;
-            border: 1px solid blue;
+            font-family: Spartan;
+            font-size: 12px;
+            font-weight: 700;
+            color: app.$font;
+            height: 48px;
+            border: 1px solid app.$light-purple-gray;
+            border-radius: 5px;
+            padding: 0px 0px 0px 20px;
+          }
+          .thirdInput:focus {
+            outline: 1px solid app.$light-purple;
+          }
+        }
+        .inputContainerPostal{
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-self: center;
+          width: 30%;
+          height: auto;
+          padding: 0px 0px;
+          .inputTitle {
+            display: flex;
+            color: app.$subtitle;
+            font-size: 12px;
+          }
+          .thirdInput {
+            position: relative;
+            display: flex;
+            align-self: flex-start;
+            width: 100%;
+            font-family: Spartan;
+            font-size: 12px;
+            font-weight: 700;
+            color: app.$font;
+            height: 48px;
+            border: 1px solid app.$light-purple-gray;
+            border-radius: 5px;
+            padding: 0px 0px 0px 20px;
+          }
+          .thirdInput:focus {
+            outline: 1px solid app.$light-purple;
+          }
+        }
+        .inputContainerCountry{
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-self: flex-end;
+          width: 30%;
+          height: auto;
+          padding: 0px 0px;
+          .inputTitle {
+            display: flex;
+            color: app.$subtitle;
+            font-size: 12px;
+          }
+          .thirdInput {
+            position: relative;
+            display: flex;
+            align-self: flex-start;
+            width: 100%;
+            font-family: Spartan;
+            font-size: 12px;
+            font-weight: 700;
+            color: app.$font;
+            height: 48px;
+            border: 1px solid app.$light-purple-gray;
+            border-radius: 5px;
+            padding: 0px 0px 0px 20px;
+          }
+          .thirdInput:focus {
+            outline: 1px solid app.$light-purple;
           }
         }
       }
@@ -91,6 +187,16 @@
           .inputTitle {
             color: app.$subtitle;
             font-size: 12px;
+          }
+          .outlineBorder {
+            display: flex;
+            position: relative;
+            align-items: center;
+            width: auto;
+            height: 48px;
+            border: 1px solid #DFE3FA !important;
+            padding: 0px 0px 0px 20px;
+            border-radius: 4px;
           }
           .halfInput {
             position: relative;
@@ -125,21 +231,88 @@
           position: relative;
           display: flex;
           flex-direction: column;
-          width: 100px;
+          width: auto;
           height: auto;
           padding: 0px 0px;
           .inputTitle {
             color: app.$subtitle;
             font-size: 12px;
           }
-          .itemInput {
-            position: relative;
+          .calcTotal {
             display: flex;
-            width: 100%;
-            height: auto;
-            border: 1px solid orange;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: app.$subtitle;
+            height: 48px;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
           }
-        }
+            .itemInputName{
+              position: relative;
+              display: flex;
+              width: 214px;
+              height: 48px;
+              font-family: Spartan;
+              font-size: 12px;
+              font-weight: 700;
+              color: app.$font;
+              border: 1px solid app.$light-purple-gray;
+              border-radius: 5px;
+              padding: 0px 0px 0px 20px;
+            }
+            .itemInputName:focus {
+              outline: 1px solid app.$light-purple;
+            }
+            .itemInputQuantity{
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              justify-self: center;
+              align-self: center;
+              text-align: center;
+              width: 46px;
+              height: 48px;
+              font-family: Spartan;
+              font-size: 12px;
+              font-weight: 700;
+              color: app.$font;
+              height: 48px;
+              border: 1px solid app.$light-purple-gray;
+              border-radius: 5px;
+              padding: 0px 0px 0px 0px;
+            }
+            .itemInputQuantity:focus {
+              outline: 1px solid app.$light-purple;
+              align-items: center;
+              justify-content: center;
+              justify-self: center;
+              align-self: center;
+            }
+            .itemInputPrice{
+              position: relative;
+              display: flex;
+              width: 100px;
+              height: 48px;
+              font-family: Spartan;
+              font-size: 12px;
+              font-weight: 700;
+              color: app.$font;
+              height: 48px;
+              border: 1px solid app.$light-purple-gray;
+              border-radius: 5px;
+              padding: 0px 0px 0px 20px;
+            }
+            .itemInputPrice:focus {
+              outline: 1px solid app.$light-purple;
+            }
+            .imageHolder {
+
+            }
+          }
       }
       .addItemButton {
         position: relative;
@@ -155,6 +328,7 @@
         border: none;
         border-radius: 40px;
         margin: 30px 0px 0px 0px;
+        cursor: pointer;
       }
       .formSubmitContainer {
         position: relative;
@@ -163,6 +337,7 @@
         align-items: flex-end;
         width: 100%;
         height: auto;
+        cursor: pointer;
       }
     }
   }

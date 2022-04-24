@@ -26,6 +26,7 @@ const InvoicePageId: NextPage = () => {
     const [invoiceForm, setInvoiceForm] = useState(false);
     const countRef = useRef<number>(0);
     const [invoiceData, setInvoiceData] = useState(({
+        invoiceId: "",
         billFromStreet:"",
         billFromCity: "",
         billFromPostal: "",
@@ -124,8 +125,7 @@ const InvoicePageId: NextPage = () => {
 
     function markAsPaid () {
         setInvoiceData({...invoiceData, status: "paid"});
-        console.log("Mark as paid", invoiceData);
-        // dispatch(updateInvoice(invoiceData, targetInvoice));
+        dispatch(updateInvoice(invoiceData, targetInvoice));
     }
 
 
@@ -136,6 +136,7 @@ const InvoicePageId: NextPage = () => {
 
     const handleLoadedData = useCallback(async () => {
         await setInvoiceData({...invoiceData, 
+            invoiceId: pageInvoice?.invoice_id,
             clientName: pageInvoice?.client_name,
             clientEmail: pageInvoice?.client_email,
             billToStreet: pageInvoice?.client_street_address,

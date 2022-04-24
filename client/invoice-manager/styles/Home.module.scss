@@ -7,6 +7,7 @@
   height: auto;
   background-color: app.$light-background;
   padding: 0 0rem;
+  overflow-x: hidden;
   .main {
     width: 100vw;
     min-height: 100vh;
@@ -21,9 +22,9 @@
       display: flex;
       width: 103px;
       height: 100vh;
-      background-color: app.$dark-background;
+      background-color: app.$white;
       left: 0px;
-      z-index: 1;
+      z-index: 2;
     }
     .invoiceFormContainer {
       position: absolute;
@@ -34,6 +35,15 @@
       align-items: center;
       background-color: app.$white;
       left: 103px;
+      z-index: 2;
+    }
+    .shadow {
+      position: absolute;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      background-color: app.$dark-background;
+      opacity: 0.5;
       z-index: 1;
     }
     .header {

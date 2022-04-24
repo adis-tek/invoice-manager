@@ -279,9 +279,6 @@ const Home: NextPage = () => {
   // console.log(invoiceList);
   // console.log(invoiceCount);
 
-    console.log(Number(invoices[0]?.item_price_1.slice(1)))
-    console.log(invoices[0]?.item_price_1.slice(1))
-
   return (
     <div className={styles.container}>
       <Head>
@@ -297,6 +294,7 @@ const Home: NextPage = () => {
         <div className={styles.invoiceFormContainer}>
           <NewInvoiceForm changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)} />
         </div>
+        <div className={styles.shadow} />
       </>
       }
       <div className={styles.header}>
