@@ -198,6 +198,9 @@
             padding: 0px 0px 0px 20px;
             border-radius: 4px;
           }
+          .outlineBorder:focus {
+            outline: 1px solid app.$light-purple;
+          }
           .halfInput {
             position: relative;
             display: flex;
