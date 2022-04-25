@@ -56,7 +56,7 @@ const Profile: NextPage = () => {
             <Sidebar />
             <div className={styles.main}>
             <div className={styles.profile}>
-                <h1>Profile</h1>
+                <h1>Change Profile</h1>
                 <div className={styles.line} />
                 <div className={styles.formContainer}>
                 <div className={styles.emailContainer}>
