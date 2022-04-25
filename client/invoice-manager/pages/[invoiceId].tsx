@@ -81,6 +81,10 @@ const InvoicePageId: NextPage = () => {
 
     // const invoiceDateFormatted = format(invoiceDateRaw, 'mm/dd/yyyy');
 
+    console.log("A CHECk", invoiceData.itemPrice2);
+    console.log("A TYPE", typeof invoiceData.itemPrice2);
+    console.log("ISNAN OR WHAT", 2 * Number("1,000"))
+
     function getMonth (conversion: string) {
         switch(conversion) {
             case '01' :
@@ -189,8 +193,6 @@ const InvoicePageId: NextPage = () => {
 
         dispatch(deleteInvoice(id));
     }
-
-    console.log();
 
     return (
         <div className={styles.container}>
@@ -345,7 +347,7 @@ const InvoicePageId: NextPage = () => {
                         <p className={styles.itemNameData}>{invoiceData.itemName1}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(invoiceData.itemQuantity1)}</p>
                         <p className={styles.itemPriceData}>{commaNumber(invoiceData.itemPrice1)}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice1.slice(1))) * (Number(invoiceData.itemQuantity1))).toFixed(2))}</p>
+                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice1)) * (Number(invoiceData.itemQuantity1))).toFixed(2))}</p>
                         </div>
                         }
                         {invoiceData?.itemPrice2 &&
@@ -353,15 +355,16 @@ const InvoicePageId: NextPage = () => {
                         <p className={styles.itemNameData}>{invoiceData.itemName2}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(invoiceData.itemQuantity2)}</p>
                         <p className={styles.itemPriceData}>{commaNumber(invoiceData.itemPrice2)}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice2.slice(1))) * (Number(invoiceData.itemQuantity2))).toFixed(2))}</p>
+                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice2)) * (Number(invoiceData.itemQuantity2))).toFixed(2))}</p>
                         </div>
+                        
                         }
                         {invoiceData?.itemPrice3 &&
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName3}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(invoiceData.itemQuantity3)}</p>
                         <p className={styles.itemPriceData}>{commaNumber(invoiceData.itemPrice3)}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice3.slice(1))) * (Number(invoiceData.itemQuantity3))).toFixed(2))}</p>
+                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice3)) * (Number(invoiceData.itemQuantity3))).toFixed(2))}</p>
                         </div>
                         }
                         {invoiceData?.itemPrice4 &&
@@ -369,7 +372,7 @@ const InvoicePageId: NextPage = () => {
                         <p className={styles.itemNameData}>{invoiceData.itemName4}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(invoiceData.itemQuantity4)}</p>
                         <p className={styles.itemPriceData}>{commaNumber(invoiceData.itemPrice4)}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice4.slice(1))) * (Number(invoiceData.itemQuantity4))).toFixed(2))}</p>
+                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice4)) * (Number(invoiceData.itemQuantity4))).toFixed(2))}</p>
                         </div>
                         }
                         {invoiceData?.itemPrice5 &&
@@ -377,17 +380,17 @@ const InvoicePageId: NextPage = () => {
                         <p className={styles.itemNameData}>{invoiceData.itemName5}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(invoiceData.itemQuantity5)}</p>
                         <p className={styles.itemPriceData}>{commaNumber(invoiceData.itemPrice5)}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice5.slice(1))) * (Number(invoiceData.itemQuantity5))).toFixed(2))}</p>
+                        <p className={styles.itemTotalData}>${commaNumber(((Number(invoiceData.itemPrice5)) * (Number(invoiceData.itemQuantity5))).toFixed(2))}</p>
                         </div>
                         }
                     </div>
                     <div className={styles.amountContainer}>
                         <p>Amount Due</p>
-                        <h1>$ {commaNumber(((invoiceData?.itemPrice1 ? (((Number(invoiceData?.itemPrice1.slice(1))) * (Number(invoiceData?.itemQuantity1)))) : 0)
-                        + (invoiceData?.itemPrice2 ? (((Number(invoiceData?.itemPrice2.slice(1))) * (Number(invoiceData?.itemQuantity2)))) : 0)
-                        + (invoiceData?.itemPrice3 ? (((Number(invoiceData?.itemPrice3.slice(1))) * (Number(invoiceData?.itemQuantity3)))) : 0)
-                        + (invoiceData?.itemPrice4 ? (((Number(invoiceData?.itemPrice4.slice(1))) * (Number(invoiceData?.itemQuantity4)))) : 0)
-                        + (invoiceData?.itemPrice5 ? (((Number(invoiceData?.itemPrice5.slice(1))) * (Number(invoiceData?.itemQuantity5)))) : 0)).toFixed(2))}</h1>
+                        <h1>$ {commaNumber(((invoiceData?.itemPrice1 ? (((Number(invoiceData?.itemPrice1)) * (Number(invoiceData?.itemQuantity1)))) : 0)
+                        + (invoiceData?.itemPrice2 ? (((Number(invoiceData?.itemPrice2)) * (Number(invoiceData?.itemQuantity2)))) : 0)
+                        + (invoiceData?.itemPrice3 ? (((Number(invoiceData?.itemPrice3)) * (Number(invoiceData?.itemQuantity3)))) : 0)
+                        + (invoiceData?.itemPrice4 ? (((Number(invoiceData?.itemPrice4)) * (Number(invoiceData?.itemQuantity4)))) : 0)
+                        + (invoiceData?.itemPrice5 ? (((Number(invoiceData?.itemPrice5)) * (Number(invoiceData?.itemQuantity5)))) : 0)).toFixed(2))}</h1>
                     </div>
               </div>
           </div>
@@ -398,3 +401,4 @@ const InvoicePageId: NextPage = () => {
 }
 
 export default InvoicePageId;
+
