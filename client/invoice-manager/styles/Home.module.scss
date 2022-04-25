@@ -235,7 +235,7 @@
             font-size: 16px;
             color: app.$font;
           }
-          .statusContainer {
+          .pendingStatusContainer {
             position: relative;
             display: flex;
             width: 104px;
@@ -245,7 +245,7 @@
             border-radius: 5px;
             background-color: app.$pending-lite;
             padding: 0px 0px 5px 0px;
-            .circle {
+            .pendingCircle {
               position: relative;
               display: flex;
               width: 8px;
@@ -255,9 +255,62 @@
               margin: 2.5px 10px 0px 0px;
               align-self: center;
             }
-            .status {
+            .pendingStatus {
               text-transform: capitalize;
               color: app.$pending;
+              font-size: 12px;
+            }
+          }
+          .draftStatusContainer {
+            position: relative;
+            display: flex;
+            width: 104px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: app.$draft-lite;
+            padding: 0px 0px 5px 0px;
+            .draftCircle {
+              position: relative;
+              display: flex;
+              width: 8px;
+              height: 8px;
+              background-color: app.$draft;
+              border-radius: 50%;
+              margin: 2.5px 10px 0px 0px;
+              align-self: center;
+            }
+            .draftStatus {
+              text-transform: capitalize;
+              color: app.$draft;
+              font-size: 12px;
+            }
+          }
+          .paidStatusContainer {
+            position: relative;
+            display: flex;
+            width: 104px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: app.$paid-lite;
+            padding: 0px 0px 5px 0px;
+            .paidCircle {
+              position: relative;
+              display: flex;
+              width: 8px;
+              height: 8px;
+              background-color: app.$paid;
+              border-radius: 50%;
+              margin: 2.5px 10px 0px 0px;
+              align-self: center;
+            }
+            .paidStatus {
+              text-transform: capitalize;
+              color: app.$paid;
+              font-size: 12px;
             }
           }
           .invoiceArrow {

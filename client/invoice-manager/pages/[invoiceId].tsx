@@ -258,11 +258,25 @@ const InvoicePageId: NextPage = () => {
       <div className={styles.mainHeaderContainer}>
           <div className={styles.statusContainer}>
               <p className={styles.statusText}>Status</p>
-              <div className={styles.statusContainer}>
-              <div className={styles.circle} />
-              <p className={styles.status}><b>{invoiceData.status}</b></p>
-            </div>
-          </div>
+              {invoiceData.status === "pending" &&
+                <div className={styles.pendingStatusContainer}>
+                <div className={styles.pendingCircle} />
+                <p className={styles.pendingStatus}>{invoiceData.status}</p>
+                </div>
+            }
+            {invoiceData.status === "paid" &&
+                <div className={styles.paidStatusContainer}>
+                <div className={styles.paidCircle} />
+                <p className={styles.paidStatus}>{invoiceData.status}</p>
+                </div>
+            }
+            {invoiceData.status === "draft" &&
+                <div className={styles.draftStatusContainer}>
+                <div className={styles.draftCircle} />
+                <p className={styles.draftStatus}>{invoiceData.status}</p>
+                </div>
+            }
+          </div> 
           <div className={styles.buttonsContainer}>
               <div onClick={toggleNewInvoiceForm} className={styles.editButtonContainer}>
                   <p className={styles.editText}><b>Edit</b></p>

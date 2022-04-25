@@ -459,10 +459,24 @@ const Home: NextPage = () => {
               + (invoice.item_price_4?.slice(1) ? (Number(invoice.item_price_4?.slice(1)) * invoice?.item_quantity_4) : 0)
               + (invoice.item_price_5?.slice(1) ? (Number(invoice.item_price_5?.slice(1)) * invoice?.item_quantity_5) : 0)).toFixed(2)
               )}</b></p>
-            <div className={styles.statusContainer}>
-              <div className={styles.circle} />
-              <p className={styles.status}>{invoice.status}</p>
-            </div>
+            {invoice.status === "pending" &&
+                <div className={styles.pendingStatusContainer}>
+                <div className={styles.pendingCircle} />
+                <p className={styles.pendingStatus}>{invoice.status}</p>
+                </div>
+            }
+            {invoice.status === "paid" &&
+                <div className={styles.paidStatusContainer}>
+                <div className={styles.paidCircle} />
+                <p className={styles.paidStatus}>{invoice.status}</p>
+                </div>
+            }
+            {invoice.status === "draft" &&
+                <div className={styles.draftStatusContainer}>
+                <div className={styles.draftCircle} />
+                <p className={styles.draftStatus}>{invoice.status}</p>
+                </div>
+            }
             <div className={styles.invoiceArrow}>
             <Image
               src="/invoice-arrow.png"
