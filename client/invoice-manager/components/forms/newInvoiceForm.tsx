@@ -4,6 +4,7 @@ import styles from "../../styles/invoiceForm.module.scss"
 import { useDispatch } from 'react-redux'
 import { createInvoice, updateInvoice } from "../../actions/invoices"
 // import DatePicker from 'react-datepicker'
+import commaNumber from 'comma-number'
 import { enUS } from '@mui/material/locale'
 import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -548,7 +549,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{checkTotal(calcTotal(invoiceData.item_quantity_1, parseFloat(invoiceData.item_price_1)).toFixed(2))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_1, parseFloat(invoiceData.item_price_1)).toFixed(2)))}</p>
                         {console.log(Number(invoiceData.item_quantity_1))}
                         {console.log(invoiceData.item_price_1?.slice(1))}
                     </div>
@@ -634,7 +635,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{checkTotal(calcTotal(invoiceData.item_quantity_2, parseFloat(invoiceData.item_price_2)).toFixed(2))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_2, parseFloat(invoiceData.item_price_2)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -718,7 +719,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{checkTotal(calcTotal(invoiceData.item_quantity_3, parseFloat(invoiceData.item_price_3)).toFixed(2))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_3, parseFloat(invoiceData.item_price_3)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -802,7 +803,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{checkTotal(calcTotal(invoiceData.item_quantity_4, parseFloat(invoiceData.item_price_4)).toFixed(2))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_4, parseFloat(invoiceData.item_price_4)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -886,7 +887,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{checkTotal(calcTotal(invoiceData.item_quantity_5, parseFloat(invoiceData.item_price_5)).toFixed(2))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_5, parseFloat(invoiceData.item_price_5)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>

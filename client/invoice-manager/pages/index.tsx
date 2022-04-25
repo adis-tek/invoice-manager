@@ -7,6 +7,7 @@ import styles from '../styles/Home.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { addDays, format } from 'date-fns'
+import commaNumber from 'comma-number'
 
 import { getInvoices, getDraft, getPending, getPaid, getBillFrom, getBillTo, getBillInfo, getItemList } from '../actions/invoices'
 import Sidebar from "../components/sidebar/sidebar"
@@ -451,12 +452,13 @@ const Home: NextPage = () => {
             </div>
             <div className={styles.secondHalf}>
             <p className={styles.total}><b>$</b><b>{
+              commaNumber(
               ((invoice.item_price_1?.slice(1) ? (Number(invoice.item_price_1?.slice(1)) * invoice?.item_quantity_1) : 0) 
               + (invoice.item_price_2?.slice(1) ? (Number(invoice.item_price_2?.slice(1)) * invoice?.item_quantity_2) : 0)
               + (invoice.item_price_3?.slice(1) ? (Number(invoice.item_price_3?.slice(1)) * invoice?.item_quantity_3) : 0)
               + (invoice.item_price_4?.slice(1) ? (Number(invoice.item_price_4?.slice(1)) * invoice?.item_quantity_4) : 0)
               + (invoice.item_price_5?.slice(1) ? (Number(invoice.item_price_5?.slice(1)) * invoice?.item_quantity_5) : 0)).toFixed(2)
-            }</b></p>
+              )}</b></p>
             <div className={styles.statusContainer}>
               <div className={styles.circle} />
               <p className={styles.status}>{invoice.status}</p>
