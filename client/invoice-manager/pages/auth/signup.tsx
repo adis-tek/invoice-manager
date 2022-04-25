@@ -86,7 +86,7 @@ const SignUp: NextPage = () => {
                     </button>
                 </div>
                 <div className={styles.signUpContainer}>
-                    <Link href="/auth/signin"><p>Or <u>Sign In</u></p></Link>
+                    <Link href="/auth/signin"><p style={{cursor: 'pointer'}}>Or <u>Sign In</u></p></Link>
                 </div>
                 </div>
             </div>

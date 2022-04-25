@@ -38,7 +38,8 @@ const Sidebar: NextPage = () => {
 
     return (
         <div className={styles.sidebar}>
-            <div className={styles.logoContainer}>
+            <Link href={"/"}>
+            <div className={styles.logoContainer} style={{cursor: 'pointer'}}>
                 <Image 
                 src="/logo.png"
                 alt="background-logo"
@@ -47,6 +48,7 @@ const Sidebar: NextPage = () => {
                 className={styles.logo}
                     />
             </div>
+            </Link>
             <div className={styles.filler}></div>
             <div className={styles.switchAndAccount}>
             <div className={styles.switch}>
@@ -64,16 +66,30 @@ const Sidebar: NextPage = () => {
                 <div className={styles.line}></div>
             
             <div className={styles.account}>
+                <Link href={"/auth/profile"}>
                 <div className={styles.ImageHolder}>
-                    <Image 
-                    src="/profile-pic.png"
-                    alt="moon-icon"
-                    width={40}
-                    height={40}
-                    layout="fixed"
-                    className={styles.image}
-                    />
+                    {profilePhoto === true &&
+                        <Image 
+                        src="/profile-pic.png"
+                        alt="profile-pic"
+                        width={40}
+                        height={40}
+                        layout="fixed"
+                        className={styles.image}
+                        />
+                    }
+                    {profilePhoto !== true &&
+                        <Image 
+                        src="/anon-profile.png"
+                        alt="profile-pic-anon"
+                        width={40}
+                        height={40}
+                        layout="fixed"
+                        className={styles.image}
+                        />
+                    }
                 </div>
+                </Link>
             </div>
         </div>
         </div>
