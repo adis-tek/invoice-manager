@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Sidebar: NextPage = () => {
     const [user, setUser] = useState(null);
-    const [profilePhoto, setProfilePhoto] = useState(null);
+    const [profilePhoto, setProfilePhoto] = useState(false);
 
     // This useEffect should be in the sidebar chacking on the user on every page
     useEffect(() => {
@@ -19,22 +19,23 @@ const Sidebar: NextPage = () => {
     setUser(JSON.parse(localStorage.getItem('profile')))
     }, [])
 
-    async function getPhoto () {
+    async function checkUser () {
         try {
-            const photo = await api.getUserPhoto();
-            if (photo) {
-                console.log("Photo found.", photo);
+            const user = await api.getUser();
+            if (user === true) {
+                console.log("User found");
+                setProfilePhoto(true);
                 return;
             } else {
-                console.log("No photo found.");
-                return null;
+                console.log("No user found");
+                setProfilePhoto(false);
             }
         } catch (error) {
             console.log(error);
         }
     }
 
-    console.log(getPhoto());
+    console.log(checkUser());
 
     return (
         <div className={styles.sidebar}>
