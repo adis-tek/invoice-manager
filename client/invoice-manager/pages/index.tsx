@@ -448,7 +448,7 @@ const Home: NextPage = () => {
             //       const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
             // invoice.invoice_date
             }</p>
-            <p className={styles.clientName}>{invoice.clients_name}</p>
+            <p className={styles.clientName}>{invoice.client_name}</p>
             </div>
             <div className={styles.secondHalf}>
             <p className={styles.total}><b>$</b><b>{

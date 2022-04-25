@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { createInvoice, updateInvoice } from "../../actions/invoices"
 // import DatePicker from 'react-datepicker'
 import commaNumber from 'comma-number'
+import { format } from 'date-fns'
 import { enUS } from '@mui/material/locale'
 import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -18,6 +19,7 @@ import Image from "next/image"
 
 const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
+    const dateToday = format(new Date(), "MMM dd yyyy").toString();
     const [invoiceData, setInvoiceData] = useState(({
         billFromStreet: props.defaultBillFromStreet,
         billFromCity: props.defaultBillFromCity,
@@ -29,25 +31,27 @@ const NewInvoiceForm: NextPage = (props) => {
         billToCity: props.defaultBillToCity,
         billToPostal: props.defaultBillToPostal,
         billToCountry: props.defaultBillToCountry,
-        invoiceDate: props.defaultInvoiceDate,
+        invoiceDate: props.defaultInvoiceDate || dateToday,
         paymentTerms: props.defaultPaymentTerms,
         projectDescription: props.defaultProjectDescription,
         item_name_1: props.defaultItemName1,
         item_quantity_1: props.defaultItemQuantity1,
-        item_price_1: parseFloat(props.defaultItemPrice1?.slice(1)).toFixed(2),
+        item_price_1: parseFloat(props.defaultItemPrice1).toFixed(2),
         item_name_2: props.defaultItemName1,
         item_quantity_2: props.defaultItemQuantity2,
-        item_price_2: parseFloat(props.defaultItemPrice2?.slice(1)).toFixed(2),
+        item_price_2: parseFloat(props.defaultItemPrice2).toFixed(2),
         item_name_3: props.defaultItemName3,
         item_quantity_3: props.defaultItemQuantity3,
-        item_price_3: parseFloat(props.defaultItemPrice3?.slice(1)).toFixed(2),
+        item_price_3: parseFloat(props.defaultItemPrice3).toFixed(2),
         item_name_4: props.defaultItemName4,
         item_quantity_4: props.defaultItemQuantity4,
-        item_price_4: parseFloat(props.defaultItemPrice4?.slice(1)).toFixed(2),
+        item_price_4: parseFloat(props.defaultItemPrice4).toFixed(2),
         item_name_5: props.defaultItemName5,
         item_quantity_5: props.defaultItemQuantity5,
-        item_price_5: parseFloat(props.defaultItemPrice5?.slice(1)).toFixed(2),
+        item_price_5: parseFloat(props.defaultItemPrice5).toFixed(2),
     }));
+
+    console.log("THIS IS INVOICE DATE", invoiceData.invoiceDate)
 
     const datePickerTheme = createMuiTheme({
         palette: {
@@ -248,18 +252,18 @@ const NewInvoiceForm: NextPage = (props) => {
     }
 
     const options = [
-        { value: 1, label: "1 Day"},
-        { value: 7, label: "7 Days"},
-        { value: 14, label: "14 Days"},
-        { value: 30, label: "30 Days"},
+        { value: "1", label: "1 Day"},
+        { value: "7", label: "7 Days"},
+        { value: "14", label: "14 Days"},
+        { value: "30", label: "30 Days"},
     ];
 
     const [selectLabel, setSelectLabel] = useState(
-        invoiceData?.paymentTerms === 1 ? { value: 1, label: "1 Day"} :
-        invoiceData?.paymentTerms === 7 ? { value: 7, label: "7 Day"} :
-        invoiceData?.paymentTerms === 14 ? { value: 14, label: "14 Day"} :
-        invoiceData?.paymentTerms === 30 ? { value: 30, label: "30 Day"} :
-        { value: 1, label: "1 Day"}
+        invoiceData?.paymentTerms === "1" ? { value: "1", label: "1 Day"} :
+        invoiceData?.paymentTerms === "7" ? { value: "7", label: "7 Day"} :
+        invoiceData?.paymentTerms === "14" ? { value: "14", label: "14 Day"} :
+        invoiceData?.paymentTerms === "30" ? { value: "30", label: "30 Day"} :
+        { value: "1", label: "1 Day"}
         )
 
     function onSelectChange (e) {
@@ -551,7 +555,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         <p className={styles.inputTitle}>Total</p>
                             <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_1, parseFloat(invoiceData.item_price_1)).toFixed(2)))}</p>
                         {console.log(Number(invoiceData.item_quantity_1))}
-                        {console.log(invoiceData.item_price_1?.slice(1))}
+                        {console.log(invoiceData.item_price_1)}
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
