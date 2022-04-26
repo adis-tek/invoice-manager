@@ -43,6 +43,7 @@ export const getInvoices = async(req, res) => {
     const userId = req.session.passport?.user;
     try {
         const allInvoices = await pool.query("SELECT * FROM invoice RIGHT OUTER JOIN bill_from ON invoice.bill_from_id = bill_from.bill_from_id RIGHT OUTER JOIN bill_to ON invoice.bill_to_id = bill_to.bill_to_id RIGHT OUTER JOIN bill_info ON invoice.bill_info_id = bill_info.bill_info_id RIGHT OUTER JOIN item_list ON invoice.item_list_id = item_list.item_list_id WHERE account_user_uuid = $1", [userId]);
+        console.log(allInvoices.rows);
         res.json(allInvoices.rows);
     } catch(err) {
         console.log(err.message)
@@ -172,7 +173,7 @@ export const createInvoice = async (req, res) => {
         const createBillFrom = await pool.query("INSERT INTO bill_from(street_address, city, postal_code, country) VALUES($1, $2, $3, $4) RETURNING *",
         [billFromStreet, billFromCity, billFromPostal, billFromCountry]);
 
-        const createBillTo = await pool.query("INSERT INTO bill_to(clients_name, clients_email, street_address, city, postal_code, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+        const createBillTo = await pool.query("INSERT INTO bill_to(client_name, client_email, client_street_address, client_city, client_postal_code, client_country) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
         [clientName, clientEmail, billToStreet, billToCity, billToPostal, billToCountry]);
 
         const createBillInfo = await pool.query("INSERT INTO bill_info(invoice_date, payment_terms, project_description) VALUES($1, $2, $3) RETURNING *",
@@ -194,10 +195,10 @@ export const createInvoice = async (req, res) => {
 
 export const updateInvoice = async(req, res) => {
     try {
-        const { id } = req.params;
         const editedInvoice = req.body;
 
         //Form Data
+        const id = editedInvoice.invoiceId;
         const billFromStreet = editedInvoice.billFromStreet;
         const billFromCity = editedInvoice.billFromCity;
         const billFromPostal = editedInvoice.billFromPostal;
@@ -233,7 +234,7 @@ export const updateInvoice = async(req, res) => {
             [billFromStreet, billFromCity, billFromPostal, billFromCountry, id]);
         
         const updateBillTo = await pool.query(
-            "UPDATE bill_to SET clients_name = $1, clients_email = $2, street_address = $3, city = $4, postal_code = $5, country = $6 WHERE bill_to_id = $7", 
+            "UPDATE bill_to SET client_name = $1, client_email = $2, client_street_address = $3, client_city = $4, client_postal_code = $5, client_country = $6 WHERE bill_to_id = $7", 
             [clientName, clientEmail, billToStreet, billToCity, billToPostal, billToCountry, id]);
         
         const updateBillInfo = await pool.query(

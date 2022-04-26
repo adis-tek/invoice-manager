@@ -16,13 +16,11 @@ values
 /* OFFICIAL */
 CREATE TABLE account_user(
     account_user_uuid uuid DEFAULT uuid_generate_v4 (),
-    profile_id BIGSERIAL NOT NULL,
-    identity_id BIGSERIAL NOT NULL,
     created_at date NOT NULL DEFAULT CURRENT_DATE,
-    last_login timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (account_user_uuid),
-    FOREIGN KEY (profile_id) REFERENCES profile(profile_id),
-    FOREIGN KEY (identity_id) REFERENCES identity(profile_id)
+    email VARCHAR(255),
+    password VARCHAR(255),
+    photo VARCHAR(255),
+    PRIMARY KEY (account_user_uuid)
 );
 
 -- CREATE TABLE profile(
@@ -81,45 +79,45 @@ CREATE TABLE invoice(
 CREATE TABLE bill_from(
     bill_from_id BIGSERIAL NOT NULL PRIMARY KEY,
     street_address VARCHAR(255),
-    city VARCHAR(100),
-    postal_code NUMERIC(50),
-    country VARCHAR(50)
+    city VARCHAR(255),
+    postal_code VARCHAR(255),
+    country VARCHAR(255)
 );
 
 CREATE TABLE bill_to(
     bill_to_id BIGSERIAL NOT NULL PRIMARY KEY,
-    clients_name VARCHAR(100),
-    clients_email VARCHAR(100),
-    street_address VARCHAR(255),
-    city VARCHAR(100),
-    postal_code NUMERIC(50),
-    country VARCHAR(50)
+    client_name VARCHAR(255),
+    client_email VARCHAR(255),
+    client_street_address VARCHAR(255),
+    client_city VARCHAR(255),
+    client_postal_code VARCHAR(255),
+    client_country VARCHAR(255)
 );
 
 CREATE TABLE bill_info(
     bill_info_id BIGSERIAL NOT NULL PRIMARY KEY,
     invoice_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    payment_terms INTEGER NOT NULL DEFAULT 1,
+    payment_terms VARCHAR(255) NOT NULL DEFAULT '1',
     project_description VARCHAR(255)
 );
 
 CREATE TABLE item_list(
     item_list_id BIGSERIAL NOT NULL PRIMARY KEY,
-    item_name_1 VARCHAR(100),
+    item_name_1 VARCHAR(255),
     item_quantity_1 INTEGER,
-    item_price_1 MONEY,
+    item_price_1 INTEGER,
     item_name_2 VARCHAR(100),
     item_quantity_2 INTEGER,
-    item_price_2 MONEY,
+    item_price_2 INTEGER,
     item_name_3 VARCHAR(100),
     item_quantity_3 INTEGER,
-    item_price_3 MONEY,
+    item_price_3 INTEGER,
     item_name_4 VARCHAR(100),
     item_quantity_4 INTEGER,
-    item_price_4 MONEY,
+    item_price_4 INTEGER,
     item_name_5 VARCHAR(100),
     item_quantity_5 INTEGER,
-    item_price_5 MONEY
+    item_price_5 INTEGER
 );
 
 /*VALUE INPUT 
