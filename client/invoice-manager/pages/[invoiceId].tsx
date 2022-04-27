@@ -20,6 +20,7 @@ import { getInvoices, updateInvoice, deleteInvoice } from '../actions/invoices'
 const InvoicePageId: NextPage = () => {
     const router = useRouter();
     const invoiceId = router.query.invoiceId;
+    console.log("ROUTER QUERY", router.query.invoiceId)
     const targetInvoice = parseInt(invoiceId);
     const dispatch = useDispatch();
     const invoices = useSelector((state: any) => state.invoices);
@@ -203,11 +204,14 @@ const InvoicePageId: NextPage = () => {
     console.log(pageInvoice);
     console.log(invoices[0]?.clients_name);
     console.log("Quantity", pageInvoice?.quantity);
+    console.log("AAAAAA", invoiceData?.invoiceId);
 
     function dispatchDeleteInvoice() {
-        const id = invoiceId;
+        const id = invoiceData?.invoiceId;
 
         dispatch(deleteInvoice(id));
+
+        router.push("/");
     }
 
     return (

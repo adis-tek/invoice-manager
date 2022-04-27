@@ -16,8 +16,10 @@ import { makeStyles } from "@material-ui/core/styles"
 import Select from 'react-select'
 
 import Image from "next/image"
+import { useRouter } from "next/router"
 
 const NewInvoiceForm: NextPage = (props) => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const dateToday = format(new Date(), "MMM dd yyyy").toString();
     const [invoiceData, setInvoiceData] = useState(({
@@ -70,6 +72,7 @@ const NewInvoiceForm: NextPage = (props) => {
             // props?.changeInvoiceForm(false);
             setInvoiceData({...invoiceData, status: "draft"});
             dispatch(createInvoice({...invoiceData, status: "draft"}));
+            router.push("/");
         }
     }
 
