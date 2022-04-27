@@ -151,7 +151,6 @@ const InvoicePageId: NextPage = () => {
             invoiceDate: pageInvoice?.invoice_date,
             paymentTerms: pageInvoice?.payment_terms,
             projectDescription: pageInvoice?.project_description,
-            status: pageInvoice?.status,
             billFromStreet: pageInvoice?.street_address,
             billFromCity: pageInvoice?.city,
             billFromPostal: pageInvoice?.postal_code,
@@ -171,6 +170,7 @@ const InvoicePageId: NextPage = () => {
             itemName5: pageInvoice?.item_name_5,
             itemQuantity5: pageInvoice?.item_quantity_5,
             itemPrice5: pageInvoice?.item_price_5,
+            status: pageInvoice?.status,
         });
     }, [setInvoiceData]);
 
@@ -209,7 +209,7 @@ const InvoicePageId: NextPage = () => {
         <div className={styles.invoiceFormContainer}>
           <NewInvoiceForm 
           changeInvoiceForm={invoiceForm => setInvoiceForm(invoiceForm)}
-          dynamicId={invoiceId}
+          defaultId={invoiceData?.invoiceId}
           defaultClientName={invoiceData?.clientName}
           defaultClientEmail={invoiceData?.clientEmail}
           defaultBillFromStreet={invoiceData?.billFromStreet}
@@ -238,6 +238,7 @@ const InvoicePageId: NextPage = () => {
           defaultItemName5={invoiceData?.itemName5}
           defaultItemQuantity5={invoiceData?.itemQuantity5}
           defaultItemPrice5={invoiceData?.itemPrice5}
+          defaultStatus={invoiceData?.status}
           />
         </div>
       </>

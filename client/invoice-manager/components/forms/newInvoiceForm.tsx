@@ -21,6 +21,7 @@ const NewInvoiceForm: NextPage = (props) => {
     const dispatch = useDispatch();
     const dateToday = format(new Date(), "MMM dd yyyy").toString();
     const [invoiceData, setInvoiceData] = useState(({
+        invoiceId: props.defaultId,
         billFromStreet: props.defaultBillFromStreet,
         billFromCity: props.defaultBillFromCity,
         billFromPostal: props.defaultBillFromPostal,
@@ -31,8 +32,8 @@ const NewInvoiceForm: NextPage = (props) => {
         billToCity: props.defaultBillToCity,
         billToPostal: props.defaultBillToPostal,
         billToCountry: props.defaultBillToCountry,
-        invoiceDate: props.defaultInvoiceDate || dateToday,
-        paymentTerms: props.defaultPaymentTerms,
+        invoiceDate: props.defaultInvoiceDate ? props.defaultInvoiceDate : dateToday,
+        paymentTerms: props.defaultPaymentTerms ? props.defaultPaymentTerms : '1',
         projectDescription: props.defaultProjectDescription,
         itemName1: props.defaultItemName1,
         itemQuantity1: props.defaultItemQuantity1,
@@ -49,9 +50,28 @@ const NewInvoiceForm: NextPage = (props) => {
         itemName5: props.defaultItemName5,
         itemQuantity5: props.defaultItemQuantity5,
         itemPrice5: parseFloat(props.defaultItemPrice5).toFixed(2),
+        status: props.defaultStatus,
     }));
 
     console.log("THIS IS INVOICE DATE", invoiceData.invoiceDate)
+
+    //INVOICE ID
+    const id = invoiceData.invoiceId;
+
+    function markAsDraft () {
+        if (id?.length > 0) {
+        console.log("Edited invoice.");
+        setInvoiceData({...invoiceData, status: "draft"});
+        dispatch(updateInvoice({...invoiceData, status: "draft"}, id));
+        //     props?.changeInvoiceForm(false);
+        } else {
+            console.log(invoiceData);
+            console.log("Created new invoice.");
+            // props?.changeInvoiceForm(false);
+            setInvoiceData({...invoiceData, status: "draft"});
+            dispatch(createInvoice({...invoiceData, status: "draft"}));
+        }
+    }
 
     const datePickerTheme = createMuiTheme({
         palette: {
@@ -77,8 +97,7 @@ const NewInvoiceForm: NextPage = (props) => {
     // console.log("PROPS2", props.defaultItemQuantity1);
     // console.log("PROPS3", props.defaultItemPrice1.slice(1))
 
-    //INVOICE ID
-    const id = props.dynamicId;
+
 
     console.log("Quantity", invoiceData.item_quantity_1);
     console.log(typeof invoiceData.item_quantity_1);
@@ -165,33 +184,33 @@ const NewInvoiceForm: NextPage = (props) => {
 
     function removeItem(itemNumber: number) {
         if (itemNumber === 1) {
-            setInvoiceData({...invoiceData, item_name_1: ""});
-            setInvoiceData({...invoiceData, item_quantity_1: ""});
-            setInvoiceData({...invoiceData, item_price_1: ""});
+            setInvoiceData({...invoiceData, itemName1: ""});
+            setInvoiceData({...invoiceData, itemQuantity1: ""});
+            setInvoiceData({...invoiceData, itemPrice1: ""});
             setItem1(false);
         }
         if (itemNumber === 2) {
-            setInvoiceData({...invoiceData, item_name_2: ""});
-            setInvoiceData({...invoiceData, item_quantity_2: ""});
-            setInvoiceData({...invoiceData, item_price_2: ""});
+            setInvoiceData({...invoiceData, itemName2: ""});
+            setInvoiceData({...invoiceData, itemQuantity2: ""});
+            setInvoiceData({...invoiceData, itemPrice2: ""});
             setItem2(false);
         }
         if (itemNumber === 3) {
-            setInvoiceData({...invoiceData, item_name_3: ""});
-            setInvoiceData({...invoiceData, item_quantity_3: ""});
-            setInvoiceData({...invoiceData, item_price_3: ""});
+            setInvoiceData({...invoiceData, itemName3: ""});
+            setInvoiceData({...invoiceData, itemQuantity3: ""});
+            setInvoiceData({...invoiceData, itemPrice3: ""});
             setItem3(false);
         }
         if (itemNumber === 4) {
-            setInvoiceData({...invoiceData, item_name_4: ""});
-            setInvoiceData({...invoiceData, item_quantity_4: ""});
-            setInvoiceData({...invoiceData, item_price_4: ""});
+            setInvoiceData({...invoiceData, itemName4: ""});
+            setInvoiceData({...invoiceData, itemQuantity4: ""});
+            setInvoiceData({...invoiceData, itemPrice4: ""});
             setItem4(false);
         }
         if (itemNumber === 5) {
-            setInvoiceData({...invoiceData, item_name_5: ""});
-            setInvoiceData({...invoiceData, item_quantity_5: ""});
-            setInvoiceData({...invoiceData, item_price_5: ""});
+            setInvoiceData({...invoiceData, itemName5: ""});
+            setInvoiceData({...invoiceData, itemQuantity5: ""});
+            setInvoiceData({...invoiceData, itemPrice5: ""});
             setItem5(false);
         }
         
@@ -241,12 +260,12 @@ const NewInvoiceForm: NextPage = (props) => {
         if (id?.length > 0) {
             console.log("Edited invoice.");
             props?.changeInvoiceForm(false);
-            dispatch(updateInvoice(invoiceData, id));
+            dispatch(updateInvoice({...invoiceData, status: "pending"}, id));
         } else {
             console.log(invoiceData);
             console.log("Created new invoice.");
             // props?.changeInvoiceForm(false);
-            dispatch(createInvoice(invoiceData));
+            dispatch(createInvoice({...invoiceData, status: "pending"}));
         }
         
     }
@@ -493,8 +512,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="text" 
                         name="itemName" 
                         id="name"
-                        value={invoiceData.item_name_1}
-                        onChange={(e) => setInvoiceData({...invoiceData, item_name_1: e.target.value})} 
+                        value={invoiceData.itemName1}
+                        onChange={(e) => setInvoiceData({...invoiceData, itemName1: e.target.value})} 
                         className={styles.itemInputName} />
                     </div>
                     <div className={styles.itemInputContainer}>
@@ -506,17 +525,17 @@ const NewInvoiceForm: NextPage = (props) => {
                         pattern="\d+"
                         name="quantity"
                         id="quantity"
-                        value={invoiceData.item_quantity_1}
+                        value={invoiceData.itemQuantity1}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
-                                setInvoiceData({...invoiceData, item_quantity_1: realInput})
+                                setInvoiceData({...invoiceData, itemQuantity1: realInput})
                                 setQuantity3(realInput);
                         }
                         else {
-                                setInvoiceData({...invoiceData, item_quantity_1: e.target.value});
+                                setInvoiceData({...invoiceData, itemQuantity1: e.target.value});
                         }
                         }}
                         className={styles.itemInputQuantity} />
@@ -527,7 +546,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="number" 
                         name="price"
                         id="price"
-                        value={invoiceData.item_price_1}
+                        value={invoiceData.itemPrice1}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
@@ -535,27 +554,29 @@ const NewInvoiceForm: NextPage = (props) => {
                                 let difference = (theLength - theIndex)-1;
                                 console.log(difference);
                                 console.log("Hello", parseFloat(e.target.value).toFixed(2));
-                                setInvoiceData({...invoiceData, item_price_1: parseFloat(e.target.value).toFixed(2)});
+                                setInvoiceData({...invoiceData, itemPrice1: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
                                     let floor = Math.floor(converted * 100) / 100;
                                     let realInput = floor.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setInvoiceData({...invoiceData, itemPrice1: realInput});
                                     setPrice1(realInput);
                                  } else {
-                                    setInvoiceData({...invoiceData, item_price_1: e.target.value});
+                                    setInvoiceData({...invoiceData, itemPrice1: e.target.value});
                                 }
                         } else {
-                            setInvoiceData({...invoiceData, item_price_1: e.target.value});
+                            setInvoiceData({...invoiceData, itemPrice1: e.target.value});
                         }
                         }}
                         className={styles.itemInputPrice} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_1, parseFloat(invoiceData.item_price_1)).toFixed(2)))}</p>
-                        {console.log(Number(invoiceData.item_quantity_1))}
-                        {console.log(invoiceData.item_price_1)}
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.itemQuantity1, parseFloat(invoiceData.itemPrice1)).toFixed(2)))}</p>
+                        {console.log(Number(invoiceData.itemQuantity1))}
+                        {console.log(invoiceData.itemPrice1)}
+                        {console.log(typeof invoiceData.itemPrice1)}
+                        {console.log(typeof parseFloat(invoiceData.itemPrice1))}
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -581,8 +602,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="text" 
                         name="itemName"
                         id="name"
-                        value={invoiceData.item_name_2}
-                        onChange={(e) => setInvoiceData({...invoiceData, item_name_2: e.target.value})} 
+                        value={invoiceData.itemName2}
+                        onChange={(e) => setInvoiceData({...invoiceData, itemName2: e.target.value})} 
                         className={styles.itemInputName} />
                     </div>
                     <div className={styles.itemInputContainer}>
@@ -594,17 +615,17 @@ const NewInvoiceForm: NextPage = (props) => {
                         pattern="\d+"
                         name="quantity"
                         id="quantity"
-                        value={invoiceData.item_quantity_2}
+                        value={invoiceData.itemQuantity2}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
-                                setInvoiceData({...invoiceData, item_quantity_2: realInput})
+                                setInvoiceData({...invoiceData, itemQuantity2: realInput})
                                 setQuantity3(realInput);
                         }
                         else {
-                                setInvoiceData({...invoiceData, item_quantity_2: e.target.value});
+                                setInvoiceData({...invoiceData, itemQuantity2: e.target.value});
                         }
                         }}
                         className={styles.itemInputQuantity} />
@@ -615,31 +636,31 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="number" 
                         name="price"
                         id="price"
-                        value={invoiceData.item_price_2}
+                        value={invoiceData.itemPrice2}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
                                 let theIndex = e.target.value.indexOf(".");
                                 let difference = (theLength - theIndex)-1;
-                                setInvoiceData({...invoiceData, item_price_2: parseFloat(e.target.value).toFixed(2)});
+                                setInvoiceData({...invoiceData, itemPrice2: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
                                     let floor = Math.floor(converted * 100) / 100;
                                     let realInput = floor.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setInvoiceData({...invoiceData, itemPrice2: realInput});
                                     setPrice2(realInput);
                                  } else {
-                                    setInvoiceData({...invoiceData, item_price_2: e.target.value});
+                                    setInvoiceData({...invoiceData, itemPrice2: e.target.value});
                                 }
                         } else {
-                            setInvoiceData({...invoiceData, item_price_2: e.target.value});
+                            setInvoiceData({...invoiceData, itemPrice2: e.target.value});
                         }
                         }}
                         className={styles.itemInputPrice} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_2, parseFloat(invoiceData.item_price_2)).toFixed(2)))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.itemQuantity2, parseFloat(invoiceData.itemPrice2)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -665,8 +686,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="text" 
                         name="itemName" 
                         id="name"
-                        value={invoiceData.item_name_3}
-                        onChange={(e) => setInvoiceData({...invoiceData, item_name_3: e.target.value})} 
+                        value={invoiceData.itemName3}
+                        onChange={(e) => setInvoiceData({...invoiceData, itemName3: e.target.value})} 
                         className={styles.itemInputName} />
                     </div>
                     <div className={styles.itemInputContainer}>
@@ -678,17 +699,17 @@ const NewInvoiceForm: NextPage = (props) => {
                         pattern="\d+"
                         name="quantity"
                         id="quantity"
-                        value={invoiceData.item_quantity_3}
+                        value={invoiceData.itemQuantity3}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
-                                setInvoiceData({...invoiceData, item_quantity_3: realInput})
+                                setInvoiceData({...invoiceData, itemQuantity3: realInput})
                                 setQuantity3(realInput);
                         }
                         else {
-                                setInvoiceData({...invoiceData, item_quantity_3: e.target.value});
+                                setInvoiceData({...invoiceData, itemQuantity3: e.target.value});
                         }
                         }}
                         className={styles.itemInputQuantity} />
@@ -699,31 +720,31 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="number" 
                         name="price"
                         id="price"
-                        value={invoiceData.item_price_3}
+                        value={invoiceData.itemPrice3}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
                                 let theIndex = e.target.value.indexOf(".");
                                 let difference = (theLength - theIndex)-1;
-                                setInvoiceData({...invoiceData, item_price_3: parseFloat(e.target.value).toFixed(2)});
+                                setInvoiceData({...invoiceData, itemPrice3: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
                                     let floor = Math.floor(converted * 100) / 100;
                                     let realInput = floor.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setInvoiceData({...invoiceData, itemPrice3: realInput});
                                     setPrice3(realInput);
                                  } else {
-                                    setInvoiceData({...invoiceData, item_price_3: e.target.value});
+                                    setInvoiceData({...invoiceData, itemPrice3: e.target.value});
                                 }
                         } else {
-                            setInvoiceData({...invoiceData, item_price_3: e.target.value});
+                            setInvoiceData({...invoiceData, itemPrice3: e.target.value});
                         }
                         }}
                         className={styles.itemInputPrice} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_3, parseFloat(invoiceData.item_price_3)).toFixed(2)))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.itemQuantity3, parseFloat(invoiceData.itemPrice3)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -749,8 +770,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="text" 
                         name="itemName" 
                         id="name"
-                        value={invoiceData.item_name_4}
-                        onChange={(e) => setInvoiceData({...invoiceData, item_name_4: e.target.value})} 
+                        value={invoiceData.itemName4}
+                        onChange={(e) => setInvoiceData({...invoiceData, itemName4: e.target.value})} 
                         className={styles.itemInputName} />
                     </div>
                     <div className={styles.itemInputContainer}>
@@ -762,17 +783,17 @@ const NewInvoiceForm: NextPage = (props) => {
                         pattern="\d+"
                         name="quantity"
                         id="quantity"
-                        value={invoiceData.item_quantity_4}
+                        value={invoiceData.itemQuantity4}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
-                                setInvoiceData({...invoiceData, item_quantity_4: realInput})
+                                setInvoiceData({...invoiceData, itemQuantity4: realInput})
                                 setQuantity4(realInput);
                         }
                         else {
-                                setInvoiceData({...invoiceData, item_quantity_4: e.target.value});
+                                setInvoiceData({...invoiceData, itemQuantity4: e.target.value});
                         }
                         }}
                         className={styles.itemInputQuantity} />
@@ -783,31 +804,31 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="number" 
                         name="price"
                         id="price"
-                        value={invoiceData.item_price_4}
+                        value={invoiceData.itemPrice4}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
                                 let theIndex = e.target.value.indexOf(".");
                                 let difference = (theLength - theIndex)-1;
-                                setInvoiceData({...invoiceData, item_price_4: parseFloat(e.target.value).toFixed(2)});
+                                setInvoiceData({...invoiceData, itemPrice4: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
                                     let floor = Math.floor(converted * 100) / 100;
                                     let realInput = floor.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setInvoiceData({...invoiceData, itemPrice4: realInput});
                                     setPrice4(realInput);
                                  } else {
-                                    setInvoiceData({...invoiceData, item_price_4: e.target.value});
+                                    setInvoiceData({...invoiceData, itemPrice4: e.target.value});
                                 }
                         } else {
-                            setInvoiceData({...invoiceData, item_price_4: e.target.value});
+                            setInvoiceData({...invoiceData, itemPrice4: e.target.value});
                         }
                         }}
                         className={styles.itemInputPrice} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_4, parseFloat(invoiceData.item_price_4)).toFixed(2)))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.itemQuantity4, parseFloat(invoiceData.itemPrice4)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -833,8 +854,8 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="text" 
                         name="itemName"
                         id="name"
-                        value={invoiceData.item_name_5}
-                        onChange={(e) => setInvoiceData({...invoiceData, item_name_5: e.target.value})} 
+                        value={invoiceData.itemName5}
+                        onChange={(e) => setInvoiceData({...invoiceData, itemName5: e.target.value})} 
                         className={styles.itemInputName} />
                     </div>
                     <div className={styles.itemInputContainer}>
@@ -846,17 +867,17 @@ const NewInvoiceForm: NextPage = (props) => {
                         pattern="\d+"
                         name="quantity"
                         id="quantity"
-                        value={invoiceData.item_quantity_5}
+                        value={invoiceData.itemQuantity5}
                         onChange={(e) => {
                         if (e.target.value.includes(".")) {
                             let splitInput = e.target.value.split("");
                             let fixedInput = splitInput.slice(0, -1);
                             let realInput = fixedInput.join("");
-                                setInvoiceData({...invoiceData, item_quantity_5: realInput})
+                                setInvoiceData({...invoiceData, itemQuantity5: realInput})
                                 setQuantity5(realInput);
                         }
                         else {
-                                setInvoiceData({...invoiceData, item_quantity_5: e.target.value});
+                                setInvoiceData({...invoiceData, itemQuantity5: e.target.value});
                         }
                         }}
                         className={styles.itemInputQuantity} />
@@ -867,31 +888,31 @@ const NewInvoiceForm: NextPage = (props) => {
                         type="number" 
                         name="price"
                         id="price"
-                        value={invoiceData.item_price_5}
+                        value={invoiceData.itemPrice5}
                         onChange={(e) => {
                             if (e.target.value.includes(".")) {
                                 let theLength = e.target.value.length;
                                 let theIndex = e.target.value.indexOf(".");
                                 let difference = (theLength - theIndex)-1;
-                                setInvoiceData({...invoiceData, item_price_5: parseFloat(e.target.value).toFixed(2)});
+                                setInvoiceData({...invoiceData, itemPrice5: parseFloat(e.target.value).toFixed(2)});
                                 if (difference == 3) {
                                     let converted = parseFloat(e.target.value);
                                     let floor = Math.floor(converted * 100) / 100;
                                     let realInput = floor.toFixed(2);
-                                    setInvoiceData({...invoiceData, item_price_3: realInput});
+                                    setInvoiceData({...invoiceData, itemPrice5: realInput});
                                     setPrice5(realInput);
                                  } else {
-                                    setInvoiceData({...invoiceData, item_price_5: e.target.value});
+                                    setInvoiceData({...invoiceData, itemPrice5: e.target.value});
                                 }
                         } else {
-                            setInvoiceData({...invoiceData, item_price_5: e.target.value});
+                            setInvoiceData({...invoiceData, itemPrice5: e.target.value});
                         }
                         }}
                         className={styles.itemInputPrice} />
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>Total</p>
-                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.item_quantity_5, parseFloat(invoiceData.item_price_5)).toFixed(2)))}</p>
+                            <p className={styles.calcTotal}>{commaNumber(checkTotal(calcTotal(invoiceData.itemQuantity5, parseFloat(invoiceData.itemPrice5)).toFixed(2)))}</p>
                     </div>
                     <div className={styles.itemInputContainer}>
                         <p className={styles.inputTitle}>&nbsp;</p>
@@ -917,7 +938,7 @@ const NewInvoiceForm: NextPage = (props) => {
                 <div className={styles.formSubmitContainer}>
                 <button onClick={() => props?.changeInvoiceForm(false)} className={styles.discard}>Discard</button>
                 <div className={styles.draftAndSubmitContainer}>
-                <button onClick={handleSubmit} className={styles.draft}>Save as Draft</button>
+                <button onClick={markAsDraft} className={styles.draft}>Save as Draft</button>
                 <button onClick={handleSubmit} className={styles.submit}>Submit</button>
                 </div>
                 </div>
