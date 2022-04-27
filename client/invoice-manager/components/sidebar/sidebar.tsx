@@ -54,14 +54,14 @@ const Sidebar: NextPage = () => {
             <div className={styles.switchAndAccount}>
             <div className={styles.switch}>
                 <div className={styles.ImageHolder}>
-                    <Image 
+                    {/* <Image 
                     src="/moon.png"
                     alt="moon-icon"
                     width={20}
                     height={20}
                     layout="fixed"
                     className={styles.image}
-                    />
+                    /> */}
                 </div>
                 </div>
                 <div className={styles.line}></div>
