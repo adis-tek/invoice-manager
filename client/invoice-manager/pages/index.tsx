@@ -71,6 +71,14 @@ const Home: NextPage = () => {
       }
   }
 
+  function checkTotal(value: number) {
+    if (isNaN(value)) {
+        return 0.00;
+    } else {
+        return value;
+    }
+}
+
    function showInvoices() {
       const invoicesCounted = Object.keys(data);
       setInvoiceCount(invoicesCounted);
@@ -453,11 +461,11 @@ const Home: NextPage = () => {
             <div className={styles.secondHalf}>
             <p className={styles.total}><b>$</b><b>{
               commaNumber(
-              ((invoice.item_price_1 ? (Number(invoice.item_price_1) * invoice?.item_quantity_1) : 0) 
+              (checkTotal((invoice.item_price_1 ? (Number(invoice.item_price_1) * invoice?.item_quantity_1) : 0) 
               + (invoice.item_price_2 ? (Number(invoice.item_price_2) * invoice?.item_quantity_2) : 0)
               + (invoice.item_price_3 ? (Number(invoice.item_price_3) * invoice?.item_quantity_3) : 0)
               + (invoice.item_price_4 ? (Number(invoice.item_price_4) * invoice?.item_quantity_4) : 0)
-              + (invoice.item_price_5 ? (Number(invoice.item_price_5) * invoice?.item_quantity_5) : 0)).toFixed(2)
+              + (invoice.item_price_5 ? (Number(invoice.item_price_5) * invoice?.item_quantity_5) : 0))).toFixed(2)
               )}</b></p>
             {invoice.status === "pending" &&
                 <div className={styles.pendingStatusContainer}>
