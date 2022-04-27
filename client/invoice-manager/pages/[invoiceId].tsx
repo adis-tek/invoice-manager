@@ -56,7 +56,7 @@ const InvoicePageId: NextPage = () => {
         itemName5: "",
         itemQuantity5: "",
         itemPrice5: "",
-        status: "",
+        status: "", 
     }));
     const date = new Date();
     const invoiceDate = pageInvoice?.invoice_date.slice(0, 10);
@@ -130,7 +130,7 @@ const InvoicePageId: NextPage = () => {
 
     function markAsPaid () {
         setInvoiceData({...invoiceData, status: "paid"});
-        dispatch(updateInvoice(invoiceData, targetInvoice));
+        dispatch(updateInvoice({...invoiceData, status: "paid"}, targetInvoice));
     }
 
 
