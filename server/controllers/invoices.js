@@ -212,23 +212,24 @@ export const updateInvoice = async(req, res) => {
         const invoiceDate = editedInvoice.invoiceDate;
         const paymentTerms = editedInvoice.paymentTerms;
         const projectDescription = editedInvoice.projectDescription;
-        const itemName1 = editedInvoice.item_name_1;
-        const itemQuantity1 = editedInvoice.item_quantity_1;
-        const itemPrice1 = editedInvoice.item_price_1;
-        const itemName2 = editedInvoice.item_name_2;
-        const itemQuantity2 = editedInvoice.item_quantity_2;
-        const itemPrice2 = editedInvoice.item_price_2;
-        const itemName3 = editedInvoice.item_name_3;
-        const itemQuantity3 = editedInvoice.item_quantity_3;
-        const itemPrice3 = editedInvoice.item_price_3;
-        const itemName4 = editedInvoice.item_name_4;
-        const itemQuantity4 = editedInvoice.item_quantity_4;
-        const itemPrice4 = editedInvoice.item_price_4;
-        const itemName5 = editedInvoice.item_name_5;
-        const itemQuantity5 = editedInvoice.item_quantity_5;
-        const itemPrice5 = editedInvoice.item_price_5;
+        const itemName1 = editedInvoice.itemName1;
+        const itemQuantity1 = editedInvoice.itemQuantity1;
+        const itemPrice1 = editedInvoice.itemPrice1;
+        const itemName2 = editedInvoice.itemName2;
+        const itemQuantity2 = editedInvoice.itemQuantity2;
+        const itemPrice2 = editedInvoice.itemPrice2;
+        const itemName3 = editedInvoice.itemName3;
+        const itemQuantity3 = editedInvoice.itemQuantity3;
+        const itemPrice3 = editedInvoice.itemPrice3;
+        const itemName4 = editedInvoice.itemName4;
+        const itemQuantity4 = editedInvoice.itemQuantity4;
+        const itemPrice4 = editedInvoice.itemPrice4;
+        const itemName5 = editedInvoice.itemName5;
+        const itemQuantity5 = editedInvoice.itemQuantity5;
+        const itemPrice5 = editedInvoice.itemPrice5;
+        const status = editedInvoice.status;
 
-        //Postgres Updates
+        //Postgres Updates 
         const updateBillFrom = await pool.query(
             "UPDATE bill_from SET street_address = $1, city = $2, postal_code = $3, country = $4 WHERE bill_from_id = $5", 
             [billFromStreet, billFromCity, billFromPostal, billFromCountry, id]);
@@ -244,6 +245,10 @@ export const updateInvoice = async(req, res) => {
         const updateItemList = await pool.query(
             "UPDATE item_list SET item_name_1 = $1, item_quantity_1 = $2, item_price_1 = $3, item_name_2 = $4, item_quantity_2 = $5, item_price_2 = $6, item_name_3 = $7, item_quantity_3 = $8, item_price_3 = $9, item_name_4 = $10, item_quantity_4= $11, item_price_4 = $12, item_name_5 = $13, item_quantity_5 = $14, item_price_5 = $15 WHERE item_list_id = $16", 
             [itemName1, itemPrice1, itemQuantity1, itemName2, itemQuantity2, itemPrice2, itemName3, itemQuantity3, itemPrice3, itemName4, itemQuantity4, itemPrice4, itemName5, itemQuantity5, itemPrice5, id]);
+
+        const updateStatus = await pool.query(
+            "UPDATE invoice SET status = $1 WHERE invoice_id = $2",
+            [status, id]);
 
         console.log("This is the invoice data", editedInvoice);
         console.log("This is the id", id);
