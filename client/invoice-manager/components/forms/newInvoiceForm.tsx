@@ -912,13 +912,14 @@ const NewInvoiceForm: NextPage = (props) => {
                 {item5 === false &&
                 <button 
                 onClick={addItem}
-                className={styles.addItemButton}><b>+Add New Item</b></button>
+                className={styles.addItemButton}><b>+ Add New Item</b></button>
                 }
                 <div className={styles.formSubmitContainer}>
-                <button onClick={() => props?.changeInvoiceForm(false)} className={styles.addItemButton}>Cancel</button>
-                <button
-                onClick={handleSubmit}
-                 className={styles.addItemButton}>Save Changes</button>
+                <button onClick={() => props?.changeInvoiceForm(false)} className={styles.discard}>Discard</button>
+                <div className={styles.draftAndSubmitContainer}>
+                <button onClick={handleSubmit} className={styles.draft}>Save as Draft</button>
+                <button onClick={handleSubmit} className={styles.submit}>Submit</button>
+                </div>
                 </div>
                 </div>
                 </div>

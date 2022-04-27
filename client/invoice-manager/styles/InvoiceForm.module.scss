@@ -336,11 +336,74 @@
       .formSubmitContainer {
         position: relative;
         display: flex;
-        justify-content: center;
-        align-items: flex-end;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         height: auto;
-        cursor: pointer;
+        .discard {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 96px;
+          height: 48px;
+          font-weight: 700;
+          font-family: Spartan;
+          letter-spacing: 0.5px;
+          color: app.$purple-gray;
+          background-color: app.$item-button;
+          border: none;
+          border-radius: 40px;
+          margin: 30px 0px 0px 0px;
+          cursor: pointer;
+        }
+        .draftAndSubmitContainer {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 50%;
+          height: auto;
+          .draft {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 133px;
+            height: 48px;
+            font-weight: 700;
+            font-family: Spartan;
+            letter-spacing: 0.5px;
+            color: app.$white;
+            background-color: app.$sidebar-background;
+            border: none;
+            border-radius: 40px;
+            margin: 30px 0px 0px 0px;
+            cursor: pointer;
+
+          }
+          .submit {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 128px;
+            height: 48px;
+            font-weight: 700;
+            font-family: Spartan;
+            letter-spacing: 0.5px;
+            color: app.$white;
+            background-color: app.$purple;
+            border: none;
+            border-radius: 40px;
+            margin: 30px 0px 0px 0px;
+            cursor: pointer;
+
+          }
+        }
       }
     }
   }
