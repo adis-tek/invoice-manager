@@ -151,24 +151,25 @@ export const createInvoice = async (req, res) => {
         const invoiceDate = newInvoice.invoiceDate;
         const paymentTerms = newInvoice.paymentTerms;
         const projectDescription = newInvoice.projectDescription;
-        const itemName1 = newInvoice.item_name_1;
-        const itemQuantity1 = newInvoice.item_quantity_1;
-        const itemPrice1 = newInvoice.item_price_1;
-        const itemName2 = newInvoice.item_name_2;
-        const itemQuantity2 = newInvoice.item_quantity_2;
-        const itemPrice2 = newInvoice.item_price_2;
-        const itemName3 = newInvoice.item_name_3;
-        const itemQuantity3 = newInvoice.item_quantity_3;
-        const itemPrice3 = newInvoice.item_price_3;
-        const itemName4 = newInvoice.item_name_4;
-        const itemQuantity4 = newInvoice.item_quantity_4;
-        const itemPrice4 = newInvoice.item_price_4;
-        const itemName5 = newInvoice.item_name_5;
-        const itemQuantity5 = newInvoice.item_quantity_5;
-        const itemPrice5 = newInvoice.item_price_5;
+        const itemName1 = newInvoice.itemName1;
+        const itemQuantity1 = newInvoice.itemQuantity1;
+        const itemPrice1 = newInvoice.itemPrice1;
+        const itemName2 = newInvoice.itemName2;
+        const itemQuantity2 = newInvoice.itemQuantity2;
+        const itemPrice2 = newInvoice.itemPrice2;
+        const itemName3 = newInvoice.itemName3;
+        const itemQuantity3 = newInvoice.itemQuantity3;
+        const itemPrice3 = newInvoice.itemPrice3;
+        const itemName4 = newInvoice.itemName4;
+        const itemQuantity4 = newInvoice.itemQuantity4;
+        const itemPrice4 = newInvoice.itemPrice4;
+        const itemName5 = newInvoice.itemName5;
+        const itemQuantity5 = newInvoice.itemQuantity5;
+        const itemPrice5 = newInvoice.itemPrice5;
+        const status = newInvoice.status;
 
-        const createInvoice = await pool.query("INSERT INTO invoice(account_user_uuid) VALUES($1) RETURNING *",
-        [userId]);
+        const createInvoice = await pool.query("INSERT INTO invoice(account_user_uuid, status) VALUES($1, $2) RETURNING *",
+        [userId, status]);
 
         const createBillFrom = await pool.query("INSERT INTO bill_from(street_address, city, postal_code, country) VALUES($1, $2, $3, $4) RETURNING *",
         [billFromStreet, billFromCity, billFromPostal, billFromCountry]);
@@ -244,7 +245,7 @@ export const updateInvoice = async(req, res) => {
 
         const updateItemList = await pool.query(
             "UPDATE item_list SET item_name_1 = $1, item_quantity_1 = $2, item_price_1 = $3, item_name_2 = $4, item_quantity_2 = $5, item_price_2 = $6, item_name_3 = $7, item_quantity_3 = $8, item_price_3 = $9, item_name_4 = $10, item_quantity_4= $11, item_price_4 = $12, item_name_5 = $13, item_quantity_5 = $14, item_price_5 = $15 WHERE item_list_id = $16", 
-            [itemName1, itemPrice1, itemQuantity1, itemName2, itemQuantity2, itemPrice2, itemName3, itemQuantity3, itemPrice3, itemName4, itemQuantity4, itemPrice4, itemName5, itemQuantity5, itemPrice5, id]);
+            [itemName1, itemQuantity1, itemPrice1, itemName2, itemQuantity2, itemPrice2, itemName3, itemQuantity3, itemPrice3, itemName4, itemQuantity4, itemPrice4, itemName5, itemQuantity5, itemPrice5, id]);
 
         const updateStatus = await pool.query(
             "UPDATE invoice SET status = $1 WHERE invoice_id = $2",

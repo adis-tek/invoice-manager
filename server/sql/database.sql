@@ -105,19 +105,19 @@ CREATE TABLE item_list(
     item_list_id BIGSERIAL NOT NULL PRIMARY KEY,
     item_name_1 VARCHAR(255),
     item_quantity_1 INTEGER,
-    item_price_1 INTEGER,
+    item_price_1 DECIMAL(12, 2),
     item_name_2 VARCHAR(100),
     item_quantity_2 INTEGER,
-    item_price_2 INTEGER,
+    item_price_2 DECIMAL(12, 2),
     item_name_3 VARCHAR(100),
     item_quantity_3 INTEGER,
-    item_price_3 INTEGER,
+    item_price_3 DECIMAL(12, 2),
     item_name_4 VARCHAR(100),
     item_quantity_4 INTEGER,
-    item_price_4 INTEGER,
+    item_price_4 DECIMAL(12, 2),
     item_name_5 VARCHAR(100),
     item_quantity_5 INTEGER,
-    item_price_5 INTEGER
+    item_price_5 DECIMAL(12, 2)
 );
 
 /*VALUE INPUT 
