@@ -30,11 +30,12 @@ const Home: NextPage = () => {
 
   const invoiceCount = useRef<number>(0);
 
-  console.log(new Date())
+  const invoices = useSelector((state: any) => state.invoices.invoices);
+  const loading = useSelector((state: any) => state.invoices.loading);
+  const length = useSelector((state: any) => state.invoices.length);
+  console.log("AAAAAA", loading);
+  console.log("BBBBBB", length);
 
-  const example = ["1", "2", "3"];
-
-  const invoices = useSelector((state: any) => state.invoices);
   const draft = useSelector((state: any) => state.draft);
   const pending = useSelector((state: any) => state.pending);
   const paid = useSelector((state: any) => state.paid);
@@ -64,12 +65,14 @@ const Home: NextPage = () => {
   // }
 
   function checkInvoices() {
-    if (data?.user1) {
+    if (invoices[0]?.invoice_id) {
       setInvoiceList(true);
     } else {
         setInvoiceList(false);
       }
   }
+
+  console.log("INVOICES", invoices)
 
   function checkTotal(value: number) {
     if (isNaN(value)) {
@@ -288,7 +291,90 @@ const Home: NextPage = () => {
   // console.log(invoiceList);
   // console.log(invoiceCount);
 
-  return (
+  const renderInvoiceList = (
+    filterInvoices?.map((invoice: any, index: number) => {
+      return(
+        <>
+        <Link href={`/${index}`}>
+        <div key={invoice.invoice_id} className={styles.invoiceContainer}>
+        <div className={styles.firstHalf}>
+        <p className={styles.id}>#<b>000{index + 1}</b></p>
+        <p className={styles.payDate}>Due {
+
+            format(addDays(new Date(`${(invoice?.invoice_date.slice(0, 10).slice(8, 11))}
+            ${(invoice?.invoice_date.slice(0, 10).slice(5, 7) === "01" ? "Jan" : 
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "02" ? "Feb" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "03" ? "Mar" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "04" ? "Apr" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "05" ? "May" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "06" ? "Jun" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "07" ? "Jul" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "08" ? "Aug" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "09" ? "Sep" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "10" ? "Oct" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "11" ? "Nov" :
+            invoice?.invoice_date.slice(0, 10).slice(5, 7) === "12" ? "Dec" :
+            ""
+            )}
+            ${invoice?.invoice_date.slice(0, 10).slice(0, 4)}`), invoice?.payment_terms), "dd MMM yyyy").toString()
+
+        //       const invoiceDate = invoice?.invoice_date.slice(0, 10);
+        //       const paymentTerms = invoice?.payment_terms;
+        //       const invoiceDateYear = invoice?.invoice_date.slice(0, 10).slice(0, 4);
+        //       const invoiceDateMonth = invoice?.invoice_date.slice(0, 10).slice(5, 7);
+        //       const invoiceDateDay = invoice?.invoice_date.slice(0, 10).slice(8, 11);
+        //       const fullInvoiceDate = ((invoice?.invoice_date.slice(0, 10).slice(5, 7)) + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
+        //       const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
+        //       const processedInvoiceDate = new Date(fullInvoiceDate);
+        //       const paymentDateProcessed = addDays(processedInvoiceDate, invoice?.payment_terms);
+        //       const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
+        // invoice.invoice_date
+        }</p>
+        <p className={styles.clientName}>{invoice.client_name}</p>
+        </div>
+        <div className={styles.secondHalf}>
+        <p className={styles.total}><b>$</b><b>{
+          commaNumber(
+          (checkTotal((invoice.item_price_1 ? (Number(invoice.item_price_1) * invoice?.item_quantity_1) : 0) 
+          + (invoice.item_price_2 ? (Number(invoice.item_price_2) * invoice?.item_quantity_2) : 0)
+          + (invoice.item_price_3 ? (Number(invoice.item_price_3) * invoice?.item_quantity_3) : 0)
+          + (invoice.item_price_4 ? (Number(invoice.item_price_4) * invoice?.item_quantity_4) : 0)
+          + (invoice.item_price_5 ? (Number(invoice.item_price_5) * invoice?.item_quantity_5) : 0))).toFixed(2)
+          )}</b></p>
+        {invoice.status === "pending" &&
+            <div className={styles.pendingStatusContainer}>
+            <div className={styles.pendingCircle} />
+            <p className={styles.pendingStatus}>{invoice.status}</p>
+            </div>
+        }
+        {invoice.status === "paid" &&
+            <div className={styles.paidStatusContainer}>
+            <div className={styles.paidCircle} />
+            <p className={styles.paidStatus}>{invoice.status}</p>
+            </div>
+        }
+        {invoice.status === "draft" &&
+            <div className={styles.draftStatusContainer}>
+            <div className={styles.draftCircle} />
+            <p className={styles.draftStatus}>{invoice.status}</p>
+            </div>
+        }
+        <div className={styles.invoiceArrow}>
+        <Image
+          src="/invoice-arrow.png"
+          alt="invoice-arrow"
+          width={7}
+          height={10}
+          layout="fixed"
+        />
+        </div>
+        </div>
+      </div>
+      </Link>
+      </>
+      )}));
+
+    return (
     <div className={styles.container}>
       <Head>
         <title>Invoice Manager</title>
@@ -309,12 +395,9 @@ const Home: NextPage = () => {
       <div className={styles.header}>
         <div className={styles.invoiceHeaderContainer}>
           <h2>Invoices</h2>
-          {numberOfInvoices === 0 &&
-            <p>No Invoices</p>
-          }
-          {numberOfInvoices > 0 && 
-          <p>{numberOfInvoices} Invoices</p>
-          }
+          {loading ? <p>Loading invoices...</p> :
+          !loading && invoices.length > 0 ? <p>There are {invoices.length} total invoices</p> : 
+          <p>No invoices</p>}
         </div>
         <div className={styles.rightEnd}>
           <div className={styles.filterByStatusButton} onClick={openFilter}>
@@ -403,104 +486,9 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      {invoiceList === false &&
-      <div className={styles.noInvoicesContainer}>
-      <Image 
-        src="/no-invoices.png"
-        alt="no-invoices"
-        width={241}
-        height={200}
-          />
-        <h2>There is nothing here</h2>
-        <p>Create an invoice by clicking the
-        <b> New Invoice </b>button and get started</p>
-      </div>
-      }
-      <div className={styles.invoiceListContainer}>
-      {filterInvoices?.map((invoice: any, index: number) => {
-          {console.log(invoice?.clients_name)}
-          return(
-            <>
-            <Link href={`/${index}`}>
-            <div key={invoice.invoice_id} className={styles.invoiceContainer}>
-            <div className={styles.firstHalf}>
-            <p className={styles.id}>#<b>000{index + 1}</b></p>
-            <p className={styles.payDate}>Due {
-
-                format(addDays(new Date(`${(invoice?.invoice_date.slice(0, 10).slice(8, 11))}
-                ${(invoice?.invoice_date.slice(0, 10).slice(5, 7) === "01" ? "Jan" : 
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "02" ? "Feb" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "03" ? "Mar" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "04" ? "Apr" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "05" ? "May" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "06" ? "Jun" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "07" ? "Jul" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "08" ? "Aug" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "09" ? "Sep" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "10" ? "Oct" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "11" ? "Nov" :
-                invoice?.invoice_date.slice(0, 10).slice(5, 7) === "12" ? "Dec" :
-                ""
-                )}
-                ${invoice?.invoice_date.slice(0, 10).slice(0, 4)}`), invoice?.payment_terms), "dd MMM yyyy").toString()
-
-            //       const invoiceDate = invoice?.invoice_date.slice(0, 10);
-            //       const paymentTerms = invoice?.payment_terms;
-            //       const invoiceDateYear = invoice?.invoice_date.slice(0, 10).slice(0, 4);
-            //       const invoiceDateMonth = invoice?.invoice_date.slice(0, 10).slice(5, 7);
-            //       const invoiceDateDay = invoice?.invoice_date.slice(0, 10).slice(8, 11);
-            //       const fullInvoiceDate = ((invoice?.invoice_date.slice(0, 10).slice(5, 7)) + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
-            //       const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
-            //       const processedInvoiceDate = new Date(fullInvoiceDate);
-            //       const paymentDateProcessed = addDays(processedInvoiceDate, invoice?.payment_terms);
-            //       const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
-            // invoice.invoice_date
-            }</p>
-            <p className={styles.clientName}>{invoice.client_name}</p>
+            <div className={styles.invoiceListContainer}>
+            {loading ? <div>LOADING...</div> : renderInvoiceList}
             </div>
-            <div className={styles.secondHalf}>
-            <p className={styles.total}><b>$</b><b>{
-              commaNumber(
-              (checkTotal((invoice.item_price_1 ? (Number(invoice.item_price_1) * invoice?.item_quantity_1) : 0) 
-              + (invoice.item_price_2 ? (Number(invoice.item_price_2) * invoice?.item_quantity_2) : 0)
-              + (invoice.item_price_3 ? (Number(invoice.item_price_3) * invoice?.item_quantity_3) : 0)
-              + (invoice.item_price_4 ? (Number(invoice.item_price_4) * invoice?.item_quantity_4) : 0)
-              + (invoice.item_price_5 ? (Number(invoice.item_price_5) * invoice?.item_quantity_5) : 0))).toFixed(2)
-              )}</b></p>
-            {invoice.status === "pending" &&
-                <div className={styles.pendingStatusContainer}>
-                <div className={styles.pendingCircle} />
-                <p className={styles.pendingStatus}>{invoice.status}</p>
-                </div>
-            }
-            {invoice.status === "paid" &&
-                <div className={styles.paidStatusContainer}>
-                <div className={styles.paidCircle} />
-                <p className={styles.paidStatus}>{invoice.status}</p>
-                </div>
-            }
-            {invoice.status === "draft" &&
-                <div className={styles.draftStatusContainer}>
-                <div className={styles.draftCircle} />
-                <p className={styles.draftStatus}>{invoice.status}</p>
-                </div>
-            }
-            <div className={styles.invoiceArrow}>
-            <Image
-              src="/invoice-arrow.png"
-              alt="invoice-arrow"
-              width={7}
-              height={10}
-              layout="fixed"
-            />
-            </div>
-            </div>
-          </div>
-          </Link>
-          </>
-          )
-        })}
-      </div>
       </main>
     </div>
   )

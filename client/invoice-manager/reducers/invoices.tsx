@@ -1,15 +1,38 @@
-const invoices = (invoices=[], action: any) => {
+const initialState = {
+    invoices: [],
+    loading: true,
+    length: null,
+};
+
+const invoices = (state = initialState, action: any) => {
     switch (action.type) {
         case "FETCH_ALL":
-            return action.payload;
+            return {
+                ...state,
+                invoices: action.payload,
+                loading: false,
+                length: state.invoices.length,
+            };
         case "CREATE":
-            return [...invoices, action.payload];
+            return {
+                ...state,
+                invoices: action.payload,
+                loading: false,
+            };
         case "UPDATE":
-            return invoices.map((invoice) => invoice.invoice_id === action.payload.invoice_id ? action.payload : invoice);
+            return {
+                ...state,
+                invoices: action.payload,
+                loading: false,
+            };
         case "DELETE":
-            return invoices.filter((invoice) => invoice.invoice_id !== action.payload);
+            return {
+                ...state,
+                invoices: action.payload,
+                loading: false,
+            };
         default:
-            return invoices;
+            return state;
     }
 }
 

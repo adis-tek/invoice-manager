@@ -20,10 +20,9 @@ import { getInvoices, updateInvoice, deleteInvoice } from '../actions/invoices'
 const InvoicePageId: NextPage = () => {
     const router = useRouter();
     const invoiceId = router.query.invoiceId;
-    console.log("ROUTER QUERY", router.query.invoiceId)
     const targetInvoice = parseInt(invoiceId);
     const dispatch = useDispatch();
-    const invoices = useSelector((state: any) => state.invoices);
+    const invoices = useSelector((state: any) => state.invoices.invoices);
     const pageInvoice = invoices[targetInvoice];
     const [invoiceForm, setInvoiceForm] = useState(false);
     const countRef = useRef<number>(0);
@@ -70,21 +69,14 @@ const InvoicePageId: NextPage = () => {
     const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
     const processedInvoiceDate = new Date(fullInvoiceDate);
     const paymentDateProcessed = addDays(processedInvoiceDate, paymentTerms);
-    console.log(processedInvoiceDate);
     const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
-    console.log(fullInvoiceDate);
     const [parsedDate, setParsedDate] = useState(date);
-    // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
-    console.log("CHECK", processedInvoiceDate);
-    // console.log(processedInvoiceDate);
-    // console.log(paymentDate);
-    // console.log(paymentDate.toString());
 
+    // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
     // const invoiceDateFormatted = format(invoiceDateRaw, 'mm/dd/yyyy');
 
-    console.log("A CHECk", invoiceData.itemPrice2);
-    console.log("A TYPE", typeof invoiceData.itemPrice2);
-    console.log("ISNAN OR WHAT", 2 * Number("1,000"))
+    console.log(paymentDateProcessed);
+
 
     function checkTotal(value: number) {
         if (isNaN(value)) {
@@ -153,7 +145,6 @@ const InvoicePageId: NextPage = () => {
 
     const loadData = useCallback(async () => {
         await dispatch(getInvoices());
-        console.log("Loading invoices.")
       }, [dispatch]);
 
     const handleLoadedData = useCallback(async () => {
@@ -199,12 +190,6 @@ const InvoicePageId: NextPage = () => {
         loadData();
         handleLoadedData();
     }, []);
-
-    console.log(invoices[targetInvoice]);
-    console.log(pageInvoice);
-    console.log(invoices[0]?.clients_name);
-    console.log("Quantity", pageInvoice?.quantity);
-    console.log("AAAAAA", invoiceData?.invoiceId);
 
     function dispatchDeleteInvoice() {
         const id = invoiceData?.invoiceId;
@@ -265,18 +250,18 @@ const InvoicePageId: NextPage = () => {
       }
       <div className={styles.pageContainer}>
       <Link href={"/"}>
-      <div className={styles.goBackContainer}>
-          <div className={styles.backArrowHolder}>
-          <Image
-          src="/go-back-arrow.png"
-          alt="invoice-arrow"
-          width={7}
-          height={10}
-          layout="fixed"
-          />
-          </div>
-          <p><b>Go back</b></p>
-      </div>
+        <div className={styles.goBackContainer}>
+            <div className={styles.backArrowHolder}>
+            <Image
+            src="/go-back-arrow.png"
+            alt="invoice-arrow"
+            width={7}
+            height={10}
+            layout="fixed"
+            />
+            </div>
+            <p><b>Go back</b></p>
+        </div>
       </Link>
       <div className={styles.mainHeaderContainer}>
           <div className={styles.statusContainer}>
