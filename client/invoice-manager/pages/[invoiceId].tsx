@@ -23,6 +23,7 @@ const InvoicePageId: NextPage = () => {
     const targetInvoice = parseInt(invoiceId);
     const dispatch = useDispatch();
     const invoices = useSelector((state: any) => state.invoices.invoices);
+    const loading = useSelector((state: any) => state.invoices.loading);
     const pageInvoice = invoices[targetInvoice];
     const [invoiceForm, setInvoiceForm] = useState(false);
     const countRef = useRef<number>(0);
@@ -58,19 +59,20 @@ const InvoicePageId: NextPage = () => {
         itemPrice5: "",
         status: "", 
     }));
-    const date = new Date();
-    const invoiceDate = pageInvoice?.invoice_date.slice(0, 10);
-    const paymentTerms = pageInvoice?.payment_terms;
-    const invoiceDateYear = invoiceDate?.slice(0, 4);
-    const invoiceDateMonth = invoiceDate?.slice(5, 7);
-    const invoiceDateMonthFormatted = getMonth(invoiceDateMonth);
-    const invoiceDateDay = invoiceDate?.slice(8, 11);
-    const fullInvoiceDate = (invoiceDateMonthFormatted + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
-    const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
-    const processedInvoiceDate = new Date(fullInvoiceDate);
-    const paymentDateProcessed = addDays(processedInvoiceDate, paymentTerms);
-    const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
-    const [parsedDate, setParsedDate] = useState(date);
+
+        const date = new Date();
+        const invoiceDate = pageInvoice?.invoice_date.slice(0, 10);
+        const paymentTerms = pageInvoice?.payment_terms;
+        const invoiceDateYear = invoiceDate?.slice(0, 4);
+        const invoiceDateMonth = invoiceDate?.slice(5, 7);
+        const invoiceDateMonthFormatted = getMonth(invoiceDateMonth);
+        const invoiceDateDay = invoiceDate?.slice(8, 11);
+        const fullInvoiceDate = (invoiceDateMonthFormatted + ' ' + invoiceDateDay + ' ' + invoiceDateYear).toString();
+        const fullInvoiceDateDisplayed = (invoiceDateDay + ' ' + invoiceDateMonthFormatted + ' ' + invoiceDateYear).toString();
+        const processedInvoiceDate = new Date(fullInvoiceDate);
+        const paymentDateProcessed = addDays(processedInvoiceDate, paymentTerms);
+        const paymentDate = format(paymentDateProcessed, "dd MMM yyyy").toString();
+
 
     // const paymentDate = invoices?.invoice_date + invoices?.payment_terms;
     // const invoiceDateFormatted = format(invoiceDateRaw, 'mm/dd/yyyy');
