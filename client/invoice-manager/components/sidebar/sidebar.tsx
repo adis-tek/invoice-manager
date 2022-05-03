@@ -34,7 +34,7 @@ const Sidebar: NextPage = () => {
             console.log(error);
         }
     }
-
+ 
     console.log(checkUser());
 
     return (
@@ -46,6 +46,7 @@ const Sidebar: NextPage = () => {
                 alt="background-logo"
                 width={103}
                 height={103}
+                layout="intrinsic"
                 className={styles.logo}
                     />
             </div>

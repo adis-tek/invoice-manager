@@ -8,6 +8,9 @@
   background-color: app.$light-background;
   padding: 0 0rem;
   overflow-x: hidden;
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
   .main {
     width: 100vw;
     min-height: 100vh;

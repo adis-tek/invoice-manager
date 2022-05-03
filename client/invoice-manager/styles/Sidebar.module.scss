@@ -8,11 +8,24 @@
   width: auto;
   height: auto;
   z-index: 2;
+  @media (max-width: 1100px) {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 80px;
+    background-color: app.$sidebar-background;
+  }
   .logoContainer {
     display: flex;
     position: relative;
     background-color: app.$sidebar-background;
     border-radius: 0% 20% 0% 0%;
+    @media (max-width: 1100px) {
+      width: auto;
+      max-width: 80px;
+      min-width: 80px;
+      height: 80px;
+      border-radius: 0% 0% 0% 0%;
+    }
   }
   .filler {
     position: relative;
@@ -20,6 +33,10 @@
     width: 103px;
     height: 80vh;
     background: app.$sidebar-background;
+    @media (max-width: 1100px) {
+      width: auto;
+      height: 80px;
+    }
   } 
   .switchAndAccount {
     position: relative;
@@ -31,6 +48,13 @@
     justify-content: center;
     background-color: app.$sidebar-background;
     border-radius: 0% 0% 20% 0%;
+    @media (max-width: 1100px) {
+      flex-direction: row;
+      justify-content: flex-end;
+      width: auto;
+      height: 80px;
+      padding: 0px 26px 0px 0px;
+    }
     .switch {
       position: relative;
       display: flex;
@@ -60,6 +84,11 @@
       height: 1px;
       border: 1px solid rgba(73, 78, 110, 1);
       margin: 17.5px 0px;
+      @media (max-width: 1100px) {
+        width: 1px;
+        height: 80px;
+        margin: 0px 25px 0px 0px;
+      }
     }
     .account {
       position: relative;
@@ -70,6 +99,12 @@
       align-items: center;
       cursor: pointer;
       top: 10px;
+      @media (max-width: 1100px) {
+        height: 80px;
+        margin: 0px;
+        padding: 0px;
+        top: 3.5px;
+      }
       .imageHolder {
         position: relative;
         display: flex;
@@ -79,10 +114,22 @@
         height: 40px;
         cursor: pointer;
         object-fit: scale-down;
+        @media (max-width: 1100px) {
+          width: 40px;
+          height: 40px;
+          align-self: center;
+          margin: 0px;
+          padding: 0px;
+        }
         .image {
           display: block;
           cursor: pointer;
           object-fit: scale-down;
+          @media (max-width: 1100px) {
+            display: flex;
+            margin: 0px;
+            padding: 0px;
+          }
         }
       }
     }
