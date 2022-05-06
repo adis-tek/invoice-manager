@@ -339,6 +339,10 @@ const InvoicePageId: NextPage = () => {
                             <h2><b>{invoiceData.clientEmail}</b></h2>
                         </div>
                     </div>
+                    <div className={styles.rightSideMobile}>
+                            <p>Sent to</p>
+                            <h2><b>{invoiceData.clientEmail}</b></h2>
+                        </div>
               </div>
               <div className={styles.itemListContainer}>
                     <div className={styles.headerContainer}>
@@ -351,49 +355,135 @@ const InvoicePageId: NextPage = () => {
                             <p className={styles.itemTotal}>Total</p>
                         </div>
                         {invoiceData?.itemPrice1 &&
+                        <>
                         <div className={styles.itemListDataContainer}>
-                        <p className={styles.itemNameData}>{invoiceData.itemName1}</p>
-                        <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity1))}</p>
-                        <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice1))).toFixed(2))}</p>
-                        <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice1)) * (Number(invoiceData.itemQuantity1)))).toFixed(2))}</p>
+                            <p className={styles.itemNameData}>{invoiceData.itemName1}</p>
+                            <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity1))}</p>
+                            <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice1))).toFixed(2))}</p>
+                            <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice1)) * (Number(invoiceData.itemQuantity1)))).toFixed(2))}</p>
                         </div>
+                        {/* Mobile section starts here. */}
+                        <div className={styles.itemListDataContainerMobile}>
+                            <div className={styles.leftContainerMobile}>
+                                <div className={styles.titleContainerMobile}>
+                                    <p className={styles.itemNameDataMobile}>{invoiceData.itemName1}</p>
+                                </div>
+                                <div className={styles.quantityAndPriceContainerMobile}>
+                                    <p className={styles.itemQuantityDataMobile}>{commaNumber(checkQuantity(invoiceData.itemQuantity1))}x &nbsp;</p>
+                                    <p className={styles.itemPriceDataMobile}>${commaNumber(checkTotal(Number((invoiceData.itemPrice1))).toFixed(2))}</p>
+                                </div>
+                            </div>
+                            <div className={styles.rightContainerMobile}>
+                                <p className={styles.itemTotalDataMobile}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice1)) * (Number(invoiceData.itemQuantity1)))).toFixed(2))}</p>
+                            </div>
+                        </div>
+                        </>
                         }
                         {invoiceData?.itemPrice2 &&
+                        <>
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName2}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity2))}</p>
                         <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice2))).toFixed(2))}</p>
                         <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice2)) * (Number(invoiceData.itemQuantity2)))).toFixed(2))}</p>
                         </div>
-                        
+                        {/* Mobile section starts here. */}
+                        <div className={styles.itemListDataContainerMobile}>
+                            <div className={styles.leftContainerMobile}>
+                                <div className={styles.titleContainerMobile}>
+                                    <p className={styles.itemNameDataMobile}>{invoiceData.itemName2}</p>
+                                </div>
+                                <div className={styles.quantityAndPriceContainerMobile}>
+                                    <p className={styles.itemQuantityDataMobile}>{commaNumber(checkQuantity(invoiceData.itemQuantity2))}x &nbsp;</p>
+                                    <p className={styles.itemPriceDataMobile}>${commaNumber(checkTotal(Number((invoiceData.itemPrice2))).toFixed(2))}</p>
+                                </div>
+                            </div>
+                            <div className={styles.rightContainerMobile}>
+                                <p className={styles.itemTotalDataMobile}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice2)) * (Number(invoiceData.itemQuantity2)))).toFixed(2))}</p>
+                            </div>
+                        </div>
+                        </>
                         }
                         {invoiceData?.itemPrice3 &&
+                        <>
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName3}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity3))}</p>
                         <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice3))).toFixed(2))}</p>
                         <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice3)) * (Number(invoiceData.itemQuantity3)))).toFixed(2))}</p>
                         </div>
+                        {/* Mobile section starts here. */}
+                        <div className={styles.itemListDataContainerMobile}>
+                            <div className={styles.leftContainerMobile}>
+                                <div className={styles.titleContainerMobile}>
+                                    <p className={styles.itemNameDataMobile}>{invoiceData.itemName3}</p>
+                                </div>
+                                <div className={styles.quantityAndPriceContainerMobile}>
+                                    <p className={styles.itemQuantityDataMobile}>{commaNumber(checkQuantity(invoiceData.itemQuantity3))}x &nbsp;</p>
+                                    <p className={styles.itemPriceDataMobile}>${commaNumber(checkTotal(Number((invoiceData.itemPrice3))).toFixed(2))}</p>
+                                </div>
+                            </div>
+                            <div className={styles.rightContainerMobile}>
+                                <p className={styles.itemTotalDataMobile}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice3)) * (Number(invoiceData.itemQuantity3)))).toFixed(2))}</p>
+                            </div>
+                        </div>
+                        </>
                         }
                         {invoiceData?.itemPrice4 &&
+                        <>
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName4}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity4))}</p>
                         <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice4))).toFixed(2))}</p>
                         <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice4)) * (Number(invoiceData.itemQuantity4)))).toFixed(2))}</p>
                         </div>
+                        {/* Mobile section starts here. */}
+                        <div className={styles.itemListDataContainerMobile}>
+                            <div className={styles.leftContainerMobile}>
+                                <div className={styles.titleContainerMobile}>
+                                    <p className={styles.itemNameDataMobile}>{invoiceData.itemName4}</p>
+                                </div>
+                                <div className={styles.quantityAndPriceContainerMobile}>
+                                    <p className={styles.itemQuantityDataMobile}>{commaNumber(checkQuantity(invoiceData.itemQuantity4))}x &nbsp;</p>
+                                    <p className={styles.itemPriceDataMobile}>${commaNumber(checkTotal(Number((invoiceData.itemPrice4))).toFixed(2))}</p>
+                                </div>
+                            </div>
+                            <div className={styles.rightContainerMobile}>
+                                <p className={styles.itemTotalDataMobile}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice4)) * (Number(invoiceData.itemQuantity4)))).toFixed(2))}</p>
+                            </div>
+                        </div>
+                        </>
                         }
                         {invoiceData?.itemPrice5 &&
+                        <>
                         <div className={styles.itemListDataContainer}>
                         <p className={styles.itemNameData}>{invoiceData.itemName5}</p>
                         <p className={styles.itemQuantityData}>{commaNumber(checkQuantity(invoiceData.itemQuantity5))}</p>
                         <p className={styles.itemPriceData}>${commaNumber(checkTotal(Number((invoiceData.itemPrice5))).toFixed(2))}</p>
                         <p className={styles.itemTotalData}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice5)) * (Number(invoiceData.itemQuantity5)))).toFixed(2))}</p>
                         </div>
+                        {/* Mobile section starts here. */}
+                        <div className={styles.itemListDataContainerMobile}>
+                            <div className={styles.leftContainerMobile}>
+                                <div className={styles.titleContainerMobile}>
+                                    <p className={styles.itemNameDataMobile}>{invoiceData.itemName5}</p>
+                                </div>
+                                <div className={styles.quantityAndPriceContainerMobile}>
+                                    <p className={styles.itemQuantityDataMobile}>{commaNumber(checkQuantity(invoiceData.itemQuantity5))}x &nbsp;</p>
+                                    <p className={styles.itemPriceDataMobile}>${commaNumber(checkTotal(Number((invoiceData.itemPrice5))).toFixed(2))}</p>
+                                </div>
+                            </div>
+                            <div className={styles.rightContainerMobile}>
+                                <p className={styles.itemTotalDataMobile}>${commaNumber(checkTotal(((Number(invoiceData.itemPrice5)) * (Number(invoiceData.itemQuantity5)))).toFixed(2))}</p>
+                            </div>
+                        </div>
+                        </>
                         }
                     </div>
                     <div className={styles.amountContainer}>
                         <p>Amount Due</p>
+                        {/* H6 is displayed when viewport is less than 330px */}
+                        <h6>Amount</h6>
                         <h1>$ {commaNumber(checkTotal(((invoiceData?.itemPrice1 ? (((Number(invoiceData?.itemPrice1)) * (Number(invoiceData?.itemQuantity1)))) : 0)
                         + (invoiceData?.itemPrice2 ? (((Number(invoiceData?.itemPrice2)) * (Number(invoiceData?.itemQuantity2)))) : 0)
                         + (invoiceData?.itemPrice3 ? (((Number(invoiceData?.itemPrice3)) * (Number(invoiceData?.itemQuantity3)))) : 0)
@@ -404,6 +494,21 @@ const InvoicePageId: NextPage = () => {
           </div>
       </div>
     </main>
+    <div className={styles.buttonsBackground}>
+            <div className={styles.buttonsContainerMobile}>
+                    <div onClick={toggleNewInvoiceForm} className={styles.editButtonContainerMobile}>
+                        <p className={styles.editTextMobile}><b>Edit</b></p>
+                    </div>
+                    <div 
+                    onClick={dispatchDeleteInvoice}
+                    className={styles.deleteButtonContainerMobile}>
+                        <p className={styles.deleteTextMobile}>Delete</p>
+                    </div>
+                    <div onClick={markAsPaid} className={styles.markButtonContainerMobile}>
+                        <p className={styles.markTextMobile}>Mark as Paid</p>
+                    </div>
+            </div>
+        </div>
     </div>
     )
 }

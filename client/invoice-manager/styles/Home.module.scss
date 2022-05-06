@@ -20,6 +20,8 @@
     flex-direction: column;
     align-items: center;
     z-index: 1;
+    @media (max-width: 1100px) {
+    }
     .sidebarBackground {
       position: absolute;
       display: flex;
@@ -28,6 +30,9 @@
       background-color: app.$white;
       left: 0px;
       z-index: 2;
+      @media (max-width: 1100px) {
+        display: none;
+      }
     }
     .invoiceFormContainer {
       position: absolute;
@@ -39,6 +44,16 @@
       background-color: app.$white;
       left: 103px;
       z-index: 2;
+      @media (max-width: 1100px) {
+        left: 0px;
+        height: calc(100vh + 80px);
+        padding: 0px 0px 35px 0px;
+      }
+      @media (max-width: 620px) {
+        width: 100%;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+      }
     }
     .shadow {
       position: absolute;
@@ -57,6 +72,13 @@
       justify-content: space-between;
       align-items: center;
       margin: calc(2.5rem + 25px) 0px 0px 0px;
+      @media (max-width: 1100px) {
+        width: 100%;
+        padding: 0px 35px;
+      }
+      @media (max-width: 350px) {
+        padding: 0px 15px;
+      }
       .invoiceHeaderContainer {
         position: relative;
         display: flex;
@@ -65,12 +87,29 @@
           font-size: 32px;
           padding: 0;
           margin: 0;
+          @media (max-width: 650px) {
+            font-size: 20px;
+          }
         }
         p {
           font-size: 12px;
           padding: 0;
           margin: 0;
           color: app.$subtitle;
+          @media (max-width: 650px) {
+            display: none;
+          }
+        }
+        h6 {
+          display: none;
+          @media (max-width: 650px) {
+          display: flex;
+          font-size: 12px;
+          font-weight: 400;
+          padding: 0;
+          margin: 0;
+          color: app.$subtitle;
+          }
         }
       }
       .rightEnd {
@@ -86,8 +125,23 @@
           justify-content: space-around;
           align-items: center;
           cursor: pointer;
+          @media (max-width: 650px) {
+            width: auto;
+            justify-content: none;
+          }
           h3 {
             font-size: 12px;
+            @media (max-width: 650px) {
+              display: none;
+            }
+          }
+          h6 {
+            display: none;
+            @media (max-width: 650px) {
+            display: flex;
+            font-size: 12px;
+            margin: 0px 15px 0px 0px;
+            }
           }
           .imageHolder {
             position: relative;
@@ -113,6 +167,9 @@
           justify-content: space-between;
           filter: drop-shadow(0px 10px 12px rgb(214, 214, 214));
           z-index: 1;
+          @media (max-width: 650px) {
+            right: 50px;
+          }
           .toggleContainer {
             position: relative;
             display: flex;
@@ -156,9 +213,25 @@
           padding: 7.5px;
           margin: 0px 0px 0px 40px;
           cursor: pointer;
+          @media (max-width: 650px) {
+            width: 100px;
+            margin: 0px 0px 0px 15px;
+          }
           h3 {
             font-size: 12px;
             color: app.$white;
+            @media (max-width: 650px) {
+              display: none;
+            }
+          }
+          h6 {
+            display: none;
+            @media (max-width: 650px) {
+              display: flex;
+              font-size: 12px;
+              font-weight: 400;
+              color: app.$white;
+            }
           }
         }
       }
@@ -192,6 +265,10 @@
       width: 730px;
       height: auto;
       margin: 100px 0px 0px 0px;
+      @media (max-width: 1100px) {
+        width: 100%;
+        padding: 0px 30px;
+      }
       .invoiceContainer {
         position: relative;
         display: flex;
@@ -205,6 +282,9 @@
         padding: 0px 0px 0px 20px;
         border-radius: 10px;
         cursor: pointer;
+        @media (max-width: 650px) {
+          display: none;
+        }
         .firstHalf {
           position: relative;
           display: flex;
@@ -323,6 +403,154 @@
           }
         }
       }
+      /* Mobile starts here. */
+      .invoiceContainerMobile {
+        display: none;
+        @media (max-width: 650px) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        background-color: app.$white;
+        margin: 0px 0px 20px 0px;
+        padding: 20px 30px;
+        border-radius: 10px;
+        }
+        @media (max-width: 350px) {
+          padding: 20px 12.5px;
+        }
+        .topContainerMobile {
+          position: relative;
+          display: flex;
+          width: 100%;
+          height: auto;
+          align-items: center;
+          justify-content: space-between;
+          margin: 0px 0px 10px 0px;
+          .idMobile {
+            color: app.$purple-gray;
+            b {
+              color: app.$font;
+            }
+          }
+          .clientNameMobile {
+            color: app.$subtitle;
+          }
+        }
+        .lowerContainerMobile {
+          position: relative;
+          display: flex;
+          width: 100%;
+          height: auto;
+          align-items: center;
+          justify-content: space-between;
+          .leftSide {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+            .payDate {
+              font-size: 12px;
+              color: app.$purple-gray;
+              margin: 0px;
+            }
+            .total {
+              font-size: 16px;
+              color: app.$font;
+              margin: 10px 0px;
+            }
+          }
+          .rightSide {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: auto;
+            height: 100%;
+              .pendingStatusContainer {
+                position: relative;
+                display: flex;
+                width: 104px;
+                height: 40px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                background-color: app.$pending-lite;
+                .pendingCircle {
+                  position: relative;
+                  display: flex;
+                  width: 8px;
+                  height: 8px;
+                  background-color: app.$pending;
+                  border-radius: 50%;
+                  margin: 2.5px 10px 0px 0px;
+                  align-self: center;
+                }
+                .pendingStatus {
+                  text-transform: capitalize;
+                  color: app.$pending;
+                  font-size: 12px;
+                }
+              }
+              .draftStatusContainer {
+                position: relative;
+                display: flex;
+                width: 104px;
+                height: 40px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                background-color: app.$draft-lite;
+                .draftCircle {
+                  position: relative;
+                  display: flex;
+                  width: 8px;
+                  height: 8px;
+                  background-color: app.$draft;
+                  border-radius: 50%;
+                  margin: 2.5px 10px 0px 0px;
+                  align-self: center;
+                }
+                .draftStatus {
+                  text-transform: capitalize;
+                  color: app.$draft;
+                  font-size: 12px;
+                }
+              }
+              .paidStatusContainer {
+                position: relative;
+                display: flex;
+                width: 104px;
+                height: 40px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                background-color: app.$paid-lite;
+                .paidCircle {
+                  position: relative;
+                  display: flex;
+                  width: 8px;
+                  height: 8px;
+                  background-color: app.$paid;
+                  border-radius: 50%;
+                  margin: 2.5px 10px 0px 0px;
+                  align-self: center;
+                }
+                .paidStatus {
+                  text-transform: capitalize;
+                  color: app.$paid;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
-}

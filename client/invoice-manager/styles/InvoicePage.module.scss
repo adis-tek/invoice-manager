@@ -7,6 +7,9 @@
   height: auto;
   background-color: app.$light-background;
   padding: 0 0rem;
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
   .main {
     width: 100vw;
     min-height: 100vh;
@@ -24,6 +27,9 @@
       background-color: app.$dark-background;
       left: 0px;
       z-index: 1;
+      @media (max-width: 1100px) {
+        display: none;
+      }
     }
     .invoiceFormContainer {
       position: absolute;
@@ -35,6 +41,10 @@
       background-color: app.$white;
       left: 103px;
       z-index: 1;
+      @media (max-width: 1100px) {
+        width: 100%;
+        left: 0px;
+      }
     }
     .pageContainer {
       position: relative;
@@ -42,6 +52,12 @@
       flex-direction: column;
       width: 730px;
       margin: 25px 0px 0px 0px;
+      @media (max-width: 1100px) {
+        width: 90%;
+      }
+      @media (max-width: 550px) {
+        width: 95%;
+      }
       .goBackContainer {
         position: relative;
         display: flex;
@@ -83,6 +99,9 @@
           height: 40px;
           align-items: center;
           justify-content: space-between;
+          @media (max-width: 650px) {
+            width: 100%;
+          }
           .statusText {
             position: relative;
             display: flex;
@@ -175,6 +194,9 @@
           height: 48px;
           align-items: center;
           justify-content: space-between;
+          @media (max-width: 650px) {
+            display: none;
+          }
           .editButtonContainer {
             position: relative;
             display: flex;
@@ -236,6 +258,16 @@
         padding: 50px;
         border-radius: 10px;
         margin: 0px 0px 50px 0px;
+        @media (max-width: 550px) {
+          min-height: none;
+          height: auto;
+        }
+        @media (max-width: 400px) {
+          padding: 20px;
+        }
+        @media (max-width: 330px) {
+          padding: 15px;
+        }
         .invoiceDetailsContainer {
           position: relative;
           display: flex;
@@ -243,6 +275,10 @@
           width: 100%;
           height: 315px;
           margin: 0px 0px 30px 0px;
+          @media (max-width: 550px) {
+            height: auto;
+            margin: 0px;
+          }
           .topContainer {
             position: relative;
             display: flex;
@@ -251,6 +287,11 @@
             align-items: center;
             justify-content: space-between;
             margin: 0px 0px 10px 0px;
+            @media (max-width: 550px) {
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: start;
+            }
             .leftSide {
               position: relative;
               display: flex;
@@ -272,6 +313,9 @@
               display: flex;
               flex-direction: column;
               height: 100%;
+              @media (max-width: 550px) {
+                margin: 15px 0px 0px 0px;
+              }
               .street,
               .city,
               .postal,
@@ -280,6 +324,9 @@
                 font-size: 12px;
                 text-align: right;
                 margin: 3px 0px;
+                @media (max-width: 550px) {
+                  text-align: left;
+                }
               }
             }
           }
@@ -300,6 +347,10 @@
               height: 150px;
               align-items: flex-start;
               justify-content: space-between;
+              @media (max-width: 550px) {
+                width: 50%;
+                margin: 0px 30px 0px 0px;
+              }
               .invoiceDateContainer {
                 position: relative;
                 display: flex;
@@ -318,6 +369,9 @@
                 position: relative;
                 display: flex;
                 flex-direction: column;
+                @media (max-width: 550px) {
+                  margin: 15px 0px 0px 0px;
+                }
               }
               p {
                 color: app.$purple-gray;
@@ -335,16 +389,25 @@
               flex-direction: column;
               width: 25%;
               height: 150px;
+              @media (max-width: 550px) {
+                width: 50%;
+              }
               p {
                 color: app.$purple-gray;
                 font-size: 12px;
                 text-align: left;
                 margin: 0px 0px 3px 0px;
+                // @media (max-width: 550px) {
+                //   text-align: right;
+                // }
               }
               h2 {
                 font-size: 15px;
                 margin: 12px 0px 15px 0px;
                 text-align: left;
+                // @media (max-width: 550px) {
+                //   text-align: right;
+                // }
               }
             }
             .rightSide {
@@ -353,17 +416,49 @@
               flex-direction: column;
               width: 30%;
               height: 150px;
+              @media (max-width: 550px) {
+                width: 0%;
+              }
               p {
                 color: app.$purple-gray;
                 font-size: 12px;
                 text-align: left;
                 margin: 0px 0px;
+                @media (max-width: 550px) {
+                  display: none;
+                }
               }
               h2 {
                 font-size: 15px;
                 margin: 15px 0px;
                 text-align: left;
+                @media (max-width: 550px) {
+                  display: none;
+                }
               }
+            }
+          }
+          .rightSideMobile {
+            display: none;
+            @media (max-width: 550px) {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              width: 30%;
+              height: 150px;
+              // border: 1px solid red;
+              margin: 65px 0px 0px 0px;
+            }
+            p {
+              color: app.$purple-gray;
+              font-size: 12px;
+              text-align: left;
+              margin: 0px 0px;
+            }
+            h2 {
+              font-size: 15px;
+              margin: 15px 0px;
+              text-align: left;
             }
           }
         }
@@ -375,6 +470,9 @@
           height: auto;
           background-color: app.$item-list;
           border-radius: 10px;
+          @media (max-width: 550px) {
+            top: 0px;
+          }
           .itemsHeader {
             position: relative;
             display: flex;
@@ -383,6 +481,12 @@
             height: auto;
             padding: 20px;
             margin: 0px;
+            @media (min-width: 800px) and (max-width: 1100px) {
+              width: auto;
+            }
+            @media (max-width: 550px) {
+              display: none;
+            }
             .itemName {
               position: relative;
               display: flex;
@@ -391,6 +495,9 @@
               color: app.$purple-gray;
               font-size: 11px;
               justify-content: flex-start;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 322px;
+              }
             }
             .itemQuantity {
               position: relative;
@@ -400,6 +507,10 @@
               color: app.$purple-gray;
               font-size: 11px;
               justify-content: flex-start;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                justify-content: center;
+                width: 110px;
+              }
             }
             .itemPrice {
               position: relative;
@@ -409,6 +520,9 @@
               color: app.$purple-gray;
               font-size: 11px;
               justify-content: flex-end;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 195px;
+              }
             }
             .itemTotal {
               position: relative;
@@ -418,6 +532,9 @@
               color: app.$purple-gray;
               font-size: 11px;
               justify-content: flex-end;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 210px;
+              }
             }
           }
           .itemListDataContainer {
@@ -427,6 +544,12 @@
             width: 100%;
             height: auto;
             padding: 0px 20px 20px 20px;
+            @media (min-width: 800px) and (max-width: 1100px) {
+              width: auto;
+            }
+            @media (max-width: 550px) {
+              display: none;
+            }
             .itemNameData {
               position: relative;
               display: flex;
@@ -436,6 +559,9 @@
               font-size: 11px;
               font-weight: 700;
               justify-content: flex-start;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 322px;
+              }
             }
             .itemQuantityData {
               position: relative;
@@ -446,6 +572,9 @@
               font-size: 11px;
               font-weight: 700;
               justify-content: center;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 110px;
+              }
             }
             .itemPriceData {
               position: relative;
@@ -456,6 +585,9 @@
               font-size: 11px;
               font-weight: 700;
               justify-content: flex-end;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 195px;
+              }
             }
             .itemTotalData {
               position: relative;
@@ -466,6 +598,89 @@
               font-size: 11px;
               font-weight: 700;
               justify-content: flex-end;
+              @media (min-width: 800px) and (max-width: 1100px) {
+                width: 210px;
+              }
+            }
+          }
+          .itemListDataContainerMobile {
+            display: none;
+            @media (max-width: 550px) {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            height: auto;
+            padding: 0px 20px 20px 20px;
+            }
+            .leftContainerMobile {
+              position: relative;
+              display: flex;
+              flex-direction: column;
+              width: 50%;
+              height: auto;
+              .titleContainerMobile {
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: auto;
+                .itemNameDataMobile {
+                  position: relative;
+                  display: flex;
+                  width: auto;
+                  height: auto;
+                  color: app.$font;
+                  font-size: 11px;
+                  font-weight: 700;
+                }
+              }
+                .quantityAndPriceContainerMobile {
+                  position: relative;
+                  display: flex;
+                  align-items: center;
+                  width: 100%;
+                  height: auto;
+                  .itemQuantityDataMobile {
+                    position: relative;
+                    display: flex;
+                    width: auto;
+                    height: auto;
+                    color: app.$purple-gray;
+                    font-size: 11px;
+                    font-weight: 700;
+                  }
+                  .itemPriceDataMobile {
+                    position: relative;
+                    display: flex;
+                    width: auto;
+                    height: auto;
+                    color: app.$purple-gray;
+                    font-size: 11px;
+                    font-weight: 700;
+                  }
+                }
+            }
+            .rightContainerMobile {
+              position: relative;
+              display: flex;
+              align-items: flex-end;
+              justify-content: flex-end;
+              width: 50%;
+              height: auto;
+              text-align: right;
+              .itemTotalDataMobile {
+                position: relative;
+                display: flex;
+                width: auto;
+                height: auto;
+                color: app.$font;
+                font-size: 11px;
+                font-weight: 700;
+                justify-content: flex-end;
+                text-align: right;
+              }
             }
           }
           .amountContainer {
@@ -481,6 +696,18 @@
             p {
               color: app.$white;
               font-size: 11px;
+              @media (max-width: 330px) {
+                display: none;
+              }
+            }
+            h6 {
+              display: none;
+              @media (max-width: 330px) {
+              display: flex;
+              color: app.$white;
+              font-size: 11px;
+              font-weight: 400;
+              }
             }
             h1 {
               color: app.$white;
@@ -491,4 +718,98 @@
       }
     }
   }
+  .buttonsBackground {
+    display: none;
+    @media (max-width: 650px) {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: auto;
+      align-items: center;
+      justify-content: center;
+      background-color: app.$white;
+      padding: 20px 0px;
+    }
+  .buttonsContainerMobile {
+    display: none;
+    @media (max-width: 650px) {
+      position: relative;
+      display: flex;
+      width: 309px;
+      height: 48px;
+      align-self: center;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .editButtonContainerMobile {
+      display: none;
+      @media (max-width: 650px) {
+        position: relative;
+        display: flex;
+        width: 73px;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        border-radius: 40px;
+        background-color: app.$edit-button;
+        cursor: pointer;
+      }
+      .editTextMobile {
+        display: none;
+        @media (max-width: 650px) {
+          position: relative;
+          display: flex;
+          color: app.$subtitle;
+          font-size: 12px;
+        }
+      }
+    }
+    .deleteButtonContainerMobile {
+      display: none;
+      @media (max-width: 650px) {
+        position: relative;
+        display: flex;
+        width: 89px;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        border-radius: 40px;
+        background-color: app.$delete-button;
+        cursor: pointer;
+      }
+      .deleteTextMobile {
+        display: none;
+        @media (max-width: 650px) {
+        position: relative;
+        display: flex;
+        color: app.$white;
+        font-size: 12px;
+        }
+      }
+    }
+    .markButtonContainerMobile {
+      display: none;
+      @media (max-width: 650px) {
+      position: relative;
+      display: flex;
+      width: 131px;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      background-color: app.$mark-as-paid;
+      cursor: pointer;
+      }
+      .markTextMobile {
+        display: none;
+        @media (max-width: 650px) {
+        position: relative;
+        display: flex;
+        color: app.$white;
+        font-size: 12px;
+        }
+      }
+    }
+  }
+}
 }

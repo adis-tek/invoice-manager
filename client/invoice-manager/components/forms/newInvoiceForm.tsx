@@ -319,7 +319,7 @@ const NewInvoiceForm: NextPage = (props) => {
             {console.log(props.defaultClientName)}
             <h2 className={styles.title}>New Invoice</h2>
             <div className={styles.formContainer}>
-                <div className={styles.formSection}>
+                <div className={styles.formSection} id={styles.billFromSection}>
                 <h5 className={styles.formTitle}>Bill from</h5>
                     <div className={styles.inputContainer}>
                         <p className={styles.inputTitle}>Street Address</p>
@@ -457,6 +457,7 @@ const NewInvoiceForm: NextPage = (props) => {
                     </LocalizationProvider>
                     </div>
                     {/* REACT CALENDAR */}
+                    <div className={styles.mobileSpace} />
                     
                     <div className={styles.inputContainer}>
                         <p className={styles.inputTitle}>Payment Terms</p>
@@ -471,6 +472,7 @@ const NewInvoiceForm: NextPage = (props) => {
                             <option value="14">Next 14 Day</option>
                             <option value="30">Next 30 Day</option>
                         </select> */}
+
                         <Select
                         value={selectLabel}
                         options={options}
@@ -508,8 +510,21 @@ const NewInvoiceForm: NextPage = (props) => {
                 <div className={styles.formSection}>
                 <h5 className={styles.itemListTitle}>Item List</h5>
                 {item1 &&
+                <>
+                {/* Start of mobile layout. */}
+                <div className={styles.itemInputContainerMobile}>
+                <p className={styles.inputTitle}>Item Name</p>
+                    <input 
+                    type="text" 
+                    name="itemName" 
+                    id="name"
+                    value={invoiceData.itemName1}
+                    onChange={(e) => setInvoiceData({...invoiceData, itemName1: e.target.value})} 
+                    className={styles.itemInputName} />
+                </div>
+                {/* End of mobile layout. */}
                 <div id="item1" className={styles.multiInputContainer}>
-                    <div className={styles.itemInputContainer}>
+                    <div className={styles.itemInputContainerName}>
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
@@ -596,10 +611,24 @@ const NewInvoiceForm: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+                </>
                     }
                 {item2 &&
+                <>
+                {/* Start of mobile layout. */}
+                <div className={styles.itemInputContainerMobile}>
+                <p className={styles.inputTitle}>Item Name</p>
+                    <input 
+                    type="text" 
+                    name="itemName" 
+                    id="name"
+                    value={invoiceData.itemName2}
+                    onChange={(e) => setInvoiceData({...invoiceData, itemName2: e.target.value})} 
+                    className={styles.itemInputName} />
+                </div>
+                {/* End of mobile layout. */}
                 <div id="item2" className={styles.multiInputContainer}>
-                    <div className={styles.itemInputContainer}>
+                    <div className={styles.itemInputContainerName}>
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
@@ -680,10 +709,24 @@ const NewInvoiceForm: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+                </>
                     }
                 {item3 &&
+                <>
+                {/* Start of mobile layout. */}
+                <div className={styles.itemInputContainerMobile}>
+                <p className={styles.inputTitle}>Item Name</p>
+                    <input 
+                    type="text" 
+                    name="itemName" 
+                    id="name"
+                    value={invoiceData.itemName3}
+                    onChange={(e) => setInvoiceData({...invoiceData, itemName3: e.target.value})} 
+                    className={styles.itemInputName} />
+                </div>
+                {/* End of mobile layout. */}
                 <div id="item3" className={styles.multiInputContainer}>
-                    <div className={styles.itemInputContainer}>
+                    <div className={styles.itemInputContainerName}>
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
@@ -764,10 +807,24 @@ const NewInvoiceForm: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+                </>
                     }
                 {item4 &&
+                <>
+                {/* Start of mobile layout. */}
+                <div className={styles.itemInputContainerMobile}>
+                <p className={styles.inputTitle}>Item Name</p>
+                    <input 
+                    type="text" 
+                    name="itemName" 
+                    id="name"
+                    value={invoiceData.itemName4}
+                    onChange={(e) => setInvoiceData({...invoiceData, itemName4: e.target.value})} 
+                    className={styles.itemInputName} />
+                </div>
+                {/* End of mobile layout. */}
                 <div id="item4" className={styles.multiInputContainer}>
-                    <div className={styles.itemInputContainer}>
+                    <div className={styles.itemInputContainerName}>
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
@@ -848,10 +905,24 @@ const NewInvoiceForm: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+                </>
                     }
                 {item5 &&
+                <>
+                {/* Start of mobile layout. */}
+                <div className={styles.itemInputContainerMobile}>
+                <p className={styles.inputTitle}>Item Name</p>
+                    <input 
+                    type="text" 
+                    name="itemName" 
+                    id="name"
+                    value={invoiceData.itemName5}
+                    onChange={(e) => setInvoiceData({...invoiceData, itemName5: e.target.value})} 
+                    className={styles.itemInputName} />
+                </div>
+                {/* End of mobile layout. */}
                 <div id="item5" className={styles.multiInputContainer}>
-                    <div className={styles.itemInputContainer}>
+                    <div className={styles.itemInputContainerName}>
                         <p className={styles.inputTitle}>Item Name</p>
                         <input 
                         type="text" 
@@ -932,6 +1003,7 @@ const NewInvoiceForm: NextPage = (props) => {
                         </div>
                     </div>
                 </div>
+                </>
                     }
                 {item5 === false &&
                 <button 
