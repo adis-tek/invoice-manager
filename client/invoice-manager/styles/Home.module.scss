@@ -551,6 +551,36 @@
             }
           }
         }
+        .noInvoicesContainer {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+          align-items: center;
+          justify-content: center;
+          margin: 0px 0px 0px 0px;
+        .imageHolder {
+          position: relative;
+          display: flex;
+          width: auto;
+          height: auto;
+        }
+        h1 {
+          position: relative;
+          display: flex;
+          text-align: center;
+          width: auto;
+          height: auto;
+        }
+        p {
+          position: relative;
+          display: flex;
+          text-align: center;
+          width: auto;
+          height: auto;
+        }
       }
+    }
     }
   }

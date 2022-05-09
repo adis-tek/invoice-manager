@@ -118,18 +118,21 @@ const Home: NextPage = () => {
 
 
   let draftAndPending = [
-    draft[0],
-    pending[0],
+    ...draft,
+    ...pending,
   ];
 
+  console.log("AAAA", pending);
+  console.log("BBBBB", pending[0])
+
   let draftAndPaid = [
-  draft[0],
-  paid[0]
+  ...draft,
+  ...paid,
   ];
 
   let pendingAndPaid = [
-    pending[0],
-    paid[0],
+    ...pending,
+    ...paid,
   ];
 
   let none: [] = [];
@@ -566,6 +569,22 @@ const Home: NextPage = () => {
       </div>
             <div className={styles.invoiceListContainer}>
             {loading ? <div>LOADING...</div> : renderInvoiceList}
+            {invoices.length === 0 &&
+            <div className={styles.noInvoicesContainer}>
+              <div className={styles.imageHolder}>
+                <Image
+                  src="/no-invoices.png"
+                  alt="plus"
+                  width={241}
+                  height={200}
+                  layout={'fixed'}
+                    />
+                </div>
+                <h1 className={styles.heading}>There is nothing here</h1>
+                <p className={styles.description}>  Create an invoice by clicking the 
+                New Invoice button and get started</p>
+              </div>
+            }
             </div>
       </main>
     </div>
